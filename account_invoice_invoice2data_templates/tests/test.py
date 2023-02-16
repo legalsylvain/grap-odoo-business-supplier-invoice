@@ -18,19 +18,15 @@ _logger = logging.getLogger(__name__)
 class TestModule(TransactionCase):
     def setUp(self):
         super().setUp()
-        _logger.info("====================== <DEBUG>")
-        _logger.info("=== os.environ")
-        _logger.info(os.environ)
-        _logger.info("=== tools.config.options")
-        for k, v in tools.config.options.items():
-            _logger.info("%s - %s " % (str(k), str(v)))
-        _logger.info("====================== </DEBUG>")
+
         # Load Templates
-        local_templates_dir = str(
+        self.local_templates_dir = str(
             Path(os.path.realpath(__file__)).parent.parent / "templates"
         )
 
-        self.templates = invoice2data.extract.loader.read_templates(local_templates_dir)
+        self.templates = invoice2data.extract.loader.read_templates(
+            self.local_templates_dir
+        )
         self.pdf_folder_path = Path(os.path.realpath(__file__)).parent / "invoices"
 
         self.invoice2data_key = tools.config.get("invoice2data_key", False)
@@ -40,15 +36,14 @@ class TestModule(TransactionCase):
             "utf-8"
         )
 
-    def _get_data_from_pdf(self, invoice_file_name):
+    def _get_invoice_path(self, invoice_file_name):
         invoice_path = self.pdf_folder_path / invoice_file_name
         invoice_path_encrypted = self.pdf_folder_path / (
             invoice_file_name + ".encrypted"
         )
         if invoice_path.exists() and invoice_path_encrypted.exists():
-            return invoice2data.main.extract_data(
-                str(invoice_path), templates=self.templates
-            )
+            return invoice_path
+
         elif not invoice_path.exists() and not invoice_path_encrypted.exists():
             raise Exception("%s file doesn't exist" % invoice_path)
 
@@ -69,9 +64,7 @@ class TestModule(TransactionCase):
             with open(invoice_path, "wb") as file:
                 file.write(decrypted_data)
 
-        return invoice2data.main.extract_data(
-            str(invoice_path), templates=self.templates
-        )
+        return invoice_path
 
     def _test_supplier_template(
         self,
@@ -80,7 +73,11 @@ class TestModule(TransactionCase):
         expected_values,
         expected_lines,
     ):
-        result = self._get_data_from_pdf(invoice_file_name)
+        invoice_path = self._get_invoice_path(invoice_file_name)
+        result = invoice2data.main.extract_data(
+            str(invoice_path), templates=self.templates
+        )
+
         for key, expected_value in expected_values.items():
             self.assertEqual(result[key], expected_value)
 

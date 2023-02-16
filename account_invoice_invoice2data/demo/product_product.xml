@@ -12,6 +12,11 @@
         <field name="name">Taxe Gazole</field>
     </record>
 
+
+    <record id="product_relais_vert_interfel" model="product.product">
+        <field name="name">Taxe Interfel TPF</field>
+    </record>
+
     <record id="product_supplierinfo_relais_vert_gazole" model="product.supplierinfo">
         <field name="name" ref="account_invoice_invoice2data.partner_relais_vert"/>
         <field name="product_tmpl_id" model="product.template" eval="obj().env.ref('account_invoice_invoice2data.product_relais_vert_gazole').product_tmpl_id.id"/>
