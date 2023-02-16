@@ -4,7 +4,7 @@
 
 {
     "name": "Account Invoice - Test for Invoice2data Import (GRAP)",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "category": "Accounting",
     "author": "GRAP",
     "website": "https://github.com/grap/grap-odoo-business-supplier-invoice",
