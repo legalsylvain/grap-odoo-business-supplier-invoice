@@ -18,13 +18,7 @@ _logger = logging.getLogger(__name__)
 class TestModule(TransactionCase):
     def setUp(self):
         super().setUp()
-        _logger.info("====================== <DEBUG>")
-        _logger.info("=== os.environ")
-        _logger.info(os.environ)
-        _logger.info("=== tools.config.options")
-        for k, v in tools.config.options.items():
-            _logger.info("%s - %s " % (str(k), str(v)))
-        _logger.info("====================== </DEBUG>")
+
         # Load Templates
         local_templates_dir = str(
             Path(os.path.realpath(__file__)).parent.parent / "templates"
