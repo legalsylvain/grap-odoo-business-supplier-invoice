@@ -15,7 +15,7 @@ together to improve the code or make a merge proposal into an OCA repository.
 You could be interesting too by the following repositories:
 
 * [grap-odoo-incubator](https://github.com/grap/grap-odoo-incubator)
-* [grap-odoo-business-supplier-invoice](https://github.com/grap/grap-odoo-business)
+* [grap-odoo-business](https://github.com/grap/grap-odoo-business)
 * [grap-odoo-custom](https://github.com/grap/grap-odoo-custom)
 
 [//]: # (addons)
