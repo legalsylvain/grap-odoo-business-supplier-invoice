@@ -28,6 +28,10 @@ jobs:
         ports:
           - 5432:5432
     steps:
+      - name: Install system dependencies (Linux)
+        run: |
+          apt update
+          apt install -y tesseract-ocr poppler-utils imagemagick
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
@@ -40,5 +44,13 @@ jobs:
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
+        env:
+          INVOICE2DATA_KEY: ${{ secrets.INVOICE2DATA_KEY }}
+          TEST_10: ${{ secrets.YOUR_SECRET_REPOSITORY_LEGALSYLVAIN_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
+          TEST_11: ${{ secrets.YOUR_SECRET_REPOSITORY_GRAP_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
+          TEST_12: ${{ secrets.YOUR_SECRET_ORGANIZATION_GRAP }}
+          TEST_20: ${{ vars.YOUR_VARIABLE_REPOSITORY_LEGALSYLVAIN_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
+          TEST_21: ${{ vars.YOUR_VARIABLE_REPOSITORY_GRAP_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
+          TEST_22: ${{ vars.YOUR_VARIABLE_ORGANIZATION_GRAP }}
         run: oca_run_tests
       - uses: codecov/codecov-action@v1

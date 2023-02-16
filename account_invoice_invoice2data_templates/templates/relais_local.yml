@@ -1,0 +1,55 @@
+issuer: Relais Local
+
+keywords:
+  - "82398351500011"
+  - FR35823983515
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL TTC\s+
+      ([\d\s?]+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture N°
+      (FC\d+)
+  date:
+    parser: regex
+    type: date
+    regex: CLIENT\s+PAGE\n\s+
+      (\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: ECHEANCE.*\n.*
+      (\d{2}\/\d{2}\/\d{2})
+  lines:
+    parser: lines
+    start: REF.*Montant HT Tva
+    end: "IBAN: FR76|Clauses de réserve"
+    line: ^(?P<product_code>\w+)
+      (?P<product_name>.*)
+      \s+(BIO).*
+      (?P<quantity>\d+)
+      \s+(U|KG)
+      \s+(?P<ignored_price_unit>\d+\.\d+)
+      \s+(?P<price_unit>\d+\.\d+)
+      \s+(?P<price_subtotal>\d+\.\d+)
+      \s+[1|3]
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+    - '%d/%m/%y'
+  languages:
+    - fr
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ["\n.*FROMAGERIE DU VAL D'ORMEZE", ""]

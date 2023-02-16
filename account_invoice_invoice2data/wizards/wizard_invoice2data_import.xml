@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2023 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+-->
+
+<odoo>
+
+    <record id="view_wizard_invoice2data_import_form" model="ir.ui.view">
+        <field name="model">wizard.invoice2data.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group name="group_import" col="4" >
+                    <field name="invoice_file" filename="invoice_filename"/>
+                    <field name="invoice_filename" force_save="1"/>
+                    <field name="invoice_id" force_save="1"/>
+                    <field name="partner_id"/>
+                    <field name="pdf_invoice_number" attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
+                    <field name="pdf_amount" attrs="{'invisible': [('pdf_amount', '=', False)]}"/>
+                    <field name="pdf_date" attrs="{'invisible': [('pdf_date', '=', False)]}"/>
+                    <field name="pdf_date_due" attrs="{'invisible': [('pdf_date_due', '=', False)]}"/>
+                </group>
+                <group>
+                    <notebook>
+                        <page string="Product Mapping" states="product_mapping">
+                            <field name="product_mapping_line_ids" nolabel="1">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="sequence"/>
+                                    <field name="pdf_product_code"/>
+                                    <field name="pdf_product_name"/>
+                                    <field name="pdf_quantity"/>
+                                    <field name="pdf_price_unit"/>
+                                    <field name="pdf_discount"/>
+                                    <field name="is_product_mapped" invisible="1"/>
+                                    <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': 'red: product_id==False'}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Invoice Lines Differences" states="line_differences">
+                            <group string="Invoice Lines to Update">
+
+                                <field name="invoice_difference_line_ids" nolabel="1">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="sequence"/>
+                                        <field name="pdf_product_code"/>
+                                        <field name="pdf_product_name"/>
+                                        <field name="pdf_quantity"/>
+                                        <field name="pdf_price_unit"/>
+                                        <field name="pdf_discount"/>
+                                        <field name="invoice_line_id"/>
+                                        <field name="changes_description"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Invoice Lines to Remove">
+                                <field name="to_delete_invoice_line_ids" nolabel="1" />
+                            </group>
+                        </page>
+                        <page string="Technical Information" states="product_mapping,line_differences">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="sequence"/>
+                                    <field name="pdf_product_code"/>
+                                    <field name="pdf_product_name"/>
+                                    <field name="pdf_quantity"/>
+                                    <field name="pdf_price_unit"/>
+                                    <field name="pdf_discount"/>
+                                    <field name="is_product_mapped" invisible="1"/>
+                                    <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}"/>
+                                    <field name="invoice_line_id" />
+                                    <field name="changes_description" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+                </group>
+                <footer>
+                    <button name="import_invoice" type="object" class="btn-primary" string="Import" states="import"/>
+                    <button name="map_products" type="object" class="btn-primary" string="Map Products" states="product_mapping"/>
+                    <button name="apply_changes" type="object" class="btn-primary" string="Apply Changes" states="line_differences"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_invoice2data_import" model="ir.actions.act_window">
+        <field name="name">Import Vendor Bill</field>
+        <field name="src_model">account.invoice</field>
+        <field name="res_model">wizard.invoice2data.import</field>
+        <field name="binding_model_id" ref="account.model_account_invoice" />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_invoice_id': active_id}</field>
+    </record>
+
+</odoo>
