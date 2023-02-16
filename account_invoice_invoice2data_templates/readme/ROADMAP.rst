@@ -1,24 +1,16 @@
-- Write Tests !
+**Suppliers To do**
 
-- Add encryption mechanism to allow to push real invoices
-  on public git repository.
+- OK : jardin de Gaia
+- OK : comptoir des lys
 
-**Supplier To do**
+- OK : Frutas Oscar Morell
+- OK : T Air de Famille
+- OK : Olival d'Ouro, Terre de Sens
+- OK : La dent du chat (Coop de Yenne)
+- OK : Papilles Sauvages
+- OK : Gonuts
+- OK : Croc Snack JBG SAS
 
-- Markal
-- jardin de Gaia
-- gravier
-- comptoir des lys
-
-
-- Frutas Oscar Morell
-- T Air de Famille
-- Olival d'Ouro, Terre de Sens
-- La dent du chat (Coop de Yenne)
+- Le bateleur
 - Bergerie du pecher, Charreyre
 - Floréal (actionfruta)
-- Papilles Sauvages
-- Le bateleur
-- Gonuts
-- Croc Snack JBG SAS
-- devidal Yssingeau salaison

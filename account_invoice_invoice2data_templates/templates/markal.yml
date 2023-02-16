@@ -1,0 +1,54 @@
+issuer: Markal
+
+keywords:
+  - SIRET 436 180 582 00021
+  - TVA FR 21 436 180 582
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL T.T.C.\n.*\n.*\s+(\d+\.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL T.T.C.\n.*\n\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture\s+(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date de facturation\n.*(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: ECHEANCE.*\n\s+(\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start: ARTICLE\s+DESIGNATION.*MT \(EUR\)
+    end: Type de ligne|TOTAL MARCHANDISES
+    line: ^
+      \s?(?P<product_code>[A-Z0-9]+)
+      \s+(?P<product_name>.{40})(\s+\d+ CAR)?
+      \s+(?P<quantity>\d+)\s(UVC|SAC)
+      \s+(?P<brut_price_unit>\d+\.\d+)\s\/(UVC|SAC)
+      \s+(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC)
+      \s+(?P<vat_code>TN|TR)
+      \s+(?P<price_subtotal>\d+\.\d+)
+
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['°', '']
+    - ['\*', '']
