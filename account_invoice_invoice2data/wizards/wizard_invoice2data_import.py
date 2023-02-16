@@ -134,6 +134,12 @@ class WizardInvoice2dataImport(models.TransientModel):
 
         # Load Templates
         local_templates_dir = tools.config.get("invoice2data_templates_dir", False)
+
+        if not local_templates_dir:
+            local_templates_dir = self.env.context.get(
+                "invoice2data_templates_dir", False
+            )
+
         if not local_templates_dir:
             raise UserError(
                 _("'invoice2data_templates_dir' not set in the odoo Config File")

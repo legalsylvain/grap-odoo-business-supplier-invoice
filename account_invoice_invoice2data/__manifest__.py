@@ -9,7 +9,11 @@
     "author": "GRAP",
     "website": "https://github.com/grap/grap-odoo-business-supplier-invoice",
     "license": "AGPL-3",
-    "depends": ["account"],
+    "depends": [
+        "account",
+        # OCA
+        "purchase_discount",
+    ],
     "data": [
         "wizards/wizard_invoice2data_import.xml",
     ],
