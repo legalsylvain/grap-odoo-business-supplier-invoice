@@ -65,7 +65,23 @@ Known issues / Roadmap
 
 **Supplier To do**
 
-- [ ] Vitafrais
+- Markal
+- jardin de Gaia
+- gravier
+- comptoir des lys
+
+
+- Frutas Oscar Morell
+- T Air de Famille
+- Olival d'Ouro, Terre de Sens
+- La dent du chat (Coop de Yenne)
+- Bergerie du pecher, Charreyre
+- Floréal (actionfruta)
+- Papilles Sauvages
+- Le bateleur
+- Gonuts
+- Croc Snack JBG SAS
+- devidal Yssingeau salaison
 
 Bug Tracker
 ===========
