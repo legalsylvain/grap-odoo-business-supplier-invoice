@@ -1,6 +1,5 @@
 **Suppliers To do**
 
-- OK : jardin de Gaia
 - OK : comptoir des lys
 
 - OK : Frutas Oscar Morell
@@ -14,3 +13,7 @@
 - Le bateleur
 - Bergerie du pecher, Charreyre
 - Floréal (actionfruta)
+
+**Bad formats**
+
+- Jardins de Gaia

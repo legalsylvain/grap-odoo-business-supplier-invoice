@@ -1,0 +1,62 @@
+issuer: Comptoir des Lys
+
+keywords:
+  - "480737030 00019"
+  - FR67480737030
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: Montant T.T.C.\s+(\d+.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Montant H.T.\s+(\d+.\d+) EUR
+  invoice_number:
+    parser: regex
+    regex: FACTURE N° (\d+)
+  date:
+    parser: regex
+    type: date
+    regex: FACTURE N° \d+ du (\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*\n\s+\d+.\d+ EUR \s+ (\d{2}\/\d{2}\/\d{4})
+  amount_discount_20:
+    parser: regex
+    type: float
+    regex: REMISE FACTURE\s+- \d+[.\d+]? %\s+(-\s+\d+.\d+) EUR
+  lines:
+    parser: lines
+    start: \s+Article.*TVA %
+    end: Réserves de propriétés
+    line: ^
+      \s?(?P<product_code>\d+)
+      \s+(?P<product_name>.{50})
+      \s+[A-Z0-9\-]+
+      \s+(?P<quantity>\d+)
+      \s+(?P<price_unit>\d+.\d+) €
+      \s+(?P<discount>\d+.\d+)%
+      \s+(?P<net_price_unit>\d+.\d+) €
+      \s+(?P<price_subtotal>\d+.\d+) €
+      \s+(?P<vat_code>(20))
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['¤', '']
+    - ['þ', '']
+    - ['§', '']
+    - ['µ', '']
+    - ['‡', '']
