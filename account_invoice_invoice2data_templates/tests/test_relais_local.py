@@ -15,6 +15,7 @@ class TestRelaisLocal(TestModule):
                 "issuer": "Relais Local",
                 "date": datetime(day=3, month=1, year=2023),
                 "invoice_number": "FC230116989",
+                "amount_untaxed": 319.39,
                 "amount": 336.96,
             },
             expected_lines=[

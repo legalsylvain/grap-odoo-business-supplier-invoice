@@ -1,9 +1,5 @@
 **Suppliers To do**
 
-- OK : comptoir des lys
-
-- OK : Frutas Oscar Morell
-- OK : T Air de Famille
 - OK : Olival d'Ouro, Terre de Sens
 - OK : La dent du chat (Coop de Yenne)
 - OK : Papilles Sauvages
@@ -16,4 +12,6 @@
 
 **Bad formats**
 
-- Jardins de Gaia
+- Jardins de Gaia : PDF bien daubé avec des retours
+  à la ligne de l'enfer, dans les lignes des produits
+- Frutas Oscar Morell : pas de code produit

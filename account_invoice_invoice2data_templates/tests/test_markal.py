@@ -15,6 +15,7 @@ class TestMarkal(TestModule):
                 "issuer": "Markal",
                 "date": datetime(day=14, month=2, year=2023),
                 "invoice_number": "00368375",
+                "amount_untaxed": 818.89,
                 "amount": 868.52,
             },
             expected_lines=[

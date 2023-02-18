@@ -15,6 +15,7 @@ class TestAgrosourcing(TestModule):
                 "issuer": "Agrosourcing",
                 "date": datetime(day=11, month=1, year=2023),
                 "invoice_number": "082083",
+                "amount_untaxed": 468.96,
                 "amount": 501.00,
             },
             expected_lines=[

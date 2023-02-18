@@ -7,8 +7,18 @@ keywords:
 fields:
   amount:
     parser: regex
-    regex: EA-010\s+    ([\d\s?]+\.\d+) Euro
     type: float
+    regex: \s+\d+.\d+\s+\d+\s+\d+[.\d+]?%\s+\d+.\d+
+      \s+\d+.\d+
+      \s+\d+.\d+
+      \s+(\d+.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: \s+\d+.\d+\s+\d+\s+\d+[.\d+]?%\s+\d+.\d+
+      \s+(\d+.\d+)
+      \s+\d+.\d+
+      \s+\d+.\d+
   invoice_number:
     parser: regex
     regex: FACTURE No\s+(\d+)

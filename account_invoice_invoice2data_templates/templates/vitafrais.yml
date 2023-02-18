@@ -9,6 +9,10 @@ fields:
     parser: regex
     type: float
     regex: TOTAL TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
   invoice_number:
     parser: regex
     regex: Facture n° .\s+(\d+)

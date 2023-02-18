@@ -1,0 +1,47 @@
+issuer: T'air de Famille
+
+keywords:
+  - "78856678400013"
+  - FR53788566784
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture\s+(FA\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date . (\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: (\d{2}\/\d{2}\/\d{4})\s+virement
+  lines:
+    parser: lines
+    start:  Code.*Montant HT
+    end: Produits issus
+    line: ^(?P<product_code>[\w\d]+)
+      \s+(?P<product_name>.{60})
+      \s+(?P<quantity>\d+(\.\d+)?)
+      \s+(?P<price_unit>\d+\.\d+)
+      \s+(?P<price_subtotal>\d+\.\d+)
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

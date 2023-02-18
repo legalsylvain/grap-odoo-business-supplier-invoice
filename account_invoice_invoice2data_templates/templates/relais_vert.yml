@@ -8,7 +8,11 @@ fields:
   amount:
     parser: regex
     type: float
-    regex: Net à payer\s+   ([\d\s?]+\.\d+)
+    regex: Montant Total TTC\s+   ([\d\s?]+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Montant Total HT\s+   ([\d\s?]+\.\d+)
   invoice_number:
     parser: regex
     regex: FACTURE\s+       (FC\d+)

@@ -15,6 +15,7 @@ class TestVitafrais(TestModule):
                 "issuer": "Vitafrais",
                 "date": datetime(day=13, month=2, year=2023),
                 "invoice_number": "23013043",
+                "amount_untaxed": 453.52,
                 "amount": 478.73,
                 "amount_fuel_surcharge": 1.83,
             },

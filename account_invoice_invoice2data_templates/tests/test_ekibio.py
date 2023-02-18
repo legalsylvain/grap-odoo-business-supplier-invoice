@@ -15,6 +15,7 @@ class TestEkibio(TestModule):
                 "issuer": "Ekibio",
                 "date": datetime(day=7, month=2, year=2023),
                 "invoice_number": "792437",
+                "amount_untaxed": 625.55,
                 "amount": 671.37,
             },
             expected_lines=[

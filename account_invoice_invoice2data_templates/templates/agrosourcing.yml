@@ -9,6 +9,10 @@ fields:
     parser: regex
     type: float
     regex: \d+\.\d+ EUR\s+\d+\.\d+ EUR\s+(\d+\.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: (\d+\.\d+) EUR\s+\d+\.\d+ EUR\s+\d+\.\d+ EUR
   invoice_number:
     parser: regex
     regex: Facture\s+(\d+)

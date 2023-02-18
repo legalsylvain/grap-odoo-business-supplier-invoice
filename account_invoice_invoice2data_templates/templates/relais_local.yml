@@ -10,6 +10,11 @@ fields:
     type: float
     regex: TOTAL TTC\s+
       ([\d\s?]+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL H.T.\s+
+      ([\d\s?]+\.\d+)
   invoice_number:
     parser: regex
     regex: Facture N°

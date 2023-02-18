@@ -15,8 +15,8 @@ class TestGravier(TestModule):
                 "issuer": "Gravier",
                 "date": datetime(day=16, month=11, year=2022),
                 "invoice_number": "FA1375938",
-                "amount": 349.38,
                 "amount_untaxed": 291.15,
+                "amount": 349.38,
             },
             expected_lines=[
                 {
