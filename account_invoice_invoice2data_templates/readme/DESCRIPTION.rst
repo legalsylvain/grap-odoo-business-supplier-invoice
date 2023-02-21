@@ -10,6 +10,7 @@ This module contains invoice2data templates for GRAP company.
 - Gonuts
 - Gravier
 - Markal
+- Papilles Sauvages
 - Relais Local
 - Relais Vert
 - T'air de Famille

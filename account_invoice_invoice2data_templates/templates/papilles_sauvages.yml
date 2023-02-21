@@ -1,0 +1,51 @@
+issuer: Papilles Sauvages
+
+keywords:
+  - "84414600100020"
+  - FR39844146001
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: N° .\s+(FAC\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date .\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance(s)\s+(\d+\.\d+) €\s+au\s+(\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start:  Libellé.*Montant HT\s+TVA
+    end: frais de recouvrement
+    line: ^\s?(?P<product_code>[\d|\w]+)+
+      \s?(?P<product_name>.{60})
+      \s+(?P<quantity>\d+(\.\d+)?)
+      \s+Pièce
+      \s+(?P<price_unit>\d+\.\d+) €
+      \s+(?P<discount>\d+\.\d+)%
+      \s+(?P<price_subtotal>\d+\.\d+) €
+      \s+(?P<vat_code>5\.50)%
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
