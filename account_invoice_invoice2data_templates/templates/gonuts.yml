@@ -1,0 +1,50 @@
+issuer: Gonuts
+
+keywords:
+  - "82877423200023"
+  - FR 84 828 774 232
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: Montant TTC .\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Montant HT .\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: \d{2}\/\d{2}\/\d{4}\s+(FC\d+)
+  date:
+    parser: regex
+    type: date
+    regex: (\d{2}\/\d{2}\/\d{4})\s+FC\d+
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance .*\s+(\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start:   Code art.*net HT
+    end: Généré le
+    line: ^(?P<product_code>[\d|\w]+)+
+      \s+(?P<product_name>.*)
+      \s+(?P<quantity>\d+(\.\d+)?) Produit
+      \s+(?P<price_unit>\d+\.\d+)
+      \s+(?P<net_price_unit>\d+\.\d+)
+      \s+(?P<vat_code>TR)
+      \s+(?P<price_subtotal>\d+\.\d+)
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['\*', '']
