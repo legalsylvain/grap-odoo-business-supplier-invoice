@@ -1,0 +1,51 @@
+issuer: Croc JBG SAS
+
+keywords:
+  - "83189917400013"
+  - FR54 831 899 174
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Net HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: (FA\d+)\s+\d{2}\/\d{2}\/\d{4}
+  date:
+    parser: regex
+    type: date
+    regex: FA\d+\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*\n\n\s+(\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start:  Référence.*Montant HT\s+TVA
+    end: frais de recouvrement
+    line: ^(?P<product_code>[\d|\w]+)
+      \s+(?P<product_name>.{65})
+      \s+(?P<quantity>\d+(\.\d+)?)
+      \s+(?P<price_unit>\d+\.\d+)
+      (\s+(?P<discount>\d+\.\d+)\s+(?P<discount_amount>\d+\.\d+))?
+      \s+(?P<net_price_unit>\d+\.\d+)
+      \s+(?P<price_subtotal>\d+\.\d+)
+      \s+(?P<vat_code>5\.50)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
