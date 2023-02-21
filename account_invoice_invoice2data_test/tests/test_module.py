@@ -4,6 +4,8 @@
 import base64
 from datetime import datetime
 
+from odoo import tools
+
 from odoo.addons.account_invoice_invoice2data_templates.tests.test import TestModule
 
 
@@ -25,6 +27,7 @@ class TestFullWorkflow(TestModule):
         self.product_interfel = self.env.ref(
             "account_invoice_invoice2data.product_relais_vert_interfel"
         )
+        tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
     def test_full_workflow(self):
         invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
@@ -32,9 +35,7 @@ class TestFullWorkflow(TestModule):
         base64_data = base64.b64encode(binary_data)
 
         # Part 1 : Import Invoice
-        wizard = self.Wizard.with_context(
-            invoice2data_templates_dir=self.local_templates_dir
-        ).create(
+        wizard = self.Wizard.create(
             {
                 "invoice_file": base64_data,
                 "invoice_filename": self.invoice_name,
