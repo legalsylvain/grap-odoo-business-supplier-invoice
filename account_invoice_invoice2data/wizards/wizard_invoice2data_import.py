@@ -51,6 +51,13 @@ class WizardInvoice2dataImport(models.TransientModel):
         readonly=True,
     )
 
+    currency_id = fields.Many2one(
+        string="Currency",
+        comodel_name="res.currency",
+        related="invoice_id.currency_id",
+        readonly=True,
+    )
+
     line_ids = fields.One2many(
         comodel_name="wizard.invoice2data.import.line", inverse_name="wizard_id"
     )
@@ -76,6 +83,8 @@ class WizardInvoice2dataImport(models.TransientModel):
     )
 
     pdf_invoice_number = fields.Char(readonly=True)
+
+    pdf_amount_untaxed = fields.Float(readonly=True)
 
     pdf_amount = fields.Float(readonly=True)
 
@@ -103,7 +112,13 @@ class WizardInvoice2dataImport(models.TransientModel):
             return self._get_action_from_state("line_differences")
 
     def _initialize_wizard_invoice(self, result):
-        for invoice_field in ["amount", "invoice_number", "date", "date_due"]:
+        for invoice_field in [
+            "amount_untaxed",
+            "amount",
+            "invoice_number",
+            "date",
+            "date_due",
+        ]:
             if invoice_field in result:
                 value = result[invoice_field]
                 if "date" in invoice_field:

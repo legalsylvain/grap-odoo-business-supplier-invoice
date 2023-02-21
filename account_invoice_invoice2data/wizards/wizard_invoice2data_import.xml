@@ -16,12 +16,22 @@
                     <field name="state" widget="statusbar"/>
                 </header>
                 <group name="group_import" col="4" >
-                    <field name="invoice_file" filename="invoice_filename"/>
-                    <field name="invoice_filename" force_save="1"/>
+                    <field name="invoice_file" filename="invoice_filename"
+                        states="import"/>
+                    <field name="invoice_filename" force_save="1"
+                        states="import"/>
                     <field name="invoice_id" force_save="1"/>
                     <field name="partner_id"/>
                     <field name="pdf_invoice_number" attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
-                    <field name="pdf_amount" attrs="{'invisible': [('pdf_amount', '=', False)]}"/>
+                    <field name="currency_id" invisible="1"/>
+                    <newline/>
+                    <field name="pdf_amount_untaxed" widget="monetary"
+                        attrs="{'invisible': [('pdf_amount_untaxed', '=', 0)]}"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="pdf_amount" widget="monetary"
+                        attrs="{'invisible': [('pdf_amount', '=', 0)]}"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <newline/>
                     <field name="pdf_date" attrs="{'invisible': [('pdf_date', '=', False)]}"/>
                     <field name="pdf_date_due" attrs="{'invisible': [('pdf_date_due', '=', False)]}"/>
                 </group>
