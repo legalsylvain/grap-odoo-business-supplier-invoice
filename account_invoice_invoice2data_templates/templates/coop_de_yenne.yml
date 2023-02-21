@@ -1,0 +1,52 @@
+issuer: Coop de Yenne
+
+keywords:
+  - "302 957 089 00014"
+  - FR 00 302 957 089
+
+fields:
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL NET H.T.\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture n° .\s+(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date de facture .\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Date d'échéance .\s+(\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start: Réf.\s+.*Montant HT\s+TVA
+    end: 302 957 089 00014
+    line: ^(?P<product_code>[\d|\w]+)
+      \s?(?P<product_name>.*)
+      \s+(?P<packaging_qty>\d+)
+      \s+(?P<unit_quantity>\d+(\.\d+)?)
+      \s+(?P<quantity>\d+(\.\d+)?)
+      \s+(?P<brut_price_unit>\d+\.\d+)
+      \s+(?P<price_unit>\d+\.\d+)\s+KG
+      \s+(?P<price_subtotal>\d+\.\d+)
+      \s?(?P<vat_code>V5)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
