@@ -22,6 +22,7 @@ class TestGravier(TestModule):
                 {
                     "product_code": "LE00001402",
                     "product_name": "LIQUIDE VAISSELLE MAIN ULTRA DEGRAISSANT 5L",
+                    "vat_code": "20",
                     "quantity": 4.0,
                     "price_unit": 14.19,
                     "discount": 20.0,
