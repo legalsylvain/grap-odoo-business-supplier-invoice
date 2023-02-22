@@ -24,6 +24,9 @@ fields:
     parser: regex
     type: date
     regex: Echéance .*\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "TR"
   lines:
     parser: lines
     start:   Code art.*net HT

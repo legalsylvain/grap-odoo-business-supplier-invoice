@@ -22,6 +22,7 @@ class TestGonuts(TestModule):
                 {
                     "product_code": "00076",
                     "product_name": "PUREE AMANDE COMPLETE TOASTEE 270G",
+                    "vat_code": "TR",
                     "quantity": 9,
                     "price_unit": 6.30,
                     "discount": 0,
