@@ -23,7 +23,7 @@ fields:
   date_due:
     parser: regex
     type: date
-    regex: Echéance(s)\s+(\d+\.\d+) €\s+au\s+(\d{2}\/\d{2}\/\d{4})
+    regex: Echéance\(s\)\s+(\d+\.\d+) €\s+au\s+(\d{2}\/\d{2}\/\d{4})
   lines:
     parser: lines
     start:  Libellé.*Montant HT\s+TVA

@@ -83,6 +83,7 @@
                                     <field name="pdf_quantity"/>
                                     <field name="pdf_price_unit"/>
                                     <field name="pdf_discount"/>
+                                    <field name="pdf_price_subtotal" sum="Total Vat Excl"/>
                                     <field name="is_product_mapped" invisible="1"/>
                                     <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}"/>
                                     <field name="invoice_line_id" />

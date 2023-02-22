@@ -30,6 +30,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_price_unit = fields.Float(readonly=True)
 
+    pdf_price_subtotal = fields.Float(readonly=True)
+
     pdf_discount = fields.Float(readonly=True)
 
     pdf_vat_amount = fields.Float(readonly=True)
@@ -110,6 +112,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "pdf_vat_amount": self._get_vat_amount(pdf_data, line_data),
                     "pdf_quantity": line_data["quantity"],
                     "pdf_price_unit": line_data["price_unit"],
+                    "pdf_price_subtotal": line_data["price_subtotal"],
                     "pdf_discount": line_data.get("discount", 0.0),
                     "data": str(line_data),
                 }
@@ -131,6 +134,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         "pdf_vat_amount": value["vat_amount"],
                         "pdf_quantity": 1,
                         "pdf_price_unit": pdf_data[key],
+                        "pdf_price_subtotal": pdf_data[key],
                         "pdf_discount": 0.0,
                         "data": str(pdf_data[key]),
                     }

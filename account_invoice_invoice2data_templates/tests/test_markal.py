@@ -22,6 +22,7 @@ class TestMarkal(TestModule):
                 {
                     "product_code": "SPADCC500",
                     "product_name": "SPAGHETTI 1/2 COMPLET 500G/12",
+                    "vat_code": "TR",
                     "quantity": 12.0,
                     "price_unit": 1.19,
                     "price_subtotal": 14.28,

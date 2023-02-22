@@ -81,6 +81,11 @@ class TestModule(TransactionCase):
         for key, expected_value in expected_values.items():
             self.assertEqual(result[key], expected_value)
 
+        self.assertEqual(
+            len(result["lines"]),
+            line_qty,
+            "Expected Lines : %d ; Lines Found : %d" % (line_qty, len(result["lines"])),
+        )
         for expected_line in expected_lines:
             line_found = False
             for real_line in result["lines"]:

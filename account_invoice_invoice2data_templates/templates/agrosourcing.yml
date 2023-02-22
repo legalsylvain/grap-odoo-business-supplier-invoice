@@ -34,10 +34,9 @@ fields:
     parser: lines
     start: Code\s+  Désignation.*Mtt HT
     end: Produit issu
-    line: (?P<product_code>\d+)
+    line: ^(?P<product_code>\d+)
       \s+(?P<product_name>.*)
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s+(?P<packaging_name>\w+)
+      \s+(?P<quantity>\d+(\.\d+)?)\s+(?P<packaging_name>\w+)
       \s+(?P<price_unit>\d+\.\d+)
       \s+(?P<discount>\d+)%
       \s+(?P<net_price_unit>\d+\.\d+)
