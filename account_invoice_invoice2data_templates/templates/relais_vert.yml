@@ -20,18 +20,25 @@ fields:
     parser: regex
     type: date
     regex: DATE\s+          (\d{2}/\d{2}/\d{4})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_200:
+    parser: static
+    value: "6"
   lines:
     parser: lines
     start: \s+Réf.\s+Désignation.*Total\sHT\sT\sP
     end: \s+Siège\ssocial|Total\sBrut\sHT
     line: ^(?P<product_code>\w+)
-      \s+(?P<product_name>.*)\s\s(COL|PCE|KG|KGV)
-      \s+(\w+)\s+(/)?\s+(\w+)?\s+
+      \s+(?P<product_name>.*)
+      \s+(?P<package_name>COL|PCE|KG|KGV)
+      \s+(?P<origin>(\w+)\s(\/)?)(\s+BIO)?
       \s+(?P<package_qty>\d+)
-      \s+(?P<quantity>\d+)
-      .*
+      \s+(?P<quantity>\d+).*
       \s+(?P<price_unit>\d+\.\d+)
       \s+(?P<price_subtotal>\d+\.\d+)
+      \s?(?P<vat_code>\d)
     types:
       quantity: float
       price_unit: float
@@ -53,3 +60,5 @@ options:
   decimal_separator: '.'
   replace:
     - [',', '.']
+    # Remove lines with the number of the Delivery Order
+    - ['\nBL\d+\n', '']

@@ -77,6 +77,19 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         }
 
     @api.model
+    def _get_vat_amount(self, pdf_data, line_data):
+        pdf_vat_code = line_data["vat_code"]
+        vat_mapping = {
+            vat_code: vat_name
+            for vat_name, vat_code in pdf_data.items()
+            if vat_name.startswith("vat_code_")
+        }
+        vat_name = vat_mapping.get(pdf_vat_code, False)
+        if not vat_name:
+            raise UserError(_("Unable to map the vat code '%s'") % (pdf_vat_code))
+        return float(vat_name.replace("vat_code_", "")) / 10
+
+    @api.model
     def _prepare_from_pdf_data(self, wizard, pdf_data):
         result = []
         sequence = 0
@@ -94,6 +107,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "product_id": product_id,
                     "pdf_product_code": line_data["product_code"],
                     "pdf_product_name": line_data["product_name"],
+                    "pdf_vat_amount": self._get_vat_amount(pdf_data, line_data),
                     "pdf_quantity": line_data["quantity"],
                     "pdf_price_unit": line_data["price_unit"],
                     "pdf_discount": line_data.get("discount", 0.0),

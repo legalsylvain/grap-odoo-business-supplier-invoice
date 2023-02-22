@@ -23,6 +23,7 @@ class TestRelaisVert(TestModule):
                 {
                     "product_code": "KIJAIT",
                     "product_name": "KIWI JAUNE VRAC CAT II",
+                    "vat_code": "1",
                     "quantity": 10.0,
                     "price_unit": 3.73,
                     "price_subtotal": 37.30,
