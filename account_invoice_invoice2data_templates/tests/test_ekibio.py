@@ -22,6 +22,7 @@ class TestEkibio(TestModule):
                 {
                     "product_code": "010118",
                     "product_name": "COUSCOUS DEMI COMPLET FILIERE FRANCE 5KG",
+                    "vat_code": "1",
                     "quantity": 10.0,
                     "price_unit": 2.56,
                     "price_subtotal": 25.60,
