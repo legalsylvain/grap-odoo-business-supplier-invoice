@@ -22,6 +22,7 @@ class TestCrocJBGSAS(TestModule):
                 {
                     "product_code": "0937",
                     "product_name": "Graines de Courge nature 10 Kg",
+                    "vat_code": "5.50",
                     "quantity": 10.00,
                     "price_unit": 13.20,
                     "discount": 21.59,

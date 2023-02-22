@@ -24,6 +24,9 @@ fields:
     parser: regex
     type: date
     regex: Echéance.*\n\n\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "5.50"
   lines:
     parser: lines
     start:  Référence.*Montant HT\s+TVA

@@ -22,6 +22,7 @@ class TestCoopDeYenne(TestModule):
                 {
                     "product_code": "RACBIO",
                     "product_name": "1/2 RACLETTE BIOLOGIQUE FUMEE x2",
+                    "vat_code": "V5",
                     "quantity": 4.438,
                     "price_unit": 14.550,
                     "discount": 0,
