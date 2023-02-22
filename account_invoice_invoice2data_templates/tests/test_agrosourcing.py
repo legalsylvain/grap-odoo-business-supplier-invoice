@@ -22,6 +22,7 @@ class TestAgrosourcing(TestModule):
                 {
                     "product_code": "000431",
                     "product_name": "Raisins de Turquie - Sultanine - 12.5 kg",
+                    "vat_code": "1",
                     "quantity": 12.5,
                     "price_unit": 4.24,
                     "discount": 15,
