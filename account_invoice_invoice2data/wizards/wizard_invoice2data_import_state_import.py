@@ -7,6 +7,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import base64
+import logging
 import mimetypes
 import os
 import tempfile
@@ -15,6 +16,8 @@ import invoice2data
 
 from odoo import _, models, tools
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class WizardInvoice2dataImportStateImport(models.TransientModel):
@@ -49,6 +52,30 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         filetype = mimetypes.guess_type(self.invoice_filename)
         if not filetype or filetype[0] != "application/pdf":
             raise UserError(_("Unimplemented file type : '%s'") % str(filetype))
+
+        # Attach the file if not yet attached
+        attachments = self.env["ir.attachment"].search(
+            [
+                ("res_model", "=", "account.invoice"),
+                ("res_id", "=", self.invoice_id.id),
+            ]
+        )
+        if not any(
+            [attachment.datas == self.invoice_file for attachment in attachments]
+        ):
+            _logger.info(
+                "Attach PDF '%s' to the account invoice #%d"
+                % (self.invoice_filename, self.invoice_id.id)
+            )
+            self.env["ir.attachment"].create(
+                {
+                    "name": self.invoice_filename,
+                    "datas": self.invoice_file,
+                    "datas_fname": self.invoice_filename,
+                    "res_model": "account.invoice",
+                    "res_id": self.invoice_id.id,
+                }
+            )
 
         # Write data in a temporary file
         fd, tmp_file_name = tempfile.mkstemp()

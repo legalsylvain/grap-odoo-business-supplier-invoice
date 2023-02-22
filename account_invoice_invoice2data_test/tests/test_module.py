@@ -29,10 +29,17 @@ class TestFullWorkflow(TestModule):
         )
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
+    def _get_attachments(self, invoice):
+        return self.env["ir.attachment"].search(
+            [("res_model", "=", "account.invoice"), ("res_id", "=", invoice.id)]
+        )
+
     def test_full_workflow(self):
         invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
         binary_data = invoice_file.read()
         base64_data = base64.b64encode(binary_data)
+
+        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 0)
 
         # Part 1 : Import Invoice
         wizard = self.Wizard.create(
@@ -47,6 +54,9 @@ class TestFullWorkflow(TestModule):
 
         wizard.import_invoice()
         self.assertEqual(wizard.state, "product_mapping")
+
+        # Check that attachment has been added
+        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
 
         # Check that main invoice data has been analyzed correctly
         self.assertEqual(wizard.pdf_invoice_number, "FC11716389")
@@ -80,3 +90,18 @@ class TestFullWorkflow(TestModule):
 
         # Check impact on invoice
         self.assertEqual(self.invoice_relais_vert.reference, "FC11716389")
+
+        # rerun the wizard, to check if attachment is not
+        # added again
+        wizard = self.Wizard.create(
+            {
+                "invoice_file": base64_data,
+                "invoice_filename": self.invoice_name,
+                "partner_id": self.partner_relais_vert.id,
+                "invoice_id": self.invoice_relais_vert.id,
+            }
+        )
+        wizard.import_invoice()
+
+        # Check that attachment has been added
+        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
