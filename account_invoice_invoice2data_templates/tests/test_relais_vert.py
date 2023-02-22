@@ -17,7 +17,7 @@ class TestRelaisVert(TestModule):
                 "invoice_number": "FC11716389",
                 "amount_untaxed": 120.90,
                 "amount": 127.66,
-                "amount_parafiscal_tax_interfel": 0.25,
+                "amount_extra_parafiscal_tax_interfel_200": 0.25,
             },
             expected_lines=[
                 {

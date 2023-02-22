@@ -43,6 +43,7 @@
                                     <field name="sequence"/>
                                     <field name="pdf_product_code"/>
                                     <field name="pdf_product_name"/>
+                                    <field name="pdf_vat_amount"/>
                                     <field name="pdf_quantity"/>
                                     <field name="pdf_price_unit"/>
                                     <field name="pdf_discount"/>
@@ -59,6 +60,7 @@
                                         <field name="sequence"/>
                                         <field name="pdf_product_code"/>
                                         <field name="pdf_product_name"/>
+                                        <field name="pdf_vat_amount"/>
                                         <field name="pdf_quantity"/>
                                         <field name="pdf_price_unit"/>
                                         <field name="pdf_discount"/>
@@ -77,6 +79,7 @@
                                     <field name="sequence"/>
                                     <field name="pdf_product_code"/>
                                     <field name="pdf_product_name"/>
+                                    <field name="pdf_vat_amount"/>
                                     <field name="pdf_quantity"/>
                                     <field name="pdf_price_unit"/>
                                     <field name="pdf_discount"/>

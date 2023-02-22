@@ -32,6 +32,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_discount = fields.Float(readonly=True)
 
+    pdf_vat_amount = fields.Float(readonly=True)
+
     data = fields.Text(readonly=True)
 
     changes_description = fields.Char(readonly=True)
@@ -62,9 +64,15 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     @api.model
     def _get_extra_products(self):
         return {
-            "amount_parafiscal_tax_interfel": {
+            "amount_extra_parafiscal_tax_interfel_200": {
                 "product_code": "TPF",
                 "product_name": _("Taxe Interfel TPF"),
+                "vat_amount": 20.0,
+            },
+            "amount_extra_discount_200": {
+                "product_code": "DISC-20.0",
+                "product_name": _("discount on products with 20.0% VAT"),
+                "vat_amount": 20.0,
             },
         }
 
@@ -106,6 +114,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         "product_id": product_id,
                         "pdf_product_code": value["product_code"],
                         "pdf_product_name": value["product_name"],
+                        "pdf_vat_amount": value["vat_amount"],
                         "pdf_quantity": 1,
                         "pdf_price_unit": pdf_data[key],
                         "pdf_discount": 0.0,

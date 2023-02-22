@@ -24,7 +24,7 @@ fields:
     parser: regex
     type: date
     regex: Echéance.*\n\s+\d+.\d+ EUR \s+ (\d{2}\/\d{2}\/\d{4})
-  amount_discount_20:
+  amount_extra_discount_200:
     parser: regex
     type: float
     regex: REMISE FACTURE\s+- \d+[.\d+]? %\s+(-\s+\d+.\d+) EUR
