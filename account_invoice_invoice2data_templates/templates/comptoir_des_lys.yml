@@ -28,6 +28,9 @@ fields:
     parser: regex
     type: float
     regex: REMISE FACTURE\s+- \d+[.\d+]? %\s+(-\s+\d+.\d+) EUR
+  vat_code_200:
+    parser: static
+    value: "20"
   lines:
     parser: lines
     start: \s+Article.*TVA %

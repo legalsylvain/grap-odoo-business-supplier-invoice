@@ -23,6 +23,7 @@ class TestComptoirDesLys(TestModule):
                 {
                     "product_code": "0200030",
                     "product_name": "FILTRES A CAFE N°4 NON BLANCHI FSC100 U.",
+                    "vat_code": "20",
                     "quantity": 24,
                     "price_unit": 1.63,
                     "discount": 12.0,
