@@ -18,9 +18,10 @@
     <record id="invoice_line_relais_vert_1_arachide" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_arachide"/>
-        <field name="name">Arachide</field>
-        <field name="quantity">5</field>
-        <field name="price_unit">6.42</field>
+        <field name="name">[39518] Arachide</field>
+        <field name="quantity">1</field>
+        <field name="price_unit">32.01</field>
+        <field name="uom_id" ref="account_invoice_invoice2data.uom_5_kg"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),
@@ -30,9 +31,11 @@
     <record id="invoice_line_relais_vert_2_champignon" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_champignon"/>
-        <field name="name">Champignon Porto Bello</field>
+        <field name="name">[CHPB] Champignon Porto Bello</field>
         <field name="quantity">2</field>
+        <field name="discount">5</field>
         <field name="price_unit">9.01</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),
@@ -42,9 +45,10 @@
     <record id="invoice_line_relais_vert_3_epinard" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_epinard"/>
-        <field name="name">Epinard</field>
+        <field name="name">[EPFE] Epinard</field>
         <field name="quantity">99</field>
         <field name="price_unit">3.43</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),
@@ -54,9 +58,10 @@
     <record id="invoice_line_relais_vert_4_yacon" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_yacon"/>
-        <field name="name">Yacon</field>
+        <field name="name">[YOC] Yacon</field>
         <field name="quantity">2</field>
         <field name="price_unit">6.99</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),
@@ -66,9 +71,10 @@
     <record id="invoice_line_relais_vert_5_kiwi" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_kiwi"/>
-        <field name="name">Kiwi</field>
+        <field name="name">[KIJAIT] Kiwi</field>
         <field name="quantity">10</field>
         <field name="price_unit">3.73</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),
@@ -78,9 +84,10 @@
     <record id="invoice_line_relais_vert_6_raisin" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
         <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_raisin"/>
-        <field name="name">Raisin Sultanine</field>
+        <field name="name">[RASUL] Raisin Sultanine</field>
         <field name="quantity">12.5</field>
         <field name="price_unit">3.07</field>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="account_id" model="account.account"
             search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
                     ('user_type_id', '=', ref('account.data_account_type_expenses')),

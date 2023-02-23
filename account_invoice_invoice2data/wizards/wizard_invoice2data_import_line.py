@@ -151,22 +151,45 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                 )
         return result
 
-    def _create_supplierinfo(self):
+    def _create_or_update_supplierinfos(self):
         for line in self.filtered(lambda x: not x.is_product_mapped and x.product_id):
-            self.env["product.supplierinfo"].create(
-                {
-                    "name": line.wizard_id.partner_id.id,
-                    "product_tmpl_id": line.product_id.product_tmpl_id.id,
-                    "product_id": (
-                        line.product_id.product_tmpl_id.product_variant_count > 1
-                    )
-                    and line.product_id.id,
-                    "product_code": line.pdf_product_code,
-                    "product_name": line.pdf_product_name,
-                    "price": line.pdf_price_unit,
-                    "discount": line.pdf_discount,
-                }
+            supplierinfos = self.env["product.supplierinfo"].search(
+                [
+                    ("name", "=", line.wizard_id.partner_id.id),
+                    ("product_tmpl_id", "=", line.product_id.product_tmpl_id.id),
+                ]
             )
+            if len(supplierinfos) == 0:
+                self.env["product.supplierinfo"].create(
+                    {
+                        "name": line.wizard_id.partner_id.id,
+                        "product_tmpl_id": line.product_id.product_tmpl_id.id,
+                        "product_id": (
+                            line.product_id.product_tmpl_id.product_variant_count > 1
+                        )
+                        and line.product_id.id,
+                        "product_code": line.pdf_product_code,
+                        "product_name": line.pdf_product_name,
+                        "price": line.pdf_price_unit,
+                        "discount": line.pdf_discount,
+                    }
+                )
+            elif len(supplierinfos) == 1:
+                supplierinfos.write(
+                    {
+                        "product_code": line.pdf_product_code,
+                        "product_name": line.pdf_product_name,
+                    }
+                )
+            else:
+                raise UserError(
+                    _(
+                        "Unimplemented feature : Product %s is still related many times"
+                        " with the supplier %s.\n"
+                        " Please update manually the information on the product form view."
+                    )
+                    % (line.product_id.complete_name, line.wizard_id.partner_id.name)
+                )
             line.is_product_mapped = True
 
     def _analyze_invoice_lines(self):

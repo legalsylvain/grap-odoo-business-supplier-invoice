@@ -10,11 +10,11 @@ class WizardInvoice2dataImportStateMap(models.TransientModel):
     _inherit = "wizard.invoice2data.import"
 
     def map_products(self):
-        self.line_ids._create_supplierinfo()
+        self.line_ids._create_or_update_supplierinfos()
+        self._analyze_invoice_lines()
         if not all(self.mapped("line_ids.is_product_mapped")):
             return self._get_action_from_state("product_mapping")
         else:
-            self._analyze_invoice_lines()
             return self._get_action_from_state("line_differences")
 
     def _analyze_invoice_lines(self):

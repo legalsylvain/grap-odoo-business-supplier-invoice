@@ -24,6 +24,9 @@
                     <field name="partner_id"/>
                     <field name="pdf_invoice_number" attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
                     <field name="currency_id" invisible="1"/>
+                    <field name="to_delete_invoice_line_qty" invisible="1"/>
+                    <field name="pdf_has_discount" invisible="1"/>
+                    <field name="has_discount" invisible="1"/>
                     <newline/>
                     <field name="pdf_amount_untaxed" widget="monetary"
                         attrs="{'invisible': [('pdf_amount_untaxed', '=', 0)]}"
@@ -37,20 +40,39 @@
                 </group>
                 <group>
                     <notebook>
-                        <page string="Product Mapping" states="product_mapping">
-                            <field name="product_mapping_line_ids" nolabel="1">
-                                <tree editable="bottom" create="false" delete="false">
-                                    <field name="sequence"/>
-                                    <field name="pdf_product_code"/>
-                                    <field name="pdf_product_name"/>
-                                    <field name="pdf_vat_amount"/>
-                                    <field name="pdf_quantity"/>
-                                    <field name="pdf_price_unit"/>
-                                    <field name="pdf_discount"/>
-                                    <field name="is_product_mapped" invisible="1"/>
-                                    <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': 'red: product_id==False'}"/>
-                                </tree>
-                            </field>
+                        <page string="Mapping" states="product_mapping">
+                            <group string="Supplier Product Code not found">
+                                <field name="product_mapping_line_ids" nolabel="1">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="sequence"/>
+                                        <field name="pdf_product_code"/>
+                                        <field name="pdf_product_name"/>
+                                        <field name="pdf_vat_amount"/>
+                                        <field name="pdf_quantity"/>
+                                        <field name="pdf_price_unit"/>
+                                        <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                        />
+                                        <field name="is_product_mapped" invisible="1"/>
+                                        <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': 'red: product_id==False'}"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Odoo Invoice Lines not found" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                                <field name="not_found_invoice_line_ids" nolabel="1">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"/>
+                                        <field name="uom_id"/>
+                                        <field name="discount"
+                                            attrs="{'column_invisible': [('parent.has_discount', '=', False)],}"
+                                        />
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                            </group>
                         </page>
                         <page string="Invoice Lines Differences" states="line_differences">
                             <group string="Invoice Lines to Update">
@@ -63,7 +85,9 @@
                                         <field name="pdf_vat_amount"/>
                                         <field name="pdf_quantity"/>
                                         <field name="pdf_price_unit"/>
-                                        <field name="pdf_discount"/>
+                                        <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                        />
                                         <field name="invoice_line_id"/>
                                         <field name="changes_description"/>
                                     </tree>
@@ -82,7 +106,9 @@
                                     <field name="pdf_vat_amount"/>
                                     <field name="pdf_quantity"/>
                                     <field name="pdf_price_unit"/>
-                                    <field name="pdf_discount"/>
+                                    <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                    />
                                     <field name="pdf_price_subtotal" sum="Total Vat Excl"/>
                                     <field name="is_product_mapped" invisible="1"/>
                                     <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}"/>

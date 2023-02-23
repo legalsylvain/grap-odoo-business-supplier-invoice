@@ -27,11 +27,22 @@ class TestFullWorkflow(TestModule):
         self.product_interfel = self.env.ref(
             "account_invoice_invoice2data.product_relais_vert_interfel"
         )
+        self.product_yacon = self.env.ref(
+            "account_invoice_invoice2data.product_relais_vert_yacon"
+        )
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
     def _get_attachments(self, invoice):
         return self.env["ir.attachment"].search(
             [("res_model", "=", "account.invoice"), ("res_id", "=", invoice.id)]
+        )
+
+    def _get_supplierinfos(self, product):
+        return self.env["product.supplierinfo"].search(
+            [
+                ("name", "=", self.partner_relais_vert.id),
+                ("product_tmpl_id", "=", product.product_tmpl_id.id),
+            ]
         )
 
     def test_full_workflow(self):
@@ -43,7 +54,9 @@ class TestFullWorkflow(TestModule):
         binary_data = invoice_file.read()
         base64_data = base64.b64encode(binary_data)
 
+        # #######################
         # Part 1 : Import Invoice
+        # #######################
         wizard = self.Wizard.create(
             {
                 "invoice_file": base64_data,
@@ -67,27 +80,74 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(wizard.pdf_date_due, False)
         # Check 6 invoices lines + interfel tax = 7
         self.assertEqual(len(wizard.line_ids), 7)
-        self.assertEqual(len(wizard.product_mapping_line_ids), 2)
 
+        # #####################
+        # Part 2 : Map Products
+        # #####################
+        self.assertEqual(len(wizard.product_mapping_line_ids), 3)
+        self.assertEqual(len(wizard.to_delete_invoice_line_ids), 3)
+
+        # Kiwi (KIJAIT) is not mapped. (supplierinfo doesn't exist)
+        # We map with existing odoo product
         kiwi_line = wizard.product_mapping_line_ids.filtered(
             lambda x: x.pdf_product_code == "KIJAIT"
         )
         kiwi_line.product_id = self.product_kiwi.id
-
+        self.assertEqual(len(self._get_supplierinfos(kiwi_line.product_id)), 0)
         wizard.map_products()
+        self.assertEqual(
+            len(self._get_supplierinfos(kiwi_line.product_id)),
+            1,
+            "Map product 'Kiwi' should have created a new supplierinfo"
+            ", because it doesn't exist.",
+        )
         self.assertEqual(wizard.state, "product_mapping")
-        self.assertEqual(len(wizard.product_mapping_line_ids), 1)
+        self.assertEqual(len(wizard.product_mapping_line_ids), 2)
 
+        # Taxe Interfel (TPF) is not mapped. (supplierinfo doesn't exist)
+        # We map with existing odoo product
         interfel_line = wizard.product_mapping_line_ids.filtered(
             lambda x: x.pdf_product_code == "TPF"
         )
         interfel_line.product_id = self.product_interfel.id
-
+        self.assertEqual(len(self._get_supplierinfos(interfel_line.product_id)), 0)
         wizard.map_products()
+        self.assertEqual(
+            len(self._get_supplierinfos(interfel_line.product_id)),
+            1,
+            "Map product 'Interfel' should have created a new supplierinfo"
+            ", because it doesn't exist.",
+        )
+
+        # Yacon (YAC) is bad mapped. (supplierinfo exists with different code) (YAC-YOC)
+        # We map with existing odoo product
+        yacon_line = wizard.product_mapping_line_ids.filtered(
+            lambda x: x.pdf_product_code == "YAC"
+        )
+        yacon_line.product_id = self.product_yacon.id
+        self.assertEqual(len(self._get_supplierinfos(yacon_line.product_id)), 1)
+        wizard.map_products()
+        yacon_supplierinfo = self._get_supplierinfos(yacon_line.product_id)
+        self.assertEqual(
+            len(yacon_supplierinfo),
+            1,
+            "Map product 'Yacon' should not have created a new supplierinfo"
+            ", because it still exists.",
+        )
+        self.assertEqual(
+            yacon_supplierinfo.product_code,
+            "YAC",
+            "Map product 'Yacon' should have updated the existing supplierinfo.",
+        )
+
         self.assertEqual(wizard.state, "line_differences")
         self.assertEqual(len(wizard.product_mapping_line_ids), 0)
-        # TODO Check the differences lines
+        self.assertEqual(len(wizard.to_delete_invoice_line_ids), 1)
+        # ######################
+        # Part 3 : Apply Changes
+        # ######################
 
+        # TODO Check the differences lines
         wizard.apply_changes()
 
         # Check impact on invoice

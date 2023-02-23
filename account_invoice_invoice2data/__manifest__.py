@@ -19,6 +19,7 @@
     ],
     "external_dependencies": {"python": ["invoice2data"]},
     "demo": [
+        "demo/uom_uom.xml",
         "demo/res_partner.xml",
         "demo/product_product.xml",
     ],

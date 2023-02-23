@@ -7,7 +7,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class WizardInvoice2dataImport(models.TransientModel):
@@ -69,6 +69,18 @@ class WizardInvoice2dataImport(models.TransientModel):
         domain=[("changes_description", "!=", False)],
     )
 
+    not_found_invoice_line_ids = fields.Many2many(
+        comodel_name="account.invoice.line",
+        string="Invoice Lines not found",
+        related="to_delete_invoice_line_ids",
+        store=False,
+        readonly=True,
+    )
+
+    to_delete_invoice_line_qty = fields.Integer(
+        compute="_compute_to_delete_invoice_line_qty"
+    )
+
     to_delete_invoice_line_ids = fields.Many2many(
         comodel_name="account.invoice.line",
         string="Invoice Lines to delete",
@@ -84,6 +96,27 @@ class WizardInvoice2dataImport(models.TransientModel):
     pdf_date = fields.Date(readonly=True)
 
     pdf_date_due = fields.Date(readonly=True)
+
+    pdf_has_discount = fields.Boolean(compute="_compute_pdf_has_discount")
+
+    has_discount = fields.Boolean(compute="_compute_has_discount")
+
+    @api.depends("to_delete_invoice_line_ids")
+    def _compute_to_delete_invoice_line_qty(self):
+        for wizard in self:
+            wizard.to_delete_invoice_line_qty = len(wizard.to_delete_invoice_line_ids)
+
+    @api.depends("line_ids.pdf_discount")
+    def _compute_pdf_has_discount(self):
+        for wizard in self:
+            self.pdf_has_discount = any(wizard.mapped("line_ids.pdf_discount"))
+
+    @api.depends("invoice_id.invoice_line_ids.discount")
+    def _compute_has_discount(self):
+        for wizard in self:
+            self.has_discount = any(
+                wizard.mapped("invoice_id.invoice_line_ids.discount")
+            )
 
     def _get_action_from_state(self, state):
         action = self.env["ir.actions.act_window"].for_xml_id(
