@@ -38,7 +38,75 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     data = fields.Text(readonly=True)
 
-    changes_description = fields.Char(readonly=True)
+    has_changes = fields.Boolean(
+        compute="_compute_change_description",
+        store=True,
+    )
+    changes_description = fields.Text(
+        compute="_compute_change_description",
+        store=True,
+    )
+
+    current_uom_id = fields.Many2one(
+        string="current UoM",
+        comodel_name="uom.uom",
+        related="invoice_line_id.uom_id",
+        readonly=True,
+    )
+
+    new_uom_id = fields.Many2one(
+        comodel_name="uom.uom",
+        string="New UoM",
+    )
+
+    @api.depends(
+        "invoice_line_id",
+        "invoice_line_id.quantity",
+        "pdf_quantity",
+        "invoice_line_id.price_unit",
+        "pdf_price_unit",
+        "invoice_line_id.discount",
+        "pdf_discount",
+        "current_uom_id",
+        "new_uom_id",
+    )
+    def _compute_change_description(self):
+        for line in self:
+            invoice_line = line.invoice_line_id
+            if not invoice_line:
+                line.changes_description = _("New Line Creation")
+            else:
+                changes = []
+                if invoice_line.quantity != line.pdf_quantity:
+                    changes.append(
+                        _(
+                            "Quantity : %s -> %s"
+                            % (invoice_line.quantity, line.pdf_quantity)
+                        )
+                    )
+                if invoice_line.price_unit != line.pdf_price_unit:
+                    changes.append(
+                        _(
+                            "Unit Price : %s -> %s"
+                            % (invoice_line.price_unit, line.pdf_price_unit)
+                        )
+                    )
+                if invoice_line.discount != line.pdf_discount:
+                    changes.append(
+                        _(
+                            "Discount : %s -> %s"
+                            % (invoice_line.discount, line.pdf_discount)
+                        )
+                    )
+                if line.current_uom_id != line.new_uom_id:
+                    changes.append(
+                        _(
+                            "UoM : %s -> %s"
+                            % (line.current_uom_id.name, line.new_uom_id.name)
+                        )
+                    )
+                line.changes_description = changes and "\n".join(changes) or ""
+                line.has_changes = bool(changes)
 
     @api.model
     def _get_product_id_from_product_code(self, partner, product_code):
@@ -205,100 +273,75 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     )
                     % wizard_line.product_id.name
                 )
-
-            # Case 2: No lines. -> Creation
-            if not invoice_lines:
-                wizard_line.write(
-                    {
-                        "changes_description": _("New Line Creation"),
-                        "invoice_line_id": False,
-                    }
-                )
-                continue
-
-            # Case 3 : Check if data changed
-            changes = []
-            if invoice_lines[0].quantity != wizard_line.pdf_quantity:
-                changes.append(
-                    _(
-                        "Quantity : %s -> %s"
-                        % (invoice_lines[0].quantity, wizard_line.pdf_quantity)
-                    )
-                )
-            if invoice_lines[0].price_unit != wizard_line.pdf_price_unit:
-                changes.append(
-                    _(
-                        "Unit Price : %s -> %s"
-                        % (invoice_lines[0].price_unit, wizard_line.pdf_price_unit)
-                    )
-                )
-            if invoice_lines[0].discount != wizard_line.pdf_discount:
-                changes.append(
-                    _(
-                        "Unit Price : %s -> %s"
-                        % (invoice_lines[0].discount, wizard_line.pdf_discount)
-                    )
-                )
             wizard_line.write(
                 {
-                    "invoice_line_id": invoice_lines[0].id,
-                    "changes_description": changes and "\n".join(changes) or False,
+                    "invoice_line_id": invoice_lines and invoice_lines[0].id or False,
+                    "new_uom_id": invoice_lines and invoice_lines[0].uom_id.id or False,
                 }
             )
 
-    def _prepare_invoice_line_vals(self):
-        self.ensure_one()
-        if not self.invoice_line_id:
+    def _prepare_invoice_lines_vals(self):
+        lines_vals = []
+        for line in self:
+            if line.invoice_line_id:
+                vals = {}
+                # Update an existing invoice line
+                if line.invoice_line_id.sequence != line.sequence:
+                    vals.update({"sequence": line.sequence})
 
-            # prepare creation of a new line
-            fiscal_position = self.wizard_id.invoice_id.fiscal_position_id
-            account = self.env["account.invoice.line"].get_invoice_line_account(
-                "in_invoice", self.product_id, fiscal_position, self.env.user.company_id
-            )
-            taxes = fiscal_position.map_tax(
-                self.product_id.supplier_taxes_id,
-                self.product_id,
-                self.wizard_id.invoice_id.partner_id,
-            )
-            name = self.product_id.with_context(
-                partner_id=self.wizard_id.partner_id.id
-            ).partner_ref
-            if self.product_id.description_purchase:
-                name += "\n" + self.product_id.description_purchase
-            return (
-                0,
-                0,
-                {
-                    "sequence": self.sequence,
-                    "product_id": self.product_id.id,
+                if line.invoice_line_id.quantity != line.pdf_quantity:
+                    vals.update({"quantity": line.pdf_quantity})
+
+                if line.invoice_line_id.price_unit != line.pdf_price_unit:
+                    vals.update({"price_unit": line.pdf_price_unit})
+
+                if line.invoice_line_id.uom_id != line.new_uom_id:
+                    vals.update({"uom_id": line.new_uom_id.id})
+
+                if line.invoice_line_id.discount != line.pdf_discount:
+                    vals.update({"discount": line.pdf_discount})
+
+                if line.changes_description:
+                    extra_text = _("[PDF analysis] %s") % (
+                        " ; ".join(line.changes_description.split("\n"))
+                    )
+                    vals.update(
+                        {"name": "%s\n%s" % (line.invoice_line_id.name, extra_text)}
+                    )
+
+                if vals:
+                    lines_vals.append((1, line.invoice_line_id.id, vals))
+            else:
+                # Create a new invoice line
+                fiscal_position = line.wizard_id.invoice_id.fiscal_position_id
+                account = self.env["account.invoice.line"].get_invoice_line_account(
+                    "in_invoice",
+                    line.product_id,
+                    fiscal_position,
+                    line.env.user.company_id,
+                )
+                taxes = fiscal_position.map_tax(
+                    line.product_id.supplier_taxes_id,
+                    line.product_id,
+                    line.wizard_id.invoice_id.partner_id,
+                )
+                name = line.product_id.with_context(
+                    partner_id=line.wizard_id.partner_id.id
+                ).partner_ref
+                if line.product_id.description_purchase:
+                    name += "\n" + line.product_id.description_purchase
+                vals = {
+                    "sequence": line.sequence,
+                    "product_id": line.product_id.id,
                     "name": name,
                     "origin": _("PDF Analysis"),
                     "account_id": account.id,
-                    "quantity": self.pdf_quantity,
-                    "price_unit": self.pdf_price_unit,
-                    "discount": self.pdf_discount,
+                    "quantity": line.pdf_quantity,
+                    "price_unit": line.pdf_price_unit,
+                    "uom_id": line.new_uom_id.id,
+                    "discount": line.pdf_discount,
                     "invoice_line_tax_ids": taxes.ids,
-                },
-            )
-        else:
+                }
+                lines_vals.append((0, 0, vals))
 
-            # Update
-            vals = {"sequence": self.sequence}
-
-            if self.invoice_line_id.quantity != self.pdf_quantity:
-                vals.update({"quantity": self.pdf_quantity})
-
-            if self.invoice_line_id.price_unit != self.pdf_price_unit:
-                vals.update({"price_unit": self.pdf_price_unit})
-
-            if self.invoice_line_id.discount != self.pdf_discount:
-                vals.update({"discount": self.pdf_discount})
-
-            if self.changes_description:
-                extra_text = _("[PDF analysis] %s") % (
-                    " ; ".join(self.changes_description.split("\n"))
-                )
-                vals.update(
-                    {"name": "%s\n%s" % (self.invoice_line_id.name, extra_text)}
-                )
-            return (1, self.invoice_line_id.id, vals)
+        return lines_vals

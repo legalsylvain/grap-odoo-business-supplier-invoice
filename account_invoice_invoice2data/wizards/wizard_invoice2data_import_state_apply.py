@@ -11,7 +11,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
 
     def apply_changes(self):
         self.ensure_one()
-        lines_vals = [x._prepare_invoice_line_vals() for x in self.line_ids]
+        lines_vals = self.line_ids._prepare_invoice_lines_vals()
 
         sequence = len(lines_vals)
         for line in self.to_delete_invoice_line_ids:
@@ -28,26 +28,13 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
             }
             lines_vals.append((1, line.id, line_vals))
 
-        vals = {
+        invoice_vals = {
+            "date_invoice": self.pdf_date,
+            "reference": self.pdf_invoice_number,
             "invoice_line_ids": lines_vals,
         }
-        if self.pdf_date:
-            vals.update(
-                {
-                    "date_invoice": self.pdf_date,
-                }
-            )
-        if self.pdf_date_due:
-            vals.update(
-                {
-                    "date_due": self.pdf_date_due,
-                }
-            )
-        if self.pdf_invoice_number:
-            vals.update(
-                {
-                    "reference": self.pdf_invoice_number,
-                }
-            )
 
-        self.invoice_id.write(vals)
+        if self.pdf_date_due:
+            invoice_vals.update({"date_due": self.pdf_date_due})
+
+        self.invoice_id.write(invoice_vals)

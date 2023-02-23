@@ -66,7 +66,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         comodel_name="wizard.invoice2data.import.line",
         inverse_name="wizard_id",
         string="Invoice Lines Differences",
-        domain=[("changes_description", "!=", False)],
+        domain=[("has_changes", "=", True)],
     )
 
     not_found_invoice_line_ids = fields.Many2many(

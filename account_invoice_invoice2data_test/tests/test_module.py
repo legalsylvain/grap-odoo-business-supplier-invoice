@@ -30,6 +30,10 @@ class TestFullWorkflow(TestModule):
         self.product_yacon = self.env.ref(
             "account_invoice_invoice2data.product_relais_vert_yacon"
         )
+        self.invoice_line_1_arachide = self.env.ref(
+            "account_invoice_invoice2data_test.invoice_line_relais_vert_1_arachide"
+        )
+        self.product_uom_kgm = self.env.ref("uom.product_uom_kgm")
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
     def _get_attachments(self, invoice):
@@ -143,18 +147,26 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(wizard.state, "line_differences")
         self.assertEqual(len(wizard.product_mapping_line_ids), 0)
         self.assertEqual(len(wizard.to_delete_invoice_line_ids), 1)
+
         # ######################
         # Part 3 : Apply Changes
         # ######################
 
-        # TODO Check the differences lines
+        arachide_line = wizard.line_ids.filtered(
+            lambda x: x.pdf_product_code == "39518"
+        )
+        arachide_line.new_uom_id = self.product_uom_kgm
         wizard.apply_changes()
 
         # Check impact on invoice
         self.assertEqual(self.invoice_relais_vert.reference, "FC11716389")
 
-        # rerun the wizard, to check if attachment is not
-        # added again
+        # Check Impact on invoice lines
+        self.assertEqual(self.invoice_line_1_arachide.uom_id, self.product_uom_kgm)
+
+        # #########################
+        # Part 4 : rerun the wizard
+        # #########################
         wizard = self.Wizard.create(
             {
                 "invoice_file": base64_data,
@@ -165,5 +177,5 @@ class TestFullWorkflow(TestModule):
         )
         wizard.import_invoice()
 
-        # Check that attachment has been added
+        # Check that attachment has not been added again
         self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
