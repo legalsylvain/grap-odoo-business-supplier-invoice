@@ -30,6 +30,14 @@ fields:
   vat_code_200:
     parser: static
     value: "TN"
+  amount_extra_trade_discount_055:
+    parser: regex
+    type: float
+    regex: \s+-\d+\.\d+\s+%\s+TR\s+(-\d+\.\d+)
+  amount_extra_trade_discount_200:
+    parser: regex
+    type: float
+    regex: \s+-\d+\.\d+\s+%\s+TN\s+(-\d+\.\d+)
   lines:
     parser: lines
     start: ARTICLE\s+DESIGNATION.*MT \(EUR\)
@@ -41,7 +49,6 @@ fields:
       \s+(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC)
       \s+(?P<vat_code>TN|TR)
       \s+(?P<price_subtotal>\d+\.\d+)
-
     types:
       quantity: float
       price_unit: float

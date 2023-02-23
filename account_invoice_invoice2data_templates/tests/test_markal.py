@@ -17,6 +17,8 @@ class TestMarkal(TestModule):
                 "invoice_number": "00368375",
                 "amount_untaxed": 818.89,
                 "amount": 868.52,
+                "amount_extra_trade_discount_055": -7.95,
+                "amount_extra_trade_discount_200": -0.32,
             },
             expected_lines=[
                 {
