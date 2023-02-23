@@ -35,11 +35,13 @@ class TestFullWorkflow(TestModule):
         )
 
     def test_full_workflow(self):
+        # unlink previous attachment to make the test idempotens
+        self._get_attachments(self.invoice_relais_vert).unlink()
+
+        # Prepare binary data
         invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
         binary_data = invoice_file.read()
         base64_data = base64.b64encode(binary_data)
-
-        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 0)
 
         # Part 1 : Import Invoice
         wizard = self.Wizard.create(

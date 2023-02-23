@@ -10,7 +10,7 @@ class TestEkibio(TestModule):
     def test_ekibio(self):
         self._test_supplier_template(
             "ekibio__2023-02-07__792437.pdf",
-            line_qty=6,
+            line_qty=18,
             expected_values={
                 "issuer": "Ekibio",
                 "date": datetime(day=7, month=2, year=2023),

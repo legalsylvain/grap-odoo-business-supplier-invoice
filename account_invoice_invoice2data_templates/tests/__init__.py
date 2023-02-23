@@ -5,13 +5,11 @@ from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
 
-# from . import test_ekibio
+from . import test_ekibio
 from . import test_gonuts
 from . import test_gravier
 
-# TODO : FIXME, some lines are not found !
-# + TODO : add escompte
-# from . import test_markal
+from . import test_markal
 from . import test_papilles_sauvages
 from . import test_relais_local
 from . import test_relais_vert
