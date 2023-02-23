@@ -2,7 +2,6 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import logging
 import os
 from pathlib import Path
 
@@ -11,8 +10,6 @@ from cryptography.fernet import Fernet
 
 from odoo import tools
 from odoo.tests.common import TransactionCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestModule(TransactionCase):
