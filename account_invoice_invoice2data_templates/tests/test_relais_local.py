@@ -22,6 +22,7 @@ class TestRelaisLocal(TestModule):
                 {
                     "product_code": "102355",
                     "product_name": "TOME DE BREBIS VRAC",
+                    "vat_code": "3",
                     "quantity": 3.0,
                     "price_unit": 24.38,
                     "price_subtotal": 73.14,

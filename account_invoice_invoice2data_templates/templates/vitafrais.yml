@@ -28,6 +28,12 @@ fields:
     parser: regex
     type: float
     regex: Surcharge carburant\s+(\d+\.\d+)
+  vat_code_055:
+    parser: static
+    value: "5.50"
+  vat_code_200:
+    parser: static
+    value: "20.00"
   lines:
     parser: lines
     start: Article\s+Quantité\s+ .*Total HT Taxe

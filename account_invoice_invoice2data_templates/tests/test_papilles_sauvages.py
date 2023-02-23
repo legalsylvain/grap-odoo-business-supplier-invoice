@@ -22,6 +22,7 @@ class TestPapillesSauvages(TestModule):
                 {
                     "product_code": "ART00000001",
                     "product_name": "-crème de châtaigne 250g - FR-BIO-15",
+                    "vat_code": "5.50",
                     "quantity": 12.00,
                     "price_unit": 3.70,
                     "discount": 0.0,

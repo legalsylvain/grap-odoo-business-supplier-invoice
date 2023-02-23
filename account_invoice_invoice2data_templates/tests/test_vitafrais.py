@@ -23,6 +23,7 @@ class TestVitafrais(TestModule):
                 {
                     "product_code": "9314",
                     "product_name": "Brillat-Savarin affiné 200 g",
+                    "vat_code": "5.50",
                     "quantity": 6.0,
                     "price_unit": 5.82,
                     "discount": 8.0,

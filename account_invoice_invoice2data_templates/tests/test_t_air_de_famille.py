@@ -22,6 +22,7 @@ class TestTAirDeFamille(TestModule):
                 {
                     "product_code": "AR00101",
                     "product_name": "Purée de pomme 1kg x 6",
+                    "vat_code": False,
                     "quantity": 1,
                     "price_unit": 20.28,
                     "price_subtotal": 20.28,
