@@ -99,6 +99,8 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_has_discount = fields.Boolean(compute="_compute_pdf_has_discount")
 
+    pdf_has_vat_mapping = fields.Boolean(readonly=True)
+
     has_discount = fields.Boolean(compute="_compute_has_discount")
 
     @api.depends("to_delete_invoice_line_ids")

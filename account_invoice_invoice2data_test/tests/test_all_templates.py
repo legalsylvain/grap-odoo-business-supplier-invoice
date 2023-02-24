@@ -22,7 +22,7 @@ _INVOICE_FILES = [
     "papilles-sauvages__2022-11-16__FAC00002114.pdf",
     "relais-local__2023_01_03__FC230116989.pdf",
     "relais-vert__2023-02-06__FC11716389.pdf",
-    # "t-air-de-famille__2023-02-01__FA20230020.pdf",
+    "t-air-de-famille__2023-02-01__FA20230020.pdf",
     "vitafrais__2023-02-13__23013043.pdf",
 ]
 

@@ -158,6 +158,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     @api.model
     def _get_vat_amount(self, pdf_data, line_data):
+        if not self.wizard_id.pdf_has_vat_mapping:
+            return False
         pdf_vat_code = line_data["vat_code"]
         vat_mapping = {
             vat_code: vat_name

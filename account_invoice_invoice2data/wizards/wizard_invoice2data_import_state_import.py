@@ -110,4 +110,7 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
     def _initialize_wizard_lines(self, pdf_data):
         self.line_ids.unlink()
         WizardLine = self.env["wizard.invoice2data.import.line"]
+        self.pdf_has_vat_mapping = any(
+            [key.startswith("vat_code_") for key in pdf_data.keys()]
+        )
         WizardLine.create(WizardLine._prepare_from_pdf_data(self, pdf_data))

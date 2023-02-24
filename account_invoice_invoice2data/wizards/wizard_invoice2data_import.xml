@@ -26,6 +26,7 @@
                     <field name="currency_id" invisible="1"/>
                     <field name="to_delete_invoice_line_qty" invisible="1"/>
                     <field name="pdf_has_discount" invisible="1"/>
+                    <field name="pdf_has_vat_mapping" invisible="1"/>
                     <field name="has_discount" invisible="1"/>
                     <newline/>
                     <field name="pdf_amount_untaxed" widget="monetary"
@@ -47,11 +48,13 @@
                                         <field name="sequence"/>
                                         <field name="pdf_product_code"/>
                                         <field name="pdf_product_name"/>
-                                        <field name="pdf_vat_amount"/>
+                                        <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                        />
                                         <field name="pdf_quantity"/>
                                         <field name="pdf_price_unit"/>
                                         <field name="pdf_discount"
-                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
                                         />
                                         <field name="is_product_mapped" invisible="1"/>
                                         <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': '#D2D2FF: product_id==False'}"/>
@@ -82,7 +85,9 @@
                                         <field name="sequence"/>
                                         <field name="pdf_product_code"/>
                                         <field name="pdf_product_name"/>
-                                        <field name="pdf_vat_amount"/>
+                                        <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                        />
                                         <field name="pdf_quantity"/>
                                         <field name="pdf_price_unit"/>
                                         <field name="current_uom_id"/>
@@ -105,7 +110,9 @@
                                     <field name="sequence"/>
                                     <field name="pdf_product_code"/>
                                     <field name="pdf_product_name"/>
-                                    <field name="pdf_vat_amount"/>
+                                    <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                    />
                                     <field name="pdf_quantity"/>
                                     <field name="pdf_price_unit"/>
                                     <field name="current_uom_id"/>
