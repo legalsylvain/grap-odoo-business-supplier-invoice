@@ -4,6 +4,8 @@
 import base64
 import logging
 
+from odoo import tools
+
 from odoo.addons.account_invoice_invoice2data_templates.tests.test import TestModule
 
 _logger = logging.getLogger(__name__)
@@ -31,6 +33,7 @@ class TestAllTemplates(TestModule):
         self.AccountInvoice = self.env["account.invoice"]
         self.Wizard = self.env["wizard.invoice2data.import"]
         self.random_draft_invoice = self.env.ref("l10n_generic_coa.demo_invoice_0")
+        tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
     def _test_import_file(self, invoice_name):
         _logger.info("Importing %s Files ..." % invoice_name)
