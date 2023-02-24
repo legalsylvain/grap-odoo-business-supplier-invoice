@@ -42,6 +42,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_discount = fields.Float(readonly=True)
 
+    pdf_discount2 = fields.Float(readonly=True)
+
     pdf_vat_amount = fields.Monetary(currency_field="currency_id", readonly=True)
 
     data = fields.Text(readonly=True)
@@ -75,6 +77,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         "pdf_price_unit",
         "invoice_line_id.discount",
         "pdf_discount",
+        "invoice_line_id.discount2",
+        "pdf_discount2",
         "current_uom_id",
         "new_uom_id",
     )
@@ -115,6 +119,13 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         _(
                             "Discount : %s%% -> %s%%"
                             % (invoice_line.discount, line.pdf_discount)
+                        )
+                    )
+                if invoice_line.discount2 != line.pdf_discount2:
+                    changes.append(
+                        _(
+                            "Discount n°2 : %s%% -> %s%%"
+                            % (invoice_line.discount2, line.pdf_discount2)
                         )
                     )
                 if line.current_uom_id != line.new_uom_id:
@@ -213,6 +224,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "pdf_price_unit": line_data["price_unit"],
                     "pdf_price_subtotal": line_data["price_subtotal"],
                     "pdf_discount": line_data.get("discount", 0.0),
+                    "pdf_discount2": line_data.get("discount2", 0.0),
                     "data": str(line_data),
                 }
             )
@@ -235,6 +247,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         "pdf_price_unit": pdf_data[key],
                         "pdf_price_subtotal": pdf_data[key],
                         "pdf_discount": 0.0,
+                        "pdf_discount2": 0.0,
                         "data": str(pdf_data[key]),
                     }
                 )
@@ -261,6 +274,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         "product_name": line.pdf_product_name,
                         "price": line.pdf_price_unit,
                         "discount": line.pdf_discount,
+                        "discount2": line.pdf_discount2,
                     }
                 )
             elif len(supplierinfos) == 1:
@@ -322,6 +336,9 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                 if line.invoice_line_id.discount != line.pdf_discount:
                     vals.update({"discount": line.pdf_discount})
 
+                if line.invoice_line_id.discount2 != line.pdf_discount2:
+                    vals.update({"discount2": line.pdf_discount2})
+
                 if line.changes_description:
                     extra_text = _("[PDF analysis] %s") % (
                         " ; ".join(line.changes_description.split("\n"))
@@ -361,6 +378,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "price_unit": line.pdf_price_unit,
                     "uom_id": line.new_uom_id.id,
                     "discount": line.pdf_discount,
+                    "discount2": line.pdf_discount2,
                     "invoice_line_tax_ids": taxes.ids,
                 }
                 lines_vals.append((0, 0, vals))

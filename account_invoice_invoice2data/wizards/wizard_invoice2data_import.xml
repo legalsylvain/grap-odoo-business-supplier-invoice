@@ -26,18 +26,27 @@
                     <field name="currency_id" invisible="1"/>
                     <field name="to_delete_invoice_line_qty" invisible="1"/>
                     <field name="pdf_has_discount" invisible="1"/>
+                    <field name="pdf_has_discount2" invisible="1"/>
                     <field name="pdf_has_vat_mapping" invisible="1"/>
                     <field name="has_discount" invisible="1"/>
+                    <field name="has_discount2" invisible="1"/>
+                    <newline/>
+                    <field name="pdf_date" attrs="{'invisible': [('state', '=', 'import')]}"/>
+                    <field name="pdf_date_due" attrs="{'invisible': [('state', '=', 'import')]}"/>
                     <newline/>
                     <field name="pdf_amount_untaxed" widget="monetary"
-                        attrs="{'invisible': [('pdf_amount_untaxed', '=', 0)]}"
+                        attrs="{'invisible': [('state', '=', 'import')]}"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="invoice_amount_untaxed" widget="monetary"
+                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     <field name="pdf_amount" widget="monetary"
-                        attrs="{'invisible': [('pdf_amount', '=', 0)]}"
+                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-                    <newline/>
-                    <field name="pdf_date" attrs="{'invisible': [('pdf_date', '=', False)]}"/>
-                    <field name="pdf_date_due" attrs="{'invisible': [('pdf_date_due', '=', False)]}"/>
+                    <field name="invoice_amount" widget="monetary"
+                        attrs="{'invisible': [('state', '=', 'import')]}"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+
                 </group>
                 <group>
                     <notebook>
@@ -58,6 +67,9 @@
                                         <field name="pdf_discount"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
                                         />
+                                        <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
+                                        />
                                         <field name="is_product_mapped" invisible="1"/>
                                         <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': '#D2D2FF: product_id==False'}"/>
                                         <field name="currency_id" invisible="1"/>
@@ -76,6 +88,9 @@
                                         <field name="uom_id"/>
                                         <field name="discount"
                                             attrs="{'column_invisible': [('parent.has_discount', '=', False)],}"
+                                        />
+                                        <field name="discount2"
+                                            attrs="{'column_invisible': [('parent.has_discount2', '=', False)],}"
                                         />
                                         <field name="price_subtotal"
                                             options="{'currency_field': 'currency_id', 'field_digits': True}"
@@ -103,7 +118,10 @@
                                         <field name="current_uom_id"/>
                                         <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}"/>
                                         <field name="pdf_discount"
-                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
+                                        />
+                                        <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
                                         />
                                         <field name="invoice_line_id"/>
                                         <field name="changes_description"/>
@@ -132,6 +150,9 @@
                                     <field name="new_uom_id" readonly="1"/>
                                     <field name="pdf_discount"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                    />
+                                    <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)],}"
                                     />
                                     <field name="pdf_price_subtotal"
                                         options="{'currency_field': 'currency_id', 'field_digits': True}"

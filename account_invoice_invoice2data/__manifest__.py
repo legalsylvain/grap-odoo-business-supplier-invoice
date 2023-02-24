@@ -13,6 +13,7 @@
         "account",
         # OCA
         "purchase_discount",
+        "account_invoice_triple_discount",
     ],
     "data": [
         "wizards/wizard_invoice2data_import.xml",

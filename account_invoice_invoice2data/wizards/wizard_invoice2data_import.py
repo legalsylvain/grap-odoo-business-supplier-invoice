@@ -51,6 +51,16 @@ class WizardInvoice2dataImport(models.TransientModel):
         readonly=True,
     )
 
+    invoice_amount_untaxed = fields.Monetary(
+        currency_field="currency_id", related="invoice_id.amount_untaxed", readonly=True
+    )
+
+    invoice_amount = fields.Monetary(
+        currency_field="currency_id", related="invoice_id.amount_total", readonly=True
+    )
+
+    pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)
+
     line_ids = fields.One2many(
         comodel_name="wizard.invoice2data.import.line", inverse_name="wizard_id"
     )
@@ -99,9 +109,13 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_has_discount = fields.Boolean(compute="_compute_pdf_has_discount")
 
+    pdf_has_discount2 = fields.Boolean(compute="_compute_pdf_has_discount2")
+
     pdf_has_vat_mapping = fields.Boolean(readonly=True)
 
     has_discount = fields.Boolean(compute="_compute_has_discount")
+
+    has_discount2 = fields.Boolean(compute="_compute_has_discount2")
 
     @api.depends("to_delete_invoice_line_ids")
     def _compute_to_delete_invoice_line_qty(self):
@@ -113,11 +127,23 @@ class WizardInvoice2dataImport(models.TransientModel):
         for wizard in self:
             self.pdf_has_discount = any(wizard.mapped("line_ids.pdf_discount"))
 
+    @api.depends("line_ids.pdf_discount2")
+    def _compute_pdf_has_discount2(self):
+        for wizard in self:
+            self.pdf_has_discount2 = any(wizard.mapped("line_ids.pdf_discount2"))
+
     @api.depends("invoice_id.invoice_line_ids.discount")
     def _compute_has_discount(self):
         for wizard in self:
             self.has_discount = any(
                 wizard.mapped("invoice_id.invoice_line_ids.discount")
+            )
+
+    @api.depends("invoice_id.invoice_line_ids.discount2")
+    def _compute_has_discount2(self):
+        for wizard in self:
+            self.has_discount2 = any(
+                wizard.mapped("invoice_id.invoice_line_ids.discount2")
             )
 
     def _get_action_from_state(self, state):
