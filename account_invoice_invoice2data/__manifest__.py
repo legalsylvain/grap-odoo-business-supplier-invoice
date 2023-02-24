@@ -18,7 +18,7 @@
     "data": [
         "wizards/wizard_invoice2data_import.xml",
     ],
-    "external_dependencies": {"python": ["invoice2data", "jaro-winkler"]},
+    "external_dependencies": {"python": ["invoice2data", "jaro"]},
     "demo": [
         "demo/uom_uom.xml",
         "demo/res_partner.xml",
