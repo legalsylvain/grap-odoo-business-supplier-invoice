@@ -44,7 +44,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_discount2 = fields.Float(readonly=True)
 
-    pdf_vat_amount = fields.Monetary(currency_field="currency_id", readonly=True)
+    pdf_vat_amount = fields.Float(readonly=True)
 
     data = fields.Text(readonly=True)
 
@@ -187,8 +187,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         }
 
     @api.model
-    def _get_vat_amount(self, pdf_data, line_data):
-        if not self.wizard_id.pdf_has_vat_mapping:
+    def _get_vat_amount(self, wizard, pdf_data, line_data):
+        if not wizard.pdf_has_vat_mapping:
             return False
         pdf_vat_code = line_data["vat_code"]
         vat_mapping = {
@@ -219,7 +219,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "product_id": product_id,
                     "pdf_product_code": line_data["product_code"],
                     "pdf_product_name": line_data["product_name"],
-                    "pdf_vat_amount": self._get_vat_amount(pdf_data, line_data),
+                    "pdf_vat_amount": self._get_vat_amount(wizard, pdf_data, line_data),
                     "pdf_quantity": line_data["quantity"],
                     "pdf_price_unit": line_data["price_unit"],
                     "pdf_price_subtotal": line_data["price_subtotal"],
