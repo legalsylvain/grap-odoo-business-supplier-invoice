@@ -89,9 +89,9 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_invoice_number = fields.Char(readonly=True)
 
-    pdf_amount_untaxed = fields.Float(readonly=True)
+    pdf_amount_untaxed = fields.Monetary(currency_field="currency_id", readonly=True)
 
-    pdf_amount = fields.Float(readonly=True)
+    pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)
 
     pdf_date = fields.Date(readonly=True)
 

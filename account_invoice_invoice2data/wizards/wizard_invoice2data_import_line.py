@@ -4,6 +4,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.misc import formatLang
 
 
 class WizardInvoice2dataImportLine(models.TransientModel):
@@ -13,6 +14,13 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     sequence = fields.Integer(readonly=True)
 
     wizard_id = fields.Many2one(comodel_name="wizard.invoice2data.import")
+
+    currency_id = fields.Many2one(
+        string="Currency",
+        comodel_name="res.currency",
+        related="wizard_id.invoice_id.currency_id",
+        readonly=True,
+    )
 
     product_id = fields.Many2one(comodel_name="product.product")
 
@@ -28,13 +36,13 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_quantity = fields.Float(readonly=True)
 
-    pdf_price_unit = fields.Float(readonly=True)
+    pdf_price_unit = fields.Monetary(currency_field="currency_id", readonly=True)
 
-    pdf_price_subtotal = fields.Float(readonly=True)
+    pdf_price_subtotal = fields.Monetary(currency_field="currency_id", readonly=True)
 
     pdf_discount = fields.Float(readonly=True)
 
-    pdf_vat_amount = fields.Float(readonly=True)
+    pdf_vat_amount = fields.Monetary(currency_field="currency_id", readonly=True)
 
     data = fields.Text(readonly=True)
 
@@ -88,13 +96,24 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     changes.append(
                         _(
                             "Unit Price : %s -> %s"
-                            % (invoice_line.price_unit, line.pdf_price_unit)
+                            % (
+                                formatLang(
+                                    self.env,
+                                    invoice_line.price_unit,
+                                    currency_obj=line.currency_id,
+                                ),
+                                formatLang(
+                                    self.env,
+                                    line.pdf_price_unit,
+                                    currency_obj=line.currency_id,
+                                ),
+                            )
                         )
                     )
                 if invoice_line.discount != line.pdf_discount:
                     changes.append(
                         _(
-                            "Discount : %s -> %s"
+                            "Discount : %s%% -> %s%%"
                             % (invoice_line.discount, line.pdf_discount)
                         )
                     )
