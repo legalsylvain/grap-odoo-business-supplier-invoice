@@ -6,6 +6,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import jaro
 
 from odoo import api, fields, models
 
@@ -13,6 +14,8 @@ from odoo import api, fields, models
 class WizardInvoice2dataImport(models.TransientModel):
     _name = "wizard.invoice2data.import"
     _description = "Wizard to import Bill invoices via invoice2data"
+
+    _JARO_DIFFERENCE_THRESHOLD = 0.9
 
     invoice_file = fields.Binary(string="PDF Invoice", required=True)
 
@@ -99,6 +102,12 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_invoice_number = fields.Char(readonly=True)
 
+    pdf_issuer = fields.Char(readonly=True)
+
+    pdf_vat = fields.Char(readonly=True)
+
+    supplier_name_different = fields.Boolean(compute="_compute_supplier_name_different")
+
     pdf_amount_untaxed = fields.Monetary(currency_field="currency_id", readonly=True)
 
     pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)
@@ -116,6 +125,24 @@ class WizardInvoice2dataImport(models.TransientModel):
     has_discount = fields.Boolean(compute="_compute_has_discount")
 
     has_discount2 = fields.Boolean(compute="_compute_has_discount2")
+
+    @api.depends("pdf_issuer", "partner_id.name", "pdf_vat")
+    def _compute_supplier_name_different(self):
+        for wizard in self:
+            # We only check if the name is different if a vat number
+            # is present as a static value, in the template file
+            # If not present, it can be a generic template file, used
+            # for many suppliers. It's the case in a multicompany context
+            # to import sale invoices. (intercompany invoices)
+            if wizard.pdf_issuer and wizard.pdf_vat:
+                wizard.supplier_name_different = (
+                    jaro.jaro_winkler_metric(
+                        wizard.pdf_issuer.lower(), wizard.partner_id.name.lower()
+                    )
+                    < self._JARO_DIFFERENCE_THRESHOLD
+                )
+            else:
+                wizard.supplier_name_different = False
 
     @api.depends("to_delete_invoice_line_ids")
     def _compute_to_delete_invoice_line_qty(self):

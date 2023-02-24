@@ -7,7 +7,7 @@
 -->
 
 <odoo>
-
+<!--                     attrs="{'invisible': [('overdue_invoice_count', '=', 0)]}" -->
     <record id="view_wizard_invoice2data_import_form" model="ir.ui.view">
         <field name="model">wizard.invoice2data.import</field>
         <field name="arch" type="xml">
@@ -15,6 +15,11 @@
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>
+                  <div class="alert alert-warning" role="alert" attrs="{'invisible': [('supplier_name_different', '=', False)]}">
+                    The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
+                    from the supplier name found in the PDF invoice "<b><field name="pdf_issuer"/></b>".
+                    Are you sure you chose the right PDF file?
+                </div>
                 <group name="group_import" col="4" >
                     <field name="invoice_file" filename="invoice_filename"
                         states="import"/>
@@ -30,6 +35,7 @@
                     <field name="pdf_has_vat_mapping" invisible="1"/>
                     <field name="has_discount" invisible="1"/>
                     <field name="has_discount2" invisible="1"/>
+                    <field name="supplier_name_different" invisible="1"/>
                     <newline/>
                     <field name="pdf_date" attrs="{'invisible': [('state', '=', 'import')]}"/>
                     <field name="pdf_date_due" attrs="{'invisible': [('state', '=', 'import')]}"/>
