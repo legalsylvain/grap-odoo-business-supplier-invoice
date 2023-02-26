@@ -28,6 +28,7 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         result = self._extract_json_from_pdf()
         self._initialize_wizard_invoice(result)
         self._initialize_wizard_lines(result)
+        self._update_supplier()
         # We try to save a step, if all the products are mapped
         return self.map_products()
 
@@ -116,3 +117,8 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
             [key.startswith("vat_code_") for key in pdf_data.keys()]
         )
         WizardLine.create(WizardLine._prepare_from_pdf_data(self, pdf_data))
+
+    def _update_supplier(self):
+        self.ensure_one()
+        if self.pdf_vat and not self.partner_id.vat:
+            self.partner_id.vat = self.pdf_vat

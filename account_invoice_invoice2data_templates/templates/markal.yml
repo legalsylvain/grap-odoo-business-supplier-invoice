@@ -5,6 +5,9 @@ keywords:
   - TVA FR 21 436 180 582
 
 fields:
+  vat:
+    parser: static
+    value: "FR21436180582"
   amount:
     parser: regex
     type: float

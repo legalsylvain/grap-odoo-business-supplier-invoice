@@ -20,7 +20,6 @@ class TestFullWorkflow(TestModule):
         self.partner_relais_vert = self.env.ref(
             "account_invoice_invoice2data.partner_relais_vert"
         )
-        self.invoice_name = "relais-vert__2023-02-06__FC11716389.pdf"
         self.product_kiwi = self.env.ref(
             "account_invoice_invoice2data.product_relais_vert_kiwi"
         )
@@ -35,6 +34,17 @@ class TestFullWorkflow(TestModule):
         )
         self.product_uom_kgm = self.env.ref("uom.product_uom_kgm")
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
+
+        # Prepare binary data
+        self.invoice_name = "relais-vert__2023-02-06__FC11716389.pdf"
+        invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
+        self.base64_data = base64.b64encode(invoice_file.read())
+
+        self.bad_invoice_name = "comptoir-des-lys__2022_12_21__155753.pdf"
+        bad_invoice_file = open(
+            str(self._get_invoice_path(self.bad_invoice_name)), "rb"
+        )
+        self.bad_base64_data = base64.b64encode(bad_invoice_file.read())
 
     def _get_attachments(self, invoice):
         return self.env["ir.attachment"].search(
@@ -53,17 +63,12 @@ class TestFullWorkflow(TestModule):
         # unlink previous attachment to make the test idempotens
         self._get_attachments(self.invoice_relais_vert).unlink()
 
-        # Prepare binary data
-        invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
-        binary_data = invoice_file.read()
-        base64_data = base64.b64encode(binary_data)
-
         # #######################
         # Part 1 : Import Invoice
         # #######################
         wizard = self.Wizard.create(
             {
-                "invoice_file": base64_data,
+                "invoice_file": self.base64_data,
                 "invoice_filename": self.invoice_name,
                 "partner_id": self.partner_relais_vert.id,
                 "invoice_id": self.invoice_relais_vert.id,
@@ -71,7 +76,16 @@ class TestFullWorkflow(TestModule):
         )
         self.assertEqual(wizard.state, "import")
 
+        self.assertEqual(self.partner_relais_vert.vat, False)
+
         wizard.import_invoice()
+
+        self.assertEqual(
+            self.partner_relais_vert.vat,
+            "FR72352867493",
+            "Import invoice should set vat on supplier.",
+        )
+
         self.assertEqual(wizard.state, "product_mapping")
 
         # Check that attachment has been added
@@ -164,12 +178,12 @@ class TestFullWorkflow(TestModule):
         # Check Impact on invoice lines
         self.assertEqual(self.invoice_line_1_arachide.uom_id, self.product_uom_kgm)
 
-        # #########################
-        # Part 4 : rerun the wizard
-        # #########################
+        # #######################################
+        # Part 4 : rerun the wizard with same pdf
+        # #######################################
         wizard = self.Wizard.create(
             {
-                "invoice_file": base64_data,
+                "invoice_file": self.base64_data,
                 "invoice_filename": self.invoice_name,
                 "partner_id": self.partner_relais_vert.id,
                 "invoice_id": self.invoice_relais_vert.id,
@@ -177,5 +191,22 @@ class TestFullWorkflow(TestModule):
         )
         wizard.import_invoice()
 
+        self.assertEqual(wizard.supplier_name_different, False)
+
         # Check that attachment has not been added again
         self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
+
+        # ############################################
+        # Part 4 : rerun the wizard with incorrect pdf
+        # ############################################
+        wizard = self.Wizard.create(
+            {
+                "invoice_file": self.bad_base64_data,
+                "invoice_filename": self.bad_invoice_name,
+                "partner_id": self.partner_relais_vert.id,
+                "invoice_id": self.invoice_relais_vert.id,
+            }
+        )
+        wizard.import_invoice()
+
+        self.assertNotEqual(wizard.supplier_name_different, False)

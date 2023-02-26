@@ -5,6 +5,9 @@ keywords:
   - FR 72 352 867 493
 
 fields:
+  vat:
+    parser: static
+    value: "FR72352867493"
   amount:
     parser: regex
     type: float
