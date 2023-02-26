@@ -5,6 +5,7 @@ import base64
 from datetime import datetime
 
 from odoo import tools
+from odoo.exceptions import UserError
 
 from odoo.addons.account_invoice_invoice2data_templates.tests.test import TestModule
 
@@ -197,7 +198,7 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
 
         # ############################################
-        # Part 4 : rerun the wizard with incorrect pdf
+        # Part 5 : rerun the wizard with incorrect pdf
         # ############################################
         wizard = self.Wizard.create(
             {
@@ -210,3 +211,17 @@ class TestFullWorkflow(TestModule):
         wizard.import_invoice()
 
         self.assertNotEqual(wizard.supplier_name_different, False)
+
+        # ################################################
+        # Part 6 : rerun the wizard with confirmed invoice
+        # ################################################
+        self.invoice_relais_vert.action_invoice_open()
+        with self.assertRaises(UserError):
+            wizard = self.Wizard.create(
+                {
+                    "invoice_file": self.base64_data,
+                    "invoice_filename": self.invoice_name,
+                    "partner_id": self.partner_relais_vert.id,
+                    "invoice_id": self.invoice_relais_vert.id,
+                }
+            )

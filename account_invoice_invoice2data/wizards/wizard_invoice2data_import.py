@@ -8,7 +8,8 @@
 
 import jaro
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class WizardInvoice2dataImport(models.TransientModel):
@@ -125,6 +126,17 @@ class WizardInvoice2dataImport(models.TransientModel):
     has_discount = fields.Boolean(compute="_compute_has_discount")
 
     has_discount2 = fields.Boolean(compute="_compute_has_discount2")
+
+    @api.model
+    def create(self, vals):
+        wizard = super().create(vals)
+        wizard._check_invoice_state()
+        return wizard
+
+    def _check_invoice_state(self):
+        self.ensure_one()
+        if self.invoice_id.state != "draft":
+            raise UserError(_("Ysou can not run this wizard on a non draft invoice"))
 
     @api.depends("pdf_issuer", "partner_id.name", "pdf_vat")
     def _compute_supplier_name_different(self):

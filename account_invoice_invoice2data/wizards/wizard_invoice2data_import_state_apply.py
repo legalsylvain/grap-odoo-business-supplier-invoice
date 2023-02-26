@@ -11,6 +11,8 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
 
     def apply_changes(self):
         self.ensure_one()
+        self._check_invoice_state()
+
         lines_vals = self.line_ids._prepare_invoice_lines_vals()
 
         sequence = len(lines_vals)
