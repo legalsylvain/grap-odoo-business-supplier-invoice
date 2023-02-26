@@ -14,6 +14,7 @@ class TestAgrosourcing(TestModule):
             expected_values={
                 "issuer": "Agrosourcing",
                 "date": datetime(day=11, month=1, year=2023),
+                "date_due": datetime(day=10, month=2, year=2023),
                 "invoice_number": "082083",
                 "amount_untaxed": 468.96,
                 "amount": 501.00,

@@ -14,6 +14,7 @@ class TestComptoirDesLys(TestModule):
             expected_values={
                 "issuer": "Comptoir des Lys",
                 "date": datetime(day=21, month=12, year=2022),
+                "date_due": datetime(day=21, month=12, year=2022),
                 "invoice_number": "155753",
                 "amount_untaxed": 308.16,
                 "amount": 369.79,

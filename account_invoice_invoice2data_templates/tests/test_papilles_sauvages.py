@@ -14,6 +14,7 @@ class TestPapillesSauvages(TestModule):
             expected_values={
                 "issuer": "Papilles Sauvages",
                 "date": datetime(day=16, month=11, year=2022),
+                "date_due": datetime(day=31, month=12, year=2022),
                 "invoice_number": "FAC00002114",
                 "amount_untaxed": 44.40,
                 "amount": 46.84,

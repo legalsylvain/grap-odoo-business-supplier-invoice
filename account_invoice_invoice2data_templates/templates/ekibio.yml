@@ -29,6 +29,10 @@ fields:
     parser: regex
     regex: FACTURE No\s+\d+\s+du\s+(\d{2}\/\d{2}\/\d{2})
     type: date
+  date_due:
+    parser: regex
+    regex: Date échéance.*\n.*(\d{2}\s\w+\s\d{4})
+    type: date
   vat_code_055:
     parser: static
     value: "1"

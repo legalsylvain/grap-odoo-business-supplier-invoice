@@ -14,6 +14,7 @@ class TestTAirDeFamille(TestModule):
             expected_values={
                 "issuer": "T'air de Famille",
                 "date": datetime(day=1, month=2, year=2023),
+                "date_due": datetime(day=1, month=2, year=2023),
                 "invoice_number": "FA20230020",
                 "amount_untaxed": 83.76,
                 "amount": 88.37,

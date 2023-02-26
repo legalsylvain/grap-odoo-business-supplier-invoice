@@ -14,6 +14,7 @@ class TestCoopDeYenne(TestModule):
             expected_values={
                 "issuer": "Coop de Yenne",
                 "date": datetime(day=9, month=1, year=2023),
+                "date_due": datetime(day=10, month=2, year=2023),
                 "invoice_number": "30101035",
                 "amount_untaxed": 189.68,
                 "amount": 200.11,

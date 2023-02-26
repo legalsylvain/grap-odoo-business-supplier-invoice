@@ -14,6 +14,7 @@ class TestCrocJBGSAS(TestModule):
             expected_values={
                 "issuer": "Croc JBG SAS",
                 "date": datetime(day=26, month=1, year=2023),
+                "date_due": datetime(day=25, month=2, year=2023),
                 "invoice_number": "FA4549",
                 "amount_untaxed": 772.75,
                 "amount": 815.25,

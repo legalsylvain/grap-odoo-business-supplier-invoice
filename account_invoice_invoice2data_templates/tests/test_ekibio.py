@@ -14,6 +14,7 @@ class TestEkibio(TestModule):
             expected_values={
                 "issuer": "Ekibio",
                 "date": datetime(day=7, month=2, year=2023),
+                "date_due": datetime(day=9, month=3, year=2023),
                 "invoice_number": "792437",
                 "amount_untaxed": 625.55,
                 "amount": 671.37,

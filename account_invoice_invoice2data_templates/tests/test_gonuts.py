@@ -14,6 +14,7 @@ class TestGonuts(TestModule):
             expected_values={
                 "issuer": "Gonuts",
                 "date": datetime(day=19, month=12, year=2022),
+                "date_due": datetime(day=18, month=1, year=2023),
                 "invoice_number": "FC002092",
                 "amount_untaxed": 116.28,
                 "amount": 122.68,
