@@ -7,13 +7,13 @@
 -->
 
 <odoo>
-<!--                     attrs="{'invisible': [('overdue_invoice_count', '=', 0)]}" -->
+
     <record id="view_wizard_invoice2data_import_form" model="ir.ui.view">
         <field name="model">wizard.invoice2data.import</field>
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"/>
+                    <field name="state" widget="statusbar" statusbar_visible="import,product_mapping,line_differences"/>
                 </header>
                   <div class="alert alert-warning" role="alert" attrs="{'invisible': [('supplier_name_different', '=', False)]}">
                     The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
@@ -21,13 +21,12 @@
                     Are you sure you chose the right PDF file?
                 </div>
                 <group name="group_import" col="4" >
-                    <field name="invoice_file" filename="invoice_filename"
-                        states="import"/>
-                    <field name="invoice_filename" force_save="1"
-                        states="import"/>
                     <field name="invoice_id" force_save="1"/>
                     <field name="partner_id"/>
-                    <field name="pdf_invoice_number" attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
+                    <field name="invoice_file" filename="invoice_filename" states="import"/>
+                    <field name="invoice_filename" force_save="1" states="import"/>
+                    <field name="pdf_invoice_number"
+                        attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="to_delete_invoice_line_qty" invisible="1"/>
                     <field name="pdf_has_discount" invisible="1"/>
@@ -36,24 +35,32 @@
                     <field name="has_discount" invisible="1"/>
                     <field name="has_discount2" invisible="1"/>
                     <field name="supplier_name_different" invisible="1"/>
-                    <newline/>
-                    <field name="pdf_date" attrs="{'invisible': [('state', '=', 'import')]}"/>
-                    <field name="pdf_date_due" attrs="{'invisible': [('state', '=', 'import')]}"/>
+                </group>
+                <group name="group_import_result" col="4" states="product_mapping,line_differences">
+                    <field name="pdf_date"/>
+                    <field name="pdf_date_due"/>
                     <newline/>
                     <field name="pdf_amount_untaxed" widget="monetary"
-                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     <field name="invoice_amount_untaxed" widget="monetary"
-                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     <field name="pdf_amount" widget="monetary"
-                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     <field name="invoice_amount" widget="monetary"
-                        attrs="{'invisible': [('state', '=', 'import')]}"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-
                 </group>
+                <group name="import_failed" col="2" states="import_failed">
+                    <div class="alert alert-warning" role="alert" colspan="2">
+                        The analysis of the PDF failed.<br/>
+                        <ul>
+                            <li>If you have uploaded a pdf file from a scan, then it is normal that it does not work. The pdf analysis only works with structured pdf's sent by email by the suppliers.</li>
+                            <li>If you are used to successfully importing invoices for this supplier, please contact the IT department and mention the supplier's name and invoice number.</li>
+                            <li>If not, please provide (if not already done) the VAT number of your supplier so that the IT department can perhaps develop the invoice analysis for this supplier.</li>
+                        </ul>
+                    </div>
+                    <field name="partner_vat" attrs="{'required': [('state', '=', 'import_failed')]}"/>
+                </group>
+
                 <group>
                     <notebook>
                         <page string="Mapping" states="product_mapping">
@@ -177,6 +184,7 @@
                 </group>
                 <footer>
                     <button name="import_invoice" type="object" class="btn-primary" string="Import" states="import"/>
+                    <button name="action_close" type="object" class="btn-primary" string="Enter VAT" states="import_failed"/>
                     <button name="map_products" type="object" class="btn-primary" string="Map Products" states="product_mapping"/>
                     <button name="apply_changes" type="object" class="btn-primary" string="Apply Changes" states="line_differences"/>
                 </footer>

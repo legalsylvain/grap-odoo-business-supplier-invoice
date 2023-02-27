@@ -26,6 +26,8 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
     def import_invoice(self):
         self.ensure_one()
         result = self._extract_json_from_pdf()
+        if not result:
+            return self._get_action_from_state("import_failed")
         self._initialize_wizard_invoice(result)
         self._initialize_wizard_lines(result)
         self._update_supplier()
@@ -85,12 +87,7 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         finally:
             os.close(fd)
 
-        try:
-            result = invoice2data.main.extract_data(tmp_file_name, templates=templates)
-        except Exception as e:
-            raise UserError(_("PDF Invoice parsing failed. Error message: %s") % e)
-        if not result:
-            raise UserError(_("This PDF invoice doesn't match a known templates"))
+        result = invoice2data.main.extract_data(tmp_file_name, templates=templates)
 
         return result
 

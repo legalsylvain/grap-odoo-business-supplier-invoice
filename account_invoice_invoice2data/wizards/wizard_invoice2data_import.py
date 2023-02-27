@@ -25,6 +25,7 @@ class WizardInvoice2dataImport(models.TransientModel):
     state = fields.Selection(
         selection=[
             ("import", "Import"),
+            ("import_failed", "Import Failed"),
             ("product_mapping", "Products Mapping"),
             ("line_differences", "Invoice Lines Differences"),
         ],
@@ -46,6 +47,10 @@ class WizardInvoice2dataImport(models.TransientModel):
         comodel_name="res.partner",
         related="invoice_id.partner_id",
         readonly=True,
+    )
+
+    partner_vat = fields.Char(
+        string="Supplier Vat Number", related="partner_id.vat", readonly=False
     )
 
     currency_id = fields.Many2one(
@@ -192,3 +197,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         self.state = state
         action["res_id"] = self.id
         return action
+
+    def action_close(self):
+        self.ensure_one()
+        return
