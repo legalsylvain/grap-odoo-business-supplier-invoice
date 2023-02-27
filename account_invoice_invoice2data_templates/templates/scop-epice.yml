@@ -1,0 +1,56 @@
+issuer: Scop Epice
+
+keywords:
+  - "Siret 443 784 335 00053"
+  - "TVA Intracom FR 81 443 784 335"
+
+fields:
+  vat:
+    parser: static
+    value: "FR81443784335"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture N°.*\s+\d{2}\/\d{2}\/\d{4}\s+(FV\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date.*\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance\s+\d{2}\/\d{2}\/\d{4}\s+FV\d+\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "2"
+  lines:
+    parser: lines
+    start: Référence.*Montant HT\s+TVA
+    end: Code.*Base.*Total HT
+    line: ^(?P<product_code>\w+)
+      \s+(?P<product_name>.*)
+      \s+(?P<quantity>\d+(\.\d+)?)
+      \s+(?P<price_unit>\d+\.\d+)
+      \s+(?P<price_subtotal>\d+\.\d+)
+      \s+(?P<vat_code>\d)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['\*', '']
