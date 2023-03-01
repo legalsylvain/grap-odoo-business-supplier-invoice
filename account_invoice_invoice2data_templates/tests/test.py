@@ -10,6 +10,7 @@ from cryptography.fernet import Fernet
 
 from odoo import tools
 from odoo.tests.common import TransactionCase
+from odoo.tools.float_utils import float_compare
 
 
 class TestModule(TransactionCase):
@@ -75,14 +76,41 @@ class TestModule(TransactionCase):
             str(invoice_path), templates=self.templates
         )
 
+        # check for the main values
         for key, expected_value in expected_values.items():
-            self.assertEqual(result[key], expected_value)
+            self.assertEqual(
+                result.get(key, False),
+                expected_value,
+                "The value of %s is %s. expected %s"
+                % (key, result.get(key, False), expected_value),
+            )
 
+        # Check that all the lines has been found
         self.assertEqual(
             len(result["lines"]),
             line_qty,
             "Expected Lines : %d ; Lines Found : %d" % (line_qty, len(result["lines"])),
         )
+
+        # check that total amount untaxed is correct
+        lines_total = sum([x["price_subtotal"] for x in result["lines"]])
+        extra_amounts_total = sum(
+            {x: y for x, y in result.items() if "amount_extra_" in x}.values()
+        )
+
+        self.assertEqual(
+            float_compare(
+                lines_total + extra_amounts_total,
+                result["amount_untaxed"],
+                precision_digits=2,
+            ),
+            0,
+            "The total untaxed of the invoice %s is "
+            "different than the sum of lines total (%s) and extra amount %s "
+            % (result["amount_untaxed"], lines_total, extra_amounts_total),
+        )
+
+        # check for expected detailled lines
         for expected_line in expected_lines:
             line_found = False
             for real_line in result["lines"]:
