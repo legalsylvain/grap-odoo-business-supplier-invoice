@@ -156,8 +156,12 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
         if len(products) > 1:
             raise UserError(
-                _("Many products found for the supplier %s and the code %s")
-                % (partner.complete_name, product_code)
+                _("Many products found for the supplier %s and the code '%s'. \n - %s")
+                % (
+                    partner.name,
+                    product_code,
+                    "\n - ".join(products.mapped("display_name")),
+                )
             )
         return products and products[0].id
 
