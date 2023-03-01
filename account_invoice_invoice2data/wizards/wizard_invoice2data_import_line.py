@@ -85,10 +85,10 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     def _compute_change_description(self):
         for line in self:
             invoice_line = line.invoice_line_id
+            changes = []
             if not invoice_line:
-                line.changes_description = _("New Line Creation")
+                changes.append(_("New Line Creation"))
             else:
-                changes = []
                 if invoice_line.quantity != line.pdf_quantity:
                     changes.append(
                         _(
@@ -135,8 +135,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                             % (line.current_uom_id.name, line.new_uom_id.name)
                         )
                     )
-                line.changes_description = changes and "\n".join(changes) or ""
-                line.has_changes = bool(changes)
+            line.changes_description = changes and "\n".join(changes) or ""
+            line.has_changes = bool(changes)
 
     @api.model
     def _get_product_id_from_product_code(self, partner, product_code):
