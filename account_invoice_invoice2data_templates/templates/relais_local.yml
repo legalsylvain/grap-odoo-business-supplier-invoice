@@ -44,8 +44,8 @@ fields:
     end: "IBAN: FR76|Clauses de réserve"
     line: ^(?P<product_code>\w+)
       (?P<product_name>.*)
-      \s+(BIO).*
-      (?P<quantity>\d+)
+      \s+(BIO|ECOCERT).*
+      (?P<quantity>\d+(\.\d+)?)
       \s+(U|KG)
       \s+(?P<ignored_price_unit>\d+\.\d+)
       \s+(?P<price_unit>\d+\.\d+)
