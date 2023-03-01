@@ -129,7 +129,7 @@
                                             options="{'currency_field': 'currency_id', 'field_digits': True}"
                                         />
                                         <field name="current_uom_id"/>
-                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}"/>
+                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"/>
                                         <field name="pdf_discount"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
                                         />

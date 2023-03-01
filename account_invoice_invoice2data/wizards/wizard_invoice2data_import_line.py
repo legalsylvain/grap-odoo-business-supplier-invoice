@@ -139,7 +139,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             line.has_changes = bool(changes)
 
     @api.model
-    def _get_product_id_from_product_code(self, partner, product_code):
+    def _get_product_from_product_code(self, partner, product_code):
         products = self.env["product.product"]
         # Search for product
         supplierinfos = self.env["product.supplierinfo"].search(
@@ -163,7 +163,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "\n - ".join(products.mapped("display_name")),
                 )
             )
-        return products and products[0].id
+        return products and products[0]
 
     @api.model
     def _get_extra_products(self):
@@ -212,15 +212,15 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         # Create regular product lines
         for line_data in pdf_data["lines"]:
             sequence += 1
-            product_id = self._get_product_id_from_product_code(
+            product = self._get_product_from_product_code(
                 wizard.partner_id, line_data["product_code"]
             )
             result.append(
                 {
                     "sequence": sequence,
                     "wizard_id": wizard.id,
-                    "is_product_mapped": bool(product_id),
-                    "product_id": product_id,
+                    "is_product_mapped": bool(product),
+                    "product_id": product and product.id,
                     "pdf_product_code": line_data["product_code"],
                     "pdf_product_name": line_data["product_name"],
                     "pdf_vat_amount": self._get_vat_amount(wizard, pdf_data, line_data),
@@ -235,15 +235,15 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         for key, value in self._get_extra_products().items():
             if key in pdf_data.keys():
                 sequence += 1
-                product_id = self._get_product_id_from_product_code(
+                product = self._get_product_from_product_code(
                     wizard.partner_id, value["product_code"]
                 )
                 result.append(
                     {
                         "sequence": sequence,
                         "wizard_id": wizard.id,
-                        "is_product_mapped": bool(product_id),
-                        "product_id": product_id,
+                        "is_product_mapped": bool(product),
+                        "product_id": product and product.id,
                         "pdf_product_code": value["product_code"],
                         "pdf_product_name": value["product_name"],
                         "pdf_vat_amount": value["vat_amount"],
@@ -315,7 +315,10 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             wizard_line.write(
                 {
                     "invoice_line_id": invoice_lines and invoice_lines[0].id or False,
-                    "new_uom_id": invoice_lines and invoice_lines[0].uom_id.id or False,
+                    "new_uom_id": invoice_lines
+                    and invoice_lines[0].uom_id.id
+                    or (wizard_line.product_id and wizard_line.product_id.uom_po_id.id)
+                    or False,
                 }
             )
 

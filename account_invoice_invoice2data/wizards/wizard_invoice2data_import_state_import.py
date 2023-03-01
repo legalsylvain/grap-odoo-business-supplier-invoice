@@ -16,6 +16,8 @@ import invoice2data
 
 from odoo import _, models, tools
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
+from odoo.tools.misc import formatLang
 
 _logger = logging.getLogger(__name__)
 
@@ -30,7 +32,9 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
             return self._get_action_from_state("import_failed")
         self._initialize_wizard_invoice(result)
         self._initialize_wizard_lines(result)
+        self._check_import_correct()
         self._update_supplier()
+
         # We try to save a step, if all the products are mapped
         return self.map_products()
 
@@ -119,3 +123,41 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         self.ensure_one()
         if self.pdf_vat and not self.partner_id.vat:
             self.partner_id.vat = self.pdf_vat
+
+    def _check_import_correct(self):
+        self.ensure_one()
+        if float_compare(
+            sum(self.line_ids.mapped("pdf_price_subtotal")),
+            self.pdf_amount_untaxed,
+            precision_digits=self.currency_id.decimal_places,
+        ):
+            raise UserError(
+                _(
+                    "The analysis of the PDF file for the supplier %s"
+                    " did not go completely well.\n"
+                    "- The amount of the analyzed lines is %s,"
+                    " but the total amount before tax is %s."
+                    " (Missing Amount : %s)\n"
+                    " - The analysis found %d lines.\n\n"
+                    " Please send the pdf to the IT department for correction.\n\n"
+                    "At this time, you will need to manually verify the supplier invoice."
+                )
+                % (
+                    self.pdf_issuer,
+                    formatLang(
+                        self.env,
+                        sum(self.line_ids.mapped("pdf_price_subtotal")),
+                        currency_obj=self.currency_id,
+                    ),
+                    formatLang(
+                        self.env, self.pdf_amount_untaxed, currency_obj=self.currency_id
+                    ),
+                    formatLang(
+                        self.env,
+                        self.pdf_amount_untaxed
+                        - sum(self.line_ids.mapped("pdf_price_subtotal")),
+                        currency_obj=self.currency_id,
+                    ),
+                    len(self.line_ids),
+                )
+            )
