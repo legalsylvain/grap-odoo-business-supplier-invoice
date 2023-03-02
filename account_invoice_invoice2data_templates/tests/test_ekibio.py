@@ -7,7 +7,31 @@ from .test import TestModule
 
 
 class TestEkibio(TestModule):
-    def test_ekibio(self):
+    def test_ekibio_01(self):
+        self._test_supplier_template(
+            "ekibio__2023-02-02__791601.pdf",
+            line_qty=35,
+            expected_values={
+                "issuer": "Ekibio",
+                "date": datetime(day=2, month=2, year=2023),
+                "date_due": datetime(day=4, month=3, year=2023),
+                "invoice_number": "791601",
+                "amount_untaxed": 965.60,
+                "amount": 1020.81,
+            },
+            expected_lines=[
+                {
+                    "product_code": "005844",
+                    "product_name": "PROTEGE SLIP 24u",
+                    "vat_code": "1",
+                    "quantity": 12.0,
+                    "price_unit": 2.780,
+                    "price_subtotal": 33.36,
+                }
+            ],
+        )
+
+    def test_ekibio_02(self):
         self._test_supplier_template(
             "ekibio__2023-02-07__792437.pdf",
             line_qty=18,
