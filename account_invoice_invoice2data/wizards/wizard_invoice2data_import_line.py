@@ -2,6 +2,10 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import re
+
+from psycopg2.extensions import AsIs
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import formatLang
@@ -141,12 +145,27 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     @api.model
     def _get_product_from_product_code(self, partner, product_code):
         products = self.env["product.product"]
-        # Search for product
+
+        # regex pattern for removing leading zeros from an input string
+        regexPattern = "^0+(?!$)"
+        clean_product_code = re.sub(regexPattern, "", product_code)
+        # Search for productinfo
+        self.env.cr.execute(
+            """
+            SELECT id
+            FROM product_supplierinfo
+            WHERE name = %s
+            AND product_code SIMILAR TO '0*%s'
+            """,
+            (
+                partner.id,
+                AsIs(clean_product_code),
+            ),
+        )
+        supplierinfo_ids = self.env.cr.fetchall()
+
         supplierinfos = self.env["product.supplierinfo"].search(
-            [
-                ("name", "=", partner.id),
-                ("product_code", "=", product_code),
-            ]
+            [("id", "in", supplierinfo_ids)]
         )
         products = supplierinfos.filtered(lambda x: x.product_id).mapped("product_id")
 
