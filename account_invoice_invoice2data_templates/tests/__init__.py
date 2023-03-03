@@ -8,6 +8,7 @@ from . import test_croc_jbg_sas
 from . import test_ekibio
 from . import test_gonuts
 from . import test_gravier
+from . import test_herbiolys
 from . import test_markal
 from . import test_papilles_sauvages
 from . import test_relais_local
