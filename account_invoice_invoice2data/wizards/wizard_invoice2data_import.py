@@ -10,6 +10,8 @@ import jaro
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
+from odoo.tools.misc import formatLang
 
 
 class WizardInvoice2dataImport(models.TransientModel):
@@ -17,6 +19,7 @@ class WizardInvoice2dataImport(models.TransientModel):
     _description = "Wizard to import Bill invoices via invoice2data"
 
     _JARO_DIFFERENCE_THRESHOLD = 0.9
+    _MAX_AMOUNT_UNTAXED_DIFFERENCE = 0.10
 
     invoice_file = fields.Binary(string="PDF Invoice", required=True)
 
@@ -122,6 +125,8 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_date_due = fields.Date(readonly=True)
 
+    pdf_has_product_code = fields.Boolean(compute="_compute_pdf_has_product_code")
+
     pdf_has_discount = fields.Boolean(compute="_compute_pdf_has_discount")
 
     pdf_has_discount2 = fields.Boolean(compute="_compute_pdf_has_discount2")
@@ -131,6 +136,15 @@ class WizardInvoice2dataImport(models.TransientModel):
     has_discount = fields.Boolean(compute="_compute_has_discount")
 
     has_discount2 = fields.Boolean(compute="_compute_has_discount2")
+
+    amount_untaxed_difference = fields.Monetary(
+        compute="_compute_fuzzy_message_amount_untaxed_difference",
+        currency_field="currency_id",
+    )
+
+    fuzzy_message_amount_untaxed_difference = fields.Text(
+        compute="_compute_fuzzy_message_amount_untaxed_difference"
+    )
 
     @api.model
     def create(self, vals):
@@ -142,6 +156,42 @@ class WizardInvoice2dataImport(models.TransientModel):
         self.ensure_one()
         if self.invoice_id.state != "draft":
             raise UserError(_("Ysou can not run this wizard on a non draft invoice"))
+
+    @api.depends("currency_id", "line_ids.pdf_price_subtotal", "pdf_amount_untaxed")
+    def _compute_fuzzy_message_amount_untaxed_difference(self):
+        for wizard in self:
+            total_amount_lines = sum(wizard.line_ids.mapped("pdf_price_subtotal"))
+            total_amount_invoice = wizard.pdf_amount_untaxed
+            currency = wizard.currency_id
+            if not total_amount_lines and not total_amount_invoice:
+                wizard.amount_untaxed_difference = 0.0
+                wizard.fuzzy_message_amount_untaxed_difference = False
+                continue
+            if not float_compare(
+                total_amount_lines,
+                total_amount_invoice,
+                precision_digits=currency.decimal_places,
+            ):
+                wizard.amount_untaxed_difference = 0.0
+                wizard.fuzzy_message_amount_untaxed_difference = False
+                continue
+            wizard.amount_untaxed_difference = total_amount_invoice - total_amount_lines
+            wizard.fuzzy_message_amount_untaxed_difference = _(
+                "The analysis of the PDF file for the supplier %s"
+                " did not go completely well.\n"
+                "- The amount of the analyzed lines is %s,"
+                " but the total amount before tax is %s."
+                " (Missing Amount : %s)\n"
+                " - The analysis found %d lines."
+            ) % (
+                wizard.pdf_issuer,
+                formatLang(wizard.env, total_amount_lines, currency_obj=currency),
+                formatLang(wizard.env, total_amount_invoice, currency_obj=currency),
+                formatLang(
+                    wizard.env, wizard.amount_untaxed_difference, currency_obj=currency
+                ),
+                len(wizard.line_ids),
+            )
 
     @api.depends("pdf_issuer", "partner_id.name", "pdf_vat")
     def _compute_supplier_name_different(self):
@@ -165,6 +215,11 @@ class WizardInvoice2dataImport(models.TransientModel):
     def _compute_to_delete_invoice_line_qty(self):
         for wizard in self:
             wizard.to_delete_invoice_line_qty = len(wizard.to_delete_invoice_line_ids)
+
+    @api.depends("line_ids.pdf_product_code")
+    def _compute_pdf_has_product_code(self):
+        for wizard in self:
+            self.pdf_has_product_code = any(wizard.mapped("line_ids.pdf_product_code"))
 
     @api.depends("line_ids.pdf_discount")
     def _compute_pdf_has_discount(self):

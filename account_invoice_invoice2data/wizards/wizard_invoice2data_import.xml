@@ -15,6 +15,9 @@
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="import,product_mapping,line_differences"/>
                 </header>
+                  <div class="alert alert-warning" role="alert" attrs="{'invisible': [('fuzzy_message_amount_untaxed_difference', '=', False)]}">
+                    <field name="fuzzy_message_amount_untaxed_difference"/>
+                </div>
                   <div class="alert alert-warning" role="alert" attrs="{'invisible': [('supplier_name_different', '=', False)]}">
                     The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
                     from the supplier name found in the PDF invoice "<b><field name="pdf_issuer"/></b>".
@@ -29,6 +32,7 @@
                         attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="to_delete_invoice_line_qty" invisible="1"/>
+                    <field name="pdf_has_product_code" invisible="1"/>
                     <field name="pdf_has_discount" invisible="1"/>
                     <field name="pdf_has_discount2" invisible="1"/>
                     <field name="pdf_has_vat_mapping" invisible="1"/>
@@ -68,7 +72,9 @@
                                 <field name="product_mapping_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
-                                        <field name="pdf_product_code"/>
+                                        <field name="pdf_product_code"
+                                            attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                        />
                                         <field name="pdf_product_name"/>
                                         <field name="pdf_vat_amount"
                                             attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
@@ -119,7 +125,9 @@
                                 <field name="invoice_difference_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
-                                        <field name="pdf_product_code"/>
+                                        <field name="pdf_product_code"
+                                            attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                        />
                                         <field name="pdf_product_name"/>
                                         <field name="pdf_vat_amount"
                                             attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
@@ -150,7 +158,9 @@
                             <field name="line_ids" nolabel="1">
                                 <tree editable="bottom" create="false" delete="false">
                                     <field name="sequence"/>
-                                    <field name="pdf_product_code"/>
+                                    <field name="pdf_product_code"
+                                        attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                    />
                                     <field name="pdf_product_name"/>
                                     <field name="pdf_vat_amount"
                                             attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"

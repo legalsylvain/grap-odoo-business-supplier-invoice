@@ -15,7 +15,9 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     _name = "wizard.invoice2data.import.line"
     _description = "Wizard Line to import Bill invoices via invoice2data"
 
-    sequence = fields.Integer(readonly=True)
+    sequence = fields.Integer(
+        string="#", readonly=True, help="Line number in the pdf invoice."
+    )
 
     wizard_id = fields.Many2one(comodel_name="wizard.invoice2data.import")
 
@@ -143,30 +145,61 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             line.has_changes = bool(changes)
 
     @api.model
-    def _get_product_from_product_code(self, partner, product_code):
+    def _guess_product(self, partner, line_data):
+        """
+        Guess the product given a partner and a dict with product_code
+        and product_name.
+        If defined, the search will be done by product_code,
+        Otherwise, the search will be done by product_name that is
+        in that case, required.
+        An error is raised if 0 or many products are found.
+
+        Parameters
+        ----------
+            partner : res.partner
+                Current supplier
+            line_data : dict
+                {'product_code': 'xxx', 'product_name': 'yyy'}
+        """
+
         products = self.env["product.product"]
+        product_code = line_data.get("product_code", False)
+        if product_code:
+            # Search supplierinfo by product_code
+            # regex pattern for removing leading zeros from an input string
+            regexPattern = "^0+(?!$)"
+            clean_product_code = re.sub(regexPattern, "", product_code)
+            # Search for productinfo
+            self.env.cr.execute(
+                """
+                SELECT id
+                FROM product_supplierinfo
+                WHERE name = %s
+                AND product_code SIMILAR TO '0*%s'
+                """,
+                (
+                    partner.id,
+                    AsIs(clean_product_code),
+                ),
+            )
+            supplierinfo_ids = self.env.cr.fetchall()
 
-        # regex pattern for removing leading zeros from an input string
-        regexPattern = "^0+(?!$)"
-        clean_product_code = re.sub(regexPattern, "", product_code)
-        # Search for productinfo
-        self.env.cr.execute(
-            """
-            SELECT id
-            FROM product_supplierinfo
-            WHERE name = %s
-            AND product_code SIMILAR TO '0*%s'
-            """,
-            (
-                partner.id,
-                AsIs(clean_product_code),
-            ),
-        )
-        supplierinfo_ids = self.env.cr.fetchall()
+            supplierinfos = self.env["product.supplierinfo"].search(
+                [("id", "in", supplierinfo_ids)]
+            )
+        elif line_data.get("product_name", False):
+            # Search supplierinfo by product_name
+            supplierinfos = self.env["product.supplierinfo"].search(
+                [
+                    ("product_name", "=", line_data["product_name"]),
+                    ("name", "=", partner.id),
+                ]
+            )
+        else:
+            raise UserError(
+                _("Unable to search product without product code neither product name.")
+            )
 
-        supplierinfos = self.env["product.supplierinfo"].search(
-            [("id", "in", supplierinfo_ids)]
-        )
         products = supplierinfos.filtered(lambda x: x.product_id).mapped("product_id")
 
         products |= supplierinfos.filtered(lambda x: not x.product_id).mapped(
@@ -236,16 +269,14 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         # Create regular product lines
         for line_data in pdf_data["lines"]:
             sequence += 1
-            product = self._get_product_from_product_code(
-                wizard.partner_id, line_data["product_code"]
-            )
+            product = self._guess_product(wizard.partner_id, line_data)
             result.append(
                 {
                     "sequence": sequence,
                     "wizard_id": wizard.id,
                     "is_product_mapped": bool(product),
                     "product_id": product and product.id,
-                    "pdf_product_code": line_data["product_code"],
+                    "pdf_product_code": line_data.get("product_code", False),
                     "pdf_product_name": line_data["product_name"],
                     "pdf_vat_amount": self._get_vat_amount(wizard, pdf_data, line_data),
                     "pdf_quantity": line_data["quantity"],
@@ -259,16 +290,14 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         for key, value in self._get_extra_products().items():
             if key in pdf_data.keys():
                 sequence += 1
-                product = self._get_product_from_product_code(
-                    wizard.partner_id, value["product_code"]
-                )
+                product = self._guess_product(wizard.partner_id, value)
                 result.append(
                     {
                         "sequence": sequence,
                         "wizard_id": wizard.id,
                         "is_product_mapped": bool(product),
                         "product_id": product and product.id,
-                        "pdf_product_code": value["product_code"],
+                        "pdf_product_code": line_data.get("product_code", False),
                         "pdf_product_name": value["product_name"],
                         "pdf_vat_amount": value["vat_amount"],
                         "pdf_quantity": 1,
