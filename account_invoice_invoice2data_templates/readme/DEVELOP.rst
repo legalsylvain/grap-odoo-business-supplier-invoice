@@ -15,7 +15,13 @@ The module analyse the PDF using ``invoice2data`` python library.
 
 To test your template :
 
-``invoice2data --exclude-built-in-templates --template-folder=./account_invoice_invoice2data_templates/templates/ ./account_invoice_invoice2data_templates/tests/invoices/supplier-name__date-invoice__invoice-number.pdf --debug``
+.. code-block:: shell
+
+   invoice2data\
+      --exclude-built-in-templates\
+      --template-folder=./account_invoice_invoice2data_templates/templates/\
+      --debug\
+      ./account_invoice_invoice2data_templates/tests/invoices/invoice.pdf
 
 Note :
 
