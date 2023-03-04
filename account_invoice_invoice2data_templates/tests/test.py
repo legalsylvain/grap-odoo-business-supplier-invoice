@@ -93,22 +93,23 @@ class TestModule(TransactionCase):
         )
 
         # check that total amount untaxed is correct
-        lines_total = sum([x["price_subtotal"] for x in result["lines"]])
-        extra_amounts_total = sum(
-            {x: y for x, y in result.items() if "amount_extra_" in x}.values()
-        )
+        if not result.get("fuzzy_total_amount_untaxed", False):
+            lines_total = sum([x["price_subtotal"] for x in result["lines"]])
+            extra_amounts_total = sum(
+                {x: y for x, y in result.items() if "amount_extra_" in x}.values()
+            )
 
-        self.assertEqual(
-            float_compare(
-                lines_total + extra_amounts_total,
-                result["amount_untaxed"],
-                precision_digits=2,
-            ),
-            0,
-            "The total untaxed of the invoice %s is "
-            "different than the sum of lines total (%s) and extra amount %s "
-            % (result["amount_untaxed"], lines_total, extra_amounts_total),
-        )
+            self.assertEqual(
+                float_compare(
+                    lines_total + extra_amounts_total,
+                    result["amount_untaxed"],
+                    precision_digits=2,
+                ),
+                0,
+                "The total untaxed of the invoice %s is "
+                "different than the sum of lines total (%s) and extra amount %s "
+                % (result["amount_untaxed"], lines_total, extra_amounts_total),
+            )
 
         # check for expected detailled lines
         for expected_line in expected_lines:

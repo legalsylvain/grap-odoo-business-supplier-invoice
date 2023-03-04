@@ -6,6 +6,7 @@ from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
 from . import test_ekibio
+from . import test_ferme_des_grands_noyers
 from . import test_gonuts
 from . import test_gravier
 from . import test_herbiolys
