@@ -270,6 +270,9 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         for line_data in pdf_data["lines"]:
             sequence += 1
             product = self._guess_product(wizard.partner_id, line_data)
+            quantity = line_data["quantity"]
+            if line_data.get("quantity2"):
+                quantity *= line_data["quantity2"]
             result.append(
                 {
                     "sequence": sequence,
@@ -279,7 +282,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "pdf_product_code": line_data.get("product_code", False),
                     "pdf_product_name": line_data["product_name"],
                     "pdf_vat_amount": self._get_vat_amount(wizard, pdf_data, line_data),
-                    "pdf_quantity": line_data["quantity"],
+                    "pdf_quantity": quantity,
                     "pdf_price_unit": line_data["price_unit"],
                     "pdf_price_subtotal": line_data["price_subtotal"],
                     "pdf_discount": line_data.get("discount", 0.0),
