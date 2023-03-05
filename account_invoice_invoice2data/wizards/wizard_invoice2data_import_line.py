@@ -300,7 +300,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         "wizard_id": wizard.id,
                         "is_product_mapped": bool(product),
                         "product_id": product and product.id,
-                        "pdf_product_code": line_data.get("product_code", False),
+                        "pdf_product_code": value["product_code"],
                         "pdf_product_name": value["product_name"],
                         "pdf_vat_amount": value["vat_amount"],
                         "pdf_quantity": 1,
