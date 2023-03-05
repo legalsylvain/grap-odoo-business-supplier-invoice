@@ -10,23 +10,6 @@ from odoo.addons.account_invoice_invoice2data_templates.tests.test import TestMo
 
 _logger = logging.getLogger(__name__)
 
-_INVOICE_FILES = [
-    "agrosourcing__2023-01-11__082083.pdf",
-    "comptoir-des-lys__2022_12_21__155753.pdf",
-    "coop-de-yenne__2023-01-09__30101035.pdf",
-    "croc-jbg-sas__2023-01-26__FA4549.pdf",
-    "ekibio__2023-02-07__792437.pdf",
-    "gonuts__2022-12-19__FC002092.pdf",
-    "gravier__2022-11-16__FA1375938.pdf",
-    "markal__2023-02-14__00368375.pdf",
-    "papilles-sauvages__2022-11-16__FAC00002114.pdf",
-    "relais-local__2023-01-03__FC230116989.pdf",
-    "relais-local__2023-02-27__FC230217945.pdf",
-    "relais-vert__2023-02-06__FC11716389.pdf",
-    "t-air-de-famille__2023-02-01__FA20230020.pdf",
-    "vitafrais__2023-02-13__23013043.pdf",
-]
-
 
 class TestAllTemplates(TestModule):
     def setUp(self):
@@ -54,5 +37,7 @@ class TestAllTemplates(TestModule):
         wizard.import_invoice()
 
     def test_all_import(self):
-        for invoice_name in _INVOICE_FILES:
-            self._test_import_file(invoice_name)
+        for file in self.pdf_folder_path.iterdir():
+            if file.name.endswith(".pdf.encrypted") and not file.name.startswith("_"):
+                invoice_name = file.name.replace(".encrypted", "")
+                self._test_import_file(invoice_name)
