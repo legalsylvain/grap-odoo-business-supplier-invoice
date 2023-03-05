@@ -23,7 +23,7 @@ class TestFullWorkflow(TestModule):
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
         # Prepare binary data
-        self.invoice_name = "unknown-supplier.pdf"
+        self.invoice_name = "_unknown-supplier.pdf"
         invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
         self.base64_data = base64.b64encode(invoice_file.read())
 
