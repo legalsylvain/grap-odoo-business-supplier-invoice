@@ -30,9 +30,15 @@ class TestFullWorkflow(TestModule):
         self.product_yacon = self.env.ref(
             "account_invoice_invoice2data.product_relais_vert_yacon"
         )
+        self.product_arachide = self.env.ref(
+            "account_invoice_invoice2data.product_relais_vert_arachide"
+        )
         self.invoice_line_1_arachide = self.env.ref(
             "account_invoice_invoice2data_test.invoice_line_relais_vert_1_arachide"
         )
+        self.tax_055 = self.env.ref("account_invoice_invoice2data_test.tax_055")
+        self.tax_200 = self.env.ref("account_invoice_invoice2data_test.tax_200")
+
         self.product_uom_kgm = self.env.ref("uom.product_uom_kgm")
         tools.config["invoice2data_templates_dir"] = self.local_templates_dir
 
@@ -63,6 +69,7 @@ class TestFullWorkflow(TestModule):
     def test_full_workflow(self):
         # unlink previous attachment to make the test idempotens
         self._get_attachments(self.invoice_relais_vert).unlink()
+        self.partner_relais_vert.vat = False
 
         # #######################
         # Part 1 : Import Invoice
@@ -76,8 +83,6 @@ class TestFullWorkflow(TestModule):
             }
         )
         self.assertEqual(wizard.state, "import")
-
-        self.assertEqual(self.partner_relais_vert.vat, False)
 
         wizard.import_invoice()
 
@@ -105,6 +110,15 @@ class TestFullWorkflow(TestModule):
         # #####################
         self.assertEqual(len(wizard.product_mapping_line_ids), 3)
         self.assertEqual(len(wizard.to_delete_invoice_line_ids), 3)
+
+        # Check the message if vat are incorrect
+        self.product_arachide.supplier_taxes_id = [(6, 0, [self.tax_200.id])]
+        wizard._compute_message_vat_difference()
+        self.assertTrue("rachide" in wizard.message_vat_difference)
+
+        self.product_arachide.supplier_taxes_id = [(6, 0, [self.tax_055.id])]
+        wizard._compute_message_vat_difference()
+        self.assertEqual(wizard.message_vat_difference, False)
 
         # Kiwi (KIJAIT) is not mapped. (supplierinfo doesn't exist)
         # We map with existing odoo product

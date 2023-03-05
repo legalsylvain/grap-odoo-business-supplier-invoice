@@ -35,7 +35,7 @@ class TestFullWorkflow(TestModule):
     def test_bad_invoice(self):
         # unlink previous attachment to make the test idempotens
         self._get_attachments(self.invoice_relais_vert).unlink()
-
+        self.partner_relais_vert.vat = False
         # #######################
         # Part 1 : Import Invoice
         # #######################
@@ -48,8 +48,6 @@ class TestFullWorkflow(TestModule):
             }
         )
         self.assertEqual(wizard.state, "import")
-
-        self.assertEqual(self.partner_relais_vert.vat, False)
 
         wizard.import_invoice()
 

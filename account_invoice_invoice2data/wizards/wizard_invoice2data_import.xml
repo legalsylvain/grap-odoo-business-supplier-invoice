@@ -15,14 +15,20 @@
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="import,product_mapping,line_differences"/>
                 </header>
-                  <div class="alert alert-warning" role="alert" attrs="{'invisible': [('fuzzy_message_amount_untaxed_difference', '=', False)]}">
-                    <field name="fuzzy_message_amount_untaxed_difference"/>
-                </div>
-                  <div class="alert alert-warning" role="alert" attrs="{'invisible': [('supplier_name_different', '=', False)]}">
-                    The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
-                    from the supplier name found in the PDF invoice "<b><field name="pdf_issuer"/></b>".
-                    Are you sure you chose the right PDF file?
-                </div>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('fuzzy_message_amount_untaxed_difference', '=', False)]}">
+                        <field name="fuzzy_message_amount_untaxed_difference"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('message_vat_difference', '=', False)]}">
+                        <field name="message_vat_difference"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('supplier_name_different', '=', False)]}">
+                        The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
+                        from the supplier name found in the PDF invoice "<b><field name="pdf_issuer"/></b>".
+                        Are you sure you chose the right PDF file?
+                    </div>
                 <group name="group_import" col="4" >
                     <field name="invoice_id" force_save="1"/>
                     <field name="partner_id"/>

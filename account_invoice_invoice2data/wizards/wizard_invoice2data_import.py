@@ -146,6 +146,10 @@ class WizardInvoice2dataImport(models.TransientModel):
         compute="_compute_fuzzy_message_amount_untaxed_difference"
     )
 
+    message_vat_difference = fields.Text(
+        compute="_compute_message_vat_difference",
+    )
+
     @api.model
     def create(self, vals):
         wizard = super().create(vals)
@@ -155,7 +159,39 @@ class WizardInvoice2dataImport(models.TransientModel):
     def _check_invoice_state(self):
         self.ensure_one()
         if self.invoice_id.state != "draft":
-            raise UserError(_("Ysou can not run this wizard on a non draft invoice"))
+            raise UserError(_("You can not run this wizard on a non draft invoice"))
+
+    @api.depends(
+        "pdf_has_vat_mapping",
+        "line_ids.pdf_vat_amount",
+        "line_ids.product_id.supplier_taxes_id",
+    )
+    def _compute_message_vat_difference(self):
+        for wizard in self.filtered(
+            lambda x: x.pdf_has_vat_mapping and x.state != "import"
+        ):
+            message_list = []
+            for line in wizard.line_ids.filtered(
+                lambda x: len(x.mapped("product_id.supplier_taxes_id")) == 1
+            ):
+                if line.pdf_vat_amount != line.product_id.supplier_taxes_id[0].amount:
+                    message_list.append(
+                        _(
+                            "The product %s has a VAT of %s %% at purchase,"
+                            " but the supplier set a VAT of %s."
+                        )
+                        % (
+                            line.product_id.display_name,
+                            line.product_id.supplier_taxes_id[0].amount,
+                            line.pdf_vat_amount,
+                        )
+                    )
+            wizard.message_vat_difference = "\n".join(message_list) or False
+
+        for wizard in self.filtered(
+            lambda x: not x.pdf_has_vat_mapping or x.state == "import"
+        ):
+            wizard.message_vat_difference = False
 
     @api.depends("currency_id", "line_ids.pdf_price_subtotal", "pdf_amount_untaxed")
     def _compute_fuzzy_message_amount_untaxed_difference(self):
