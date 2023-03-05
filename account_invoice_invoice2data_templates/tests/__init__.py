@@ -3,6 +3,7 @@ from . import test
 
 from . import test_agrosourcing
 from . import test_brasserie_teddy_bear
+from . import test_cds
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas

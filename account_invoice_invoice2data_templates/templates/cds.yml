@@ -1,0 +1,46 @@
+issuer: CDS
+
+keywords:
+  - "34380270800010"
+  - "FR55343802708"
+
+fields:
+  vat:
+    parser: static
+    value: "FR55343802708"
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL TTC\n.*\n\s+\d+\.\d+\s+\d+\.\d+\s+(\d+\.\d+)\n
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL TTC\n.*\n\s+(\d+\.\d+)\s+\d+\.\d+\s+\d+\.\d+\n
+  invoice_number:
+    parser: regex
+    regex: Facture N° (\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date .\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_200:
+    parser: static
+    value: "1"
+  lines:
+    parser: lines
+    start: Référence\s+Désignation.*Cd
+    end: Pénalités de retard
+    line: ^(?P<product_code>\w+)\s+(?P<product_name>.{50})\s+(?P<quantity>\d+)\s+(U|C(?P<quantity2>\d+))\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>1)
+    types:
+      quantity: float
+      quantity2: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
