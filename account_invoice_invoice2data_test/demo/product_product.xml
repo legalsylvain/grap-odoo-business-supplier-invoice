@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2023 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+-->
+
+<odoo>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_gazole" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
+    </record>
+
+
+    <record id="account_invoice_invoice2data.product_relais_vert_interfel" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_champignon" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_arachide" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_epinard" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_yacon" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_kiwi" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_relais_vert_raisin" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
+    </record>
+
+</odoo>

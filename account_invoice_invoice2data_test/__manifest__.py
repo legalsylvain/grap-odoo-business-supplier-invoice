@@ -11,6 +11,9 @@
     "license": "AGPL-3",
     "depends": ["account_invoice_invoice2data", "l10n_generic_coa"],
     "demo": [
+        "demo/account_tax_group.xml",
+        "demo/account_tax.xml",
+        "demo/product_product.xml",
         "demo/account_invoice.xml",
     ],
     "installable": True,
