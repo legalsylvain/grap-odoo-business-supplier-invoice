@@ -13,6 +13,7 @@ class AccountInvoice(models.Model):
         selection=[
             ("undefined", "Undefined"),
             ("available", "Available"),
+            ("not_found", "Not Found"),
             ("no_vat", "Vat Number Not Set"),
         ],
     )
@@ -39,8 +40,8 @@ class AccountInvoice(models.Model):
                         % template.name
                     )
                 else:
+                    invoice.invoice2data_situation = "not_found"
                     # For the time being, do not display anything
-                    continue
             else:
                 invoice.invoice2data_situation = "no_vat"
                 invoice.invoice2data_message = _(
