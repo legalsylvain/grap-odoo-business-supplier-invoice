@@ -356,18 +356,14 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             line.is_product_mapped = True
 
     def _analyze_invoice_lines(self):
+        mapped_invoice_line_ids = []
         for wizard_line in self:
             invoice_lines = wizard_line.wizard_id.invoice_id.invoice_line_ids.filtered(
                 lambda x: x.product_id == wizard_line.product_id
+                and x.id not in mapped_invoice_line_ids
             )
-            # Case 1 : Many lines. Unimplemented feature
-            if len(invoice_lines) > 1:
-                raise UserError(
-                    _(
-                        "Unimplemented feature : Many invoice lines for the same product '%s'"
-                    )
-                    % wizard_line.product_id.name
-                )
+            if invoice_lines:
+                mapped_invoice_line_ids.append(invoice_lines[0].id)
             wizard_line.write(
                 {
                     "invoice_line_id": invoice_lines and invoice_lines[0].id or False,

@@ -8,10 +8,13 @@
 
 <odoo>
 
+    <!-- ==================================-->
+    <!-- Relais Vert Products              -->
+    <!-- ==================================-->
+
     <record id="product_relais_vert_gazole" model="product.product">
         <field name="name">Taxe Gazole</field>
     </record>
-
 
     <record id="product_relais_vert_interfel" model="product.product">
         <field name="name">Taxe Interfel TPF</field>
@@ -88,5 +91,40 @@
         <field name="product_tmpl_id" model="product.template" eval="obj().env.ref('account_invoice_invoice2data.product_relais_vert_raisin').product_tmpl_id.id"/>
         <field name="product_code">36868</field>
     </record>
+
+    <!-- ==================================-->
+    <!-- Brasserie Teddy Beer Products     -->
+    <!-- ==================================-->
+
+    <record id="product_teddy_beer_tranquille" model="product.product">
+        <field name="name">Tranquille Achille - 75cl</field>
+    </record>
+
+    <record id="product_supplierinfo_teddy_beer_tranquille" model="product.supplierinfo">
+        <field name="name" ref="account_invoice_invoice2data.partner_teddy_beer"/>
+        <field name="product_tmpl_id" model="product.template" eval="obj().env.ref('account_invoice_invoice2data.product_teddy_beer_tranquille').product_tmpl_id.id"/>
+        <field name="product_code">tranquille75</field>
+    </record>
+
+    <record id="product_teddy_beer_miel" model="product.product">
+        <field name="name">Ô Miel - 75cl</field>
+    </record>
+
+    <record id="product_supplierinfo_teddy_beer_miel" model="product.supplierinfo">
+        <field name="name" ref="account_invoice_invoice2data.partner_teddy_beer"/>
+        <field name="product_tmpl_id" model="product.template" eval="obj().env.ref('account_invoice_invoice2data.product_teddy_beer_miel').product_tmpl_id.id"/>
+        <field name="product_code">miel75</field>
+    </record>
+
+    <record id="product_teddy_beer_consigne" model="product.product">
+        <field name="name">Bouteille 75cl consigné</field>
+    </record>
+
+    <record id="product_supplierinfo_teddy_beer_consigne" model="product.supplierinfo">
+        <field name="name" ref="account_invoice_invoice2data.partner_teddy_beer"/>
+        <field name="product_tmpl_id" model="product.template" eval="obj().env.ref('account_invoice_invoice2data.product_teddy_beer_consigne').product_tmpl_id.id"/>
+        <field name="product_code">consigne75</field>
+    </record>
+
 
 </odoo>

@@ -8,6 +8,10 @@
 
 <odoo>
 
+    <!-- ==================================-->
+    <!-- Relais Vert Invoice               -->
+    <!-- ==================================-->
+
     <record id="invoice_relais_vert" model="account.invoice">
         <field name="partner_id" ref="account_invoice_invoice2data.partner_relais_vert"/>
         <field name="type">in_invoice</field>
@@ -94,4 +98,41 @@
                     ('company_id', '=', obj().env['res.company']._company_default_get('account.account').id)]"/>
     </record>
 
+
+    <!-- ==================================-->
+    <!-- Brasserie Teddy Beer Invoice      -->
+    <!-- ==================================-->
+
+    <record id="invoice_teddy_beer" model="account.invoice">
+        <field name="partner_id" ref="account_invoice_invoice2data.partner_teddy_beer"/>
+        <field name="type">in_invoice</field>
+        <field name="date_invoice" eval="False"/>
+        <field name="journal_id" search="[('type', '=', 'purchase')]"/>
+    </record>
+
+    <record id="invoice_line_teddy_beer_tranquille" model="account.invoice.line">
+        <field name="invoice_id" ref="invoice_teddy_beer"/>
+        <field name="product_id" ref="account_invoice_invoice2data.product_teddy_beer_tranquille"/>
+        <field name="name">[tranquille75] Tranquille Achille - 75cl</field>
+        <field name="quantity">6</field>
+        <field name="price_unit">10</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="account_id" model="account.account"
+            search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
+                    ('user_type_id', '=', ref('account.data_account_type_expenses')),
+                    ('company_id', '=', obj().env['res.company']._company_default_get('account.account').id)]"/>
+    </record>
+
+    <record id="invoice_line_teddy_beer_miel" model="account.invoice.line">
+        <field name="invoice_id" ref="invoice_teddy_beer"/>
+        <field name="product_id" ref="account_invoice_invoice2data.product_teddy_beer_miel"/>
+        <field name="name">[miel75] Ô Miel - 75cl</field>
+        <field name="quantity">6</field>
+        <field name="price_unit">10</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="account_id" model="account.account"
+            search="['|', ('tag_ids', '=', ref('account.demo_ceo_wages_account')),
+                    ('user_type_id', '=', ref('account.data_account_type_expenses')),
+                    ('company_id', '=', obj().env['res.company']._company_default_get('account.account').id)]"/>
+    </record>
 </odoo>

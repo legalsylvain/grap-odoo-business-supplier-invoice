@@ -8,10 +8,13 @@
 
 <odoo>
 
+    <!-- ==================================-->
+    <!-- Relais Vert Products              -->
+    <!-- ==================================-->
+
     <record id="account_invoice_invoice2data.product_relais_vert_gazole" model="product.product">
         <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
     </record>
-
 
     <record id="account_invoice_invoice2data.product_relais_vert_interfel" model="product.product">
         <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
@@ -41,4 +44,19 @@
         <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_055')])]"/>
     </record>
 
+
+    <!-- ==================================-->
+    <!-- Brasserie Teddy Beer Products     -->
+    <!-- ==================================-->
+    <record id="account_invoice_invoice2data.product_teddy_beer_tranquille" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_teddy_beer_miel" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
+    </record>
+
+    <record id="account_invoice_invoice2data.product_teddy_beer_consigne" model="product.product">
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data_test.tax_200')])]"/>
+    </record>
 </odoo>
