@@ -102,6 +102,12 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(wizard.pdf_amount, 127.66)
         self.assertEqual(wizard.pdf_date, datetime(day=6, month=2, year=2023).date())
         self.assertEqual(wizard.pdf_date_due, False)
+        self.assertEqual(wizard.pdf_has_product_code, True)
+        self.assertEqual(wizard.pdf_has_discount, False)
+        self.assertEqual(wizard.pdf_has_discount2, False)
+        self.assertEqual(wizard.has_discount, True)
+        self.assertEqual(wizard.has_discount2, False)
+
         # Check 6 invoices lines + interfel tax = 7
         self.assertEqual(len(wizard.line_ids), 7)
 
@@ -176,6 +182,7 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(wizard.state, "line_differences")
         self.assertEqual(len(wizard.product_mapping_line_ids), 0)
         self.assertEqual(len(wizard.to_delete_invoice_line_ids), 1)
+        self.assertEqual(wizard.to_delete_invoice_line_qty, 1)
 
         # ######################
         # Part 3 : Apply Changes
