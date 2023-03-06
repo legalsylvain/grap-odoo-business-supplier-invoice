@@ -12,6 +12,7 @@
     "depends": [
         "account",
         # OCA
+        "web_notify",
         "purchase_discount",
         "account_invoice_triple_discount",
     ],
