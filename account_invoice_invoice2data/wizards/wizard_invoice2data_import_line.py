@@ -8,7 +8,10 @@ from psycopg2.extensions import AsIs
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
 from odoo.tools.misc import formatLang
+
+from odoo.addons import decimal_precision as dp
 
 
 class WizardInvoice2dataImportLine(models.TransientModel):
@@ -95,54 +98,110 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             if not invoice_line:
                 changes.append(_("New Line Creation"))
             else:
-                if invoice_line.quantity != line.pdf_quantity:
-                    changes.append(
-                        _(
-                            "Quantity : %s -> %s"
-                            % (invoice_line.quantity, line.pdf_quantity)
-                        )
-                    )
-                if invoice_line.price_unit != line.pdf_price_unit:
-                    changes.append(
-                        _(
-                            "Unit Price : %s -> %s"
-                            % (
-                                formatLang(
-                                    self.env,
-                                    invoice_line.price_unit,
-                                    currency_obj=line.currency_id,
-                                ),
-                                formatLang(
-                                    self.env,
-                                    line.pdf_price_unit,
-                                    currency_obj=line.currency_id,
-                                ),
-                            )
-                        )
-                    )
-                if invoice_line.discount != line.pdf_discount:
-                    changes.append(
-                        _(
-                            "Discount : %s%% -> %s%%"
-                            % (invoice_line.discount, line.pdf_discount)
-                        )
-                    )
-                if invoice_line.discount2 != line.pdf_discount2:
-                    changes.append(
-                        _(
-                            "Discount n°2 : %s%% -> %s%%"
-                            % (invoice_line.discount2, line.pdf_discount2)
-                        )
-                    )
-                if line.current_uom_id != line.new_uom_id:
-                    changes.append(
-                        _(
-                            "UoM : %s -> %s"
-                            % (line.current_uom_id.name, line.new_uom_id.name)
-                        )
-                    )
+                changes = [x["description"] for x in line._analyse_differences()]
+
             line.changes_description = changes and "\n".join(changes) or ""
             line.has_changes = bool(changes)
+
+    def _analyse_differences(self):
+        self.ensure_one()
+        changes = []
+        invoice_line = self.invoice_line_id
+        if float_compare(
+            invoice_line.quantity,
+            self.pdf_quantity,
+            precision_digits=dp.get_precision("Product Unit of Measure")(self.env.cr)[
+                1
+            ],
+        ):
+            changes.append(
+                {
+                    "field_name": "quantity",
+                    "name": _("Quantity"),
+                    "current_value": invoice_line.quantity,
+                    "new_value": self.pdf_quantity,
+                    "format_lang": True,
+                }
+            )
+
+        if float_compare(
+            invoice_line.price_unit,
+            self.pdf_price_unit,
+            precision_digits=self.currency_id.decimal_places,
+        ):
+            changes.append(
+                {
+                    "field_name": "price_unit",
+                    "name": _("Unit Price"),
+                    "current_value": invoice_line.price_unit,
+                    "new_value": self.pdf_price_unit,
+                    "format_lang": True,
+                }
+            )
+
+        if float_compare(
+            invoice_line.discount,
+            self.pdf_discount,
+            precision_digits=dp.get_precision("Discount")(self.env.cr)[1],
+        ):
+            changes.append(
+                {
+                    "field_name": "discount",
+                    "name": _("Discount"),
+                    "current_value": invoice_line.discount,
+                    "new_value": self.pdf_discount,
+                    "suffix": "%",
+                }
+            )
+
+        if float_compare(
+            invoice_line.discount2,
+            self.pdf_discount2,
+            precision_digits=dp.get_precision("Discount")(self.env.cr)[1],
+        ):
+            changes.append(
+                {
+                    "field_name": "discount2",
+                    "name": _("Discount n°2"),
+                    "current_value": invoice_line.discount2,
+                    "new_value": self.pdf_discount2,
+                    "suffix": "%",
+                }
+            )
+
+        if invoice_line.uom_id != self.new_uom_id:
+            changes.append(
+                {
+                    "field_name": "uom_id",
+                    "name": _("UoM"),
+                    "current_value": invoice_line.uom_id,
+                    "new_value": self.new_uom_id,
+                    "many2one": True,
+                }
+            )
+
+        for change in changes:
+            if change.get("format_lang"):
+                current_value_text = formatLang(
+                    self.env, change["current_value"], currency_obj=self.currency_id
+                )
+                new_value_text = formatLang(
+                    self.env, change["new_value"], currency_obj=self.currency_id
+                )
+            elif change.get("many2one"):
+                current_value_text = change["current_value"].name
+                new_value_text = change["new_value"].name
+            else:
+                current_value_text = change["current_value"]
+                new_value_text = change["new_value"]
+            change["description"] = _("%s : %s%s -> %s%s") % (
+                change["name"],
+                current_value_text,
+                change.get("suffix", ""),
+                new_value_text,
+                change.get("suffix", ""),
+            )
+        return changes
 
     @api.model
     def _guess_product(self, partner, line_data):
@@ -380,23 +439,11 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             if line.invoice_line_id:
                 vals = {}
                 # Update an existing invoice line
-                if line.invoice_line_id.sequence != line.sequence:
-                    vals.update({"sequence": line.sequence})
-
-                if line.invoice_line_id.quantity != line.pdf_quantity:
-                    vals.update({"quantity": line.pdf_quantity})
-
-                if line.invoice_line_id.price_unit != line.pdf_price_unit:
-                    vals.update({"price_unit": line.pdf_price_unit})
-
-                if line.invoice_line_id.uom_id != line.new_uom_id:
-                    vals.update({"uom_id": line.new_uom_id.id})
-
-                if line.invoice_line_id.discount != line.pdf_discount:
-                    vals.update({"discount": line.pdf_discount})
-
-                if line.invoice_line_id.discount2 != line.pdf_discount2:
-                    vals.update({"discount2": line.pdf_discount2})
+                for change in line._analyse_differences():
+                    if change.get("many2one"):
+                        vals.update({change["field_name"]: change["new_value"].id})
+                    else:
+                        vals.update({change["field_name"]: change["new_value"]})
 
                 if line.changes_description:
                     extra_text = _("[PDF analysis] %s") % (
