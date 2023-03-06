@@ -438,7 +438,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "uom_id": line.new_uom_id.id,
                     "discount": line.pdf_discount,
                     "discount2": line.pdf_discount2,
-                    "invoice_line_tax_ids": taxes.ids,
+                    "invoice_line_tax_ids": [(6, 0, taxes.ids)],
                 }
                 lines_vals.append((0, 0, vals))
 

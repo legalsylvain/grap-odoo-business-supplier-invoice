@@ -190,8 +190,17 @@ class TestFullWorkflow(TestModule):
         # Check impact on invoice
         self.assertEqual(self.invoice_relais_vert.reference, "FC11716389")
 
-        # Check Impact on invoice lines
+        # Check Impact on invoice lines regarding UoM
         self.assertEqual(self.invoice_line_1_arachide.uom_id, self.product_uom_kgm)
+
+        # Check Impact on new invoice line, regarding taxes
+        invoice_line_interfel = self.invoice_relais_vert.invoice_line_ids.filtered(
+            lambda x: x.product_id == self.product_interfel
+        )
+        self.assertEqual(
+            invoice_line_interfel.invoice_line_tax_ids.ids,
+            [self.tax_200.id],
+        )
 
         # #######################################
         # Part 4 : rerun the wizard with same pdf
