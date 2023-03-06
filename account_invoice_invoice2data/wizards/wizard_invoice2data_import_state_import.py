@@ -58,30 +58,6 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         if not filetype or filetype[0] != "application/pdf":
             raise UserError(_("Unimplemented file type : '%s'") % str(filetype))
 
-        # Attach the file if not yet attached
-        attachments = self.env["ir.attachment"].search(
-            [
-                ("res_model", "=", "account.invoice"),
-                ("res_id", "=", self.invoice_id.id),
-            ]
-        )
-        if not any(
-            [attachment.datas == self.invoice_file for attachment in attachments]
-        ):
-            _logger.info(
-                "Attach PDF '%s' to the account invoice #%d"
-                % (self.invoice_filename, self.invoice_id.id)
-            )
-            self.env["ir.attachment"].create(
-                {
-                    "name": self.invoice_filename,
-                    "datas": self.invoice_file,
-                    "datas_fname": self.invoice_filename,
-                    "res_model": "account.invoice",
-                    "res_id": self.invoice_id.id,
-                }
-            )
-
         # Write data in a temporary file
         fd, tmp_file_name = tempfile.mkstemp()
         try:

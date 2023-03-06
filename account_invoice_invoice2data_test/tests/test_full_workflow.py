@@ -94,9 +94,6 @@ class TestFullWorkflow(TestModule):
 
         self.assertEqual(wizard.state, "product_mapping")
 
-        # Check that attachment has been added
-        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
-
         # Check that main invoice data has been analyzed correctly
         self.assertEqual(wizard.pdf_invoice_number, "FC11716389")
         self.assertEqual(wizard.pdf_amount, 127.66)
@@ -196,6 +193,9 @@ class TestFullWorkflow(TestModule):
 
         # Check impact on invoice
         self.assertEqual(self.invoice_relais_vert.reference, "FC11716389")
+
+        # Check that attachment has been added
+        self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
 
         # Check Impact on invoice lines regarding UoM
         self.assertEqual(self.invoice_line_1_arachide.uom_id, self.product_uom_kgm)

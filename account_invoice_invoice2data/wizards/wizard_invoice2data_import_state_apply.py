@@ -12,7 +12,10 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
     def apply_changes(self):
         self.ensure_one()
         self._check_invoice_state()
+        self._apply_write_invoice()
+        self._apply_attach_file()
 
+    def _apply_write_invoice(self):
         lines_vals = self.line_ids._prepare_invoice_lines_vals()
 
         sequence = len(lines_vals)
@@ -40,3 +43,28 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
             invoice_vals.update({"date_due": self.pdf_date_due})
 
         self.invoice_id.write(invoice_vals)
+
+    def _apply_attach_file(self):
+        # Attach the file if not yet attached
+        attachments = self.env["ir.attachment"].search(
+            [
+                ("res_model", "=", "account.invoice"),
+                ("res_id", "=", self.invoice_id.id),
+            ]
+        )
+        if not any(
+            [attachment.datas == self.invoice_file for attachment in attachments]
+        ):
+            self.env["ir.attachment"].create(
+                {
+                    "name": self.invoice_filename,
+                    "datas": self.invoice_file,
+                    "datas_fname": self.invoice_filename,
+                    "res_model": "account.invoice",
+                    "res_id": self.invoice_id.id,
+                }
+            )
+            self.env.user.notify_info(
+                _("The PDF file %s has been attached to the current invoice.")
+                % self.invoice_filename
+            )

@@ -24,7 +24,7 @@ class AccountInvoice(models.Model):
 
     @api.depends("partner_id.vat", "state")
     def _compute_invoice2data_info(self):
-        for invoice in self.filtered(lambda x: x.state == "draft"):
+        for invoice in self.filtered(lambda x: x.state == "draft" and x.partner_id):
             current_vat = (invoice.partner_id.vat or "").replace(" ", "")
             if current_vat:
                 template = self.env["account.invoice2data.template"].search(
