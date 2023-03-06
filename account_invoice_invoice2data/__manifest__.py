@@ -16,7 +16,10 @@
         "account_invoice_triple_discount",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "wizards/wizard_invoice2data_import.xml",
+        "views/view_account_invoice.xml",
+        "views/view_account_invoice2data_template.xml",
     ],
     "external_dependencies": {"python": ["invoice2data", "jaro"]},
     "demo": [
