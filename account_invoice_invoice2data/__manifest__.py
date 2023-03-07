@@ -26,7 +26,11 @@
     "demo": [
         "demo/uom_uom.xml",
         "demo/res_partner.xml",
+        "demo/account_tax_group.xml",
+        "demo/account_tax.xml",
+        "demo/account_account.xml",
         "demo/product_product.xml",
+        "demo/account_invoice.xml",
     ],
     "installable": True,
 }

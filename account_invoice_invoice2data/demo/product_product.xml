@@ -14,10 +14,12 @@
 
     <record id="product_relais_vert_gazole" model="product.product">
         <field name="name">Taxe Gazole</field>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 
     <record id="product_relais_vert_interfel" model="product.product">
         <field name="name">Taxe Interfel TPF</field>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_gazole" model="product.supplierinfo">
@@ -30,6 +32,7 @@
         <field name="name">Champignon Porto Bello</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_champignon" model="product.supplierinfo">
@@ -42,6 +45,7 @@
         <field name="name">Arachide</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="account_invoice_invoice2data.uom_5_kg"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_arachide" model="product.supplierinfo">
@@ -54,6 +58,7 @@
         <field name="name">Epinard</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_epinard" model="product.supplierinfo">
@@ -66,6 +71,7 @@
         <field name="name">Yacon</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_yacon" model="product.supplierinfo">
@@ -78,12 +84,14 @@
         <field name="name">Kiwi jaune</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_relais_vert_raisin" model="product.product">
         <field name="name">Raisin sultanine n°9</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
         <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_055')])]"/>
     </record>
 
     <record id="product_supplierinfo_relais_vert_raisin" model="product.supplierinfo">
@@ -98,6 +106,7 @@
 
     <record id="product_teddy_beer_tranquille" model="product.product">
         <field name="name">Tranquille Achille - 75cl</field>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 
     <record id="product_supplierinfo_teddy_beer_tranquille" model="product.supplierinfo">
@@ -108,6 +117,7 @@
 
     <record id="product_teddy_beer_miel" model="product.product">
         <field name="name">Ô Miel - 75cl</field>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 
     <record id="product_supplierinfo_teddy_beer_miel" model="product.supplierinfo">
@@ -118,6 +128,7 @@
 
     <record id="product_teddy_beer_consigne" model="product.product">
         <field name="name">Bouteille 75cl consigné</field>
+        <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 
     <record id="product_supplierinfo_teddy_beer_consigne" model="product.supplierinfo">

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2023 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+-->
+
+<odoo>
+
+    <record id="account_expense" model="account.account">
+        <field name="code">I2D-607</field>
+        <field name="name">Invoice2data - Expense</field>
+        <field name="user_type_id" ref="account.data_account_type_expenses"/>
+    </record>
+
+    <record id="account_payable" model="account.account">
+        <field name="code">I2D-401</field>
+        <field name="reconcile" eval="True"/>
+        <field name="name">Invoice2data - Payable</field>
+        <field name="user_type_id" ref="account.data_account_type_payable"/>
+    </record>
+
+</odoo>
