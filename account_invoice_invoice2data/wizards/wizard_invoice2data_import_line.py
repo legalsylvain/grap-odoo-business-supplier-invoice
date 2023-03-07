@@ -120,7 +120,6 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "name": _("Quantity"),
                     "current_value": invoice_line.quantity,
                     "new_value": self.pdf_quantity,
-                    "format_lang": True,
                 }
             )
 
