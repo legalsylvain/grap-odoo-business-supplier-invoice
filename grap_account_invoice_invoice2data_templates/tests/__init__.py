@@ -15,6 +15,7 @@ from . import test_ferme_bio_margerie
 from . import test_ferme_des_grands_noyers
 from . import test_gonuts
 from . import test_gravier
+from . import test_helpac
 from . import test_herbiolys
 from . import test_markal
 from . import test_papilles_sauvages

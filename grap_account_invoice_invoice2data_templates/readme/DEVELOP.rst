@@ -18,10 +18,10 @@ To test your template :
 .. code-block:: shell
 
    invoice2data\
-      --exclude-built-in-templates\
-      --template-folder=./account_invoice_invoice2data_templates/templates/\
       --debug\
-      ./account_invoice_invoice2data_templates/tests/invoices/invoice.pdf
+      --exclude-built-in-templates\
+      --template-folder=./grap_account_invoice_invoice2data_templates/templates/\
+      ./grap_account_invoice_invoice2data_templates/tests/invoices/XXX.pdf
 
 Note :
 
