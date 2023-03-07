@@ -1,5 +1,4 @@
 from . import test_module
-
 from . import test_all_templates
 
 from . import test_agrosourcing
@@ -24,5 +23,6 @@ from . import test_relais_vert
 from . import test_saldac
 from . import test_scop_epice
 from . import test_senfas
+from . import test_supersec
 from . import test_t_air_de_famille
 from . import test_vitafrais
