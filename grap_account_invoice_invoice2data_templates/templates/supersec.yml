@@ -30,7 +30,7 @@ fields:
     parser: lines
     start: \s+Description.*Total TTC
     end: Total HTVA
-    line: ^\s+(?P<product_name>.*)\s+(?P<quantity>\d+(\.\d+)?)\s+(?P<price_unit>\d+\.\d+) €\s+\d+%\s+(?P<price_subtotal>\d+\.\d+) €\s+\d+\.\d+ €$
+    line: ^ +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) € +\d+% +(?P<price_subtotal>\d+\.\d+) € +\d+\.\d+ €$
     types:
       quantity: float
       price_unit: float

@@ -35,9 +35,9 @@ fields:
     value: "5"
   lines:
     parser: lines
-    start: Réf Interne.*Total HT\s+Code
-    end: Code\s+Base\s+Taux
-    line: ^\s+(?P<product_code>\w+)\s+(?P<product_name>.*)\s+(?P<quantity>\d+\.\d+)\s+(?P<unit_name>\w+)\s+(?P<brut_price_unit>\d+\.\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2|5)
+    start: Réf Interne.*Total HT +Code
+    end: Code +Base +Taux
+    line: ^ +(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+\.\d+) +(?P<unit_name>\w+) +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>2|5)
     types:
       quantity: float
       price_unit: float

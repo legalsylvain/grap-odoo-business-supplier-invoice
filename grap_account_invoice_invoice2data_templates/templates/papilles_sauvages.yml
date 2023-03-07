@@ -37,14 +37,7 @@ fields:
     parser: lines
     start:  Libellé.*Montant HT\s+TVA
     end: frais de recouvrement|Détail de la TVA
-    line: ^\s?(?P<product_code>[\d|\w]+)+
-      \s?(?P<product_name>.{60})
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s+Pièce
-      \s+(?P<price_unit>\d+\.\d+) €
-      \s+(?P<discount>\d+\.\d+)%
-      \s+(?P<price_subtotal>\d+\.\d+) €
-      \s+(?P<vat_code>5\.50|20.00)%
+    line: ^\s?(?P<product_code>[\d|\w]+)+ ?(?P<product_name>.{60}) +(?P<quantity>\d+(\.\d+)?) +Pièce +(?P<price_unit>\d+\.\d+) € +(?P<discount>\d+\.\d+)% +(?P<price_subtotal>\d+\.\d+) € +(?P<vat_code>5\.50|20.00)%
     types:
       quantity: float
       price_unit: float

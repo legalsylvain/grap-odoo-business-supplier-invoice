@@ -41,7 +41,7 @@ fields:
     value: "2"
   lines:
     parser: lines
-    start: Code et Désignation.*Montant HT\s+T
+    start: Code et Désignation.*Montant HT +T
     end: FACTURE No|Sous-total BL
     line: ^ ?(?P<product_code>\d+)(?P<product_name>.{60}) +(?P<certification>\d\d\d +)?(?P<referential>\d\d\d) +(?P<package_qty>\d+) +(?P<quantity>\d+\.\d+) +(?P<brut_price_unit>\d+\.\d+) *(?P<discount_name>(\w:\d+(\.\d+)?% )*) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d)
     types:

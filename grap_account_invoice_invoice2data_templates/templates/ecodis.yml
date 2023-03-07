@@ -35,9 +35,9 @@ fields:
     value: "1"
   lines:
     parser: lines
-    start: Désignation\s+Quantité
+    start: Désignation +Quantité
     end: Total Bon de livraison
-    line: ^\s+(?P<product_code>\w+)\s\s+(?P<product_name>.{60})\s+(?P<quantity>\d+\.\d+)\s+(?P<quantity2>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2|1)
+    line: ^ +(?P<product_code>\w+)\s +(?P<product_name>.{60}) +(?P<quantity>\d+\.\d+) +(?P<quantity2>\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>2|1)
     types:
       quantity: float
       quantity2: float

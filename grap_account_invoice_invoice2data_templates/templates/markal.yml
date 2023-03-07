@@ -45,13 +45,7 @@ fields:
     parser: lines
     start: ARTICLE\s+DESIGNATION.*MT \(EUR\)
     end: Type de ligne|TOTAL MARCHANDISES
-    line: ^\s?(?P<product_code>[A-Z0-9]+)
-      \s+(?P<product_name>.{40})(\s+\d+ CAR)?
-      \s+(?P<quantity>\d+)\s(UVC|SAC)
-      \s+(?P<brut_price_unit>\d+\.\d+)\s\/(UVC|SAC)
-      \s+(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC)
-      \s+(?P<vat_code>TN|TR)
-      \s+(?P<price_subtotal>\d+\.\d+)
+    line: ^\s?(?P<product_code>[A-Z0-9]+) +(?P<product_name>.{40})(\s+\d+ CAR)? +(?P<quantity>\d+)\s(UVC|SAC) +(?P<brut_price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<vat_code>TN|TR) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float

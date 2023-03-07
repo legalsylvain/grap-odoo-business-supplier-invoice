@@ -35,9 +35,9 @@ fields:
     value: "C20"
   lines:
     parser: lines
-    start: \s*Référence\s+.*TVA
+    start: \s*Référence +.*TVA
     end: \s*Dans le cas où
-    line: ^\s*(?P<product_code>\w+)\s+(?P<product_name>.*)\s+(?P<packaging_name>(\w|é)+)\s+(?P<quantity>\d+\.\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<discount>\d+)%\s+(?P<net_price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>C20|C55)
+    line: ^\s*(?P<product_code>\w+) +(?P<product_name>.*) +(?P<packaging_name>(\w|é)+) +(?P<quantity>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<discount>\d+)% +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>C20|C55)
     types:
       quantity: float
       price_unit: float

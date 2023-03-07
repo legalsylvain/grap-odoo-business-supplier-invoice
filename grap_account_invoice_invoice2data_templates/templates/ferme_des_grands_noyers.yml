@@ -41,7 +41,7 @@ fields:
     parser: lines
     start: Désignation.*Total HT
     end: Total HT
-    line: ^\s*(?P<product_name>.{50})\s+(?P<price_unit>\d+\.\d+) €\s+(?P<quantity>\d+)\s+(?P<vat_code>5.50%|20.00%)\s+(?P<price_subtotal>\d+\.\d+)
+    line: ^\s*(?P<product_name>.{50}) +(?P<price_unit>\d+\.\d+) € +(?P<quantity>\d+) +(?P<vat_code>5.50%|20.00%) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float

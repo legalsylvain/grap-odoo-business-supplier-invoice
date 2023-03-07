@@ -35,9 +35,9 @@ fields:
     value: "20.00%"
   lines:
     parser: lines
-    start: Référence\s+Désignation.*TVA
+    start: Référence +Désignation.*TVA
     end: Conditions générales de ventes|CONDITIONS DE REGLEMENT
-    line: ^\s*(?P<product_code>\d+)\s+(?P<product_name>.*)\s+(?P<quantity>\d+(\.\d+)?)\s+(?P<packaging_name>\w+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>5.50%|20.00%)
+    line: ^\s*(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<packaging_name>\w+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5.50%|20.00%)
     types:
       quantity: float
       price_unit: float

@@ -31,11 +31,7 @@ fields:
     parser: lines
     start:  Code.*Montant HT
     end: Produits issus
-    line: ^(?P<product_code>[\w\d]+)
-      \s+(?P<product_name>.{60})
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+(?P<price_subtotal>\d+\.\d+)
+    line: ^(?P<product_code>[\w\d]+) +(?P<product_name>.{60}) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float

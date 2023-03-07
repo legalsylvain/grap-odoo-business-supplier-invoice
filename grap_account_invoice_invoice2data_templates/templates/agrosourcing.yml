@@ -37,14 +37,7 @@ fields:
     parser: lines
     start: Code\s+  Désignation.*Mtt HT
     end: Produit issu
-    line: ^(?P<product_code>\d+)
-      \s+(?P<product_name>.*)
-      \s+(?P<quantity>\d+(\.\d+)?)\s+(?P<packaging_name>\w+)
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+(?P<discount>\d+)%
-      \s+(?P<net_price_unit>\d+\.\d+)
-      \s+(?P<vat_code>\d)
-      \s+(?P<price_subtotal>\d+\.\d+)
+    line: ^(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?)\s+(?P<packaging_name>\w+) +(?P<price_unit>\d+\.\d+) +(?P<discount>\d+)% +(?P<net_price_unit>\d+\.\d+) +(?P<vat_code>\d) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float

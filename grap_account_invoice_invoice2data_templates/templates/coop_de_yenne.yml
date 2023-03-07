@@ -32,17 +32,9 @@ fields:
     value: "V5"
   lines:
     parser: lines
-    start: Réf.\s+.*Montant HT\s+TVA
+    start: Réf. +.*Montant HT +TVA
     end: 302 957 089 00014
-    line: ^(?P<product_code>[\d|\w]+)
-      \s?(?P<product_name>.*)
-      \s+(?P<packaging_qty>\d+)
-      \s+(?P<unit_quantity>\d+(\.\d+)?)
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s+(?P<brut_price_unit>\d+\.\d+)
-      \s+(?P<price_unit>\d+\.\d+)\s+KG
-      \s+(?P<price_subtotal>\d+\.\d+)
-      \s?(?P<vat_code>V5)
+    line: ^(?P<product_code>[\d|\w]+) ?(?P<product_name>.*) +(?P<packaging_qty>\d+) +(?P<unit_quantity>\d+(\.\d+)?) +(?P<quantity>\d+(\.\d+)?) +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+)\s+KG +(?P<price_subtotal>\d+\.\d+) ?(?P<vat_code>V5)
     types:
       quantity: float
       price_unit: float

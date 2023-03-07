@@ -42,15 +42,7 @@ fields:
     parser: lines
     start: REF.*Montant HT Tva
     end: "IBAN: FR76|Clauses de réserve"
-    line: ^(?P<product_code>\w+)
-      (?P<product_name>.*)
-      \s+(BIO|ECOCERT).*
-      (?P<quantity>\d+(\.\d+)?)
-      \s+(U|KG)
-      \s+(?P<ignored_price_unit>\d+\.\d+)
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+(?P<price_subtotal>\d+\.\d+)
-      \s+(?P<vat_code>1|3)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(BIO|ECOCERT).* (?P<quantity>\d+(\.\d+)?) +(U|KG) +(?P<ignored_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>1|3)
     types:
       quantity: float
       price_unit: float

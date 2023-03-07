@@ -34,7 +34,7 @@ fields:
     parser: lines
     start: Ref Article.*TVA
     end: Total.*\s+Mode de Réglement
-    line: ^(?P<product_code>\w+)\s+(?P<product_name>.{40})\s+(?P<packaging>\d+)\s+(?P<quantity>\d+)\s+\w+\s+(?P<packaging_qty>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+\s+(?P<vat_code>5.5%)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.{40}) +(?P<packaging>\d+) +(?P<quantity>\d+) +\w+ +(?P<packaging_qty>\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) + +(?P<vat_code>5.5%)
     types:
       quantity: float
       price_unit: float

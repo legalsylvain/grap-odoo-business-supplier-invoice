@@ -34,7 +34,7 @@ fields:
     parser: lines
     start: Description.*Total HT
     end: Montant total HT
-    line: ^\s+(?P<product_name>.*)\s+SKU. (?P<product_code>\w+)\s+€(?P<price_unit>\d+\.\d+)\s+(?P<quantity>\d+)\s+€(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>5.5%)
+    line: ^ +(?P<product_name>.*) +SKU. (?P<product_code>\w+) +€(?P<price_unit>\d+\.\d+) +(?P<quantity>\d+) +€(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5.5%)
     types:
       quantity: float
       price_unit: float

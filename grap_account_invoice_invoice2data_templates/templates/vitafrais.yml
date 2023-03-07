@@ -11,18 +11,18 @@ fields:
   amount:
     parser: regex
     type: float
-    regex: TOTAL TTC\s+(\d+\.\d+)
+    regex: TOTAL TTC +(\d+\.\d+)
   amount_untaxed:
     parser: regex
     type: float
-    regex: Total HT\s+(\d+\.\d+)
+    regex: Total HT +(\d+\.\d+)
   invoice_number:
     parser: regex
-    regex: Facture n° .\s+(\d+)
+    regex: Facture n° . +(\d+)
   date:
     parser: regex
     type: date
-    regex: Date .\s+(\d{2}\/\d{2}\/\d{4})
+    regex: Date . +(\d{2}\/\d{2}\/\d{4})
   date_due:
     parser: regex
     type: date
@@ -30,7 +30,7 @@ fields:
   amount_extra_fuel_surcharge:
     parser: regex
     type: float
-    regex: Surcharge carburant\s+(\d+\.\d+)
+    regex: Surcharge carburant +(\d+\.\d+)
   vat_code_055:
     parser: static
     value: "5.50"
@@ -39,17 +39,9 @@ fields:
     value: "20.00"
   lines:
     parser: lines
-    start: Article\s+Quantité\s+ .*Total HT Taxe
+    start: Article +Quantité + .*Total HT Taxe
     end: Base taxe
-    line: ^(?P<product_code>\d+)
-      \s+(?P<product_name>.*)
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s?(UN|Kg)
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+((?P<discount>\d+)%)?
-      \s+(?P<net_price_unit>\d+\.\d+)
-      \s+(?P<price_subtotal>\d+\.\d+)
-      \s+(?P<vat_code>\d+\.\d+)
+    line: ^(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?)\s?(UN|Kg) +(?P<price_unit>\d+\.\d+) +((?P<discount>\d+)%)? +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
     types:
       quantity: float
       price_unit: float

@@ -28,9 +28,9 @@ fields:
     value: "1"
   lines:
     parser: lines
-    start: Référence\s+Désignation.*Cd
+    start: Référence +Désignation.*Cd
     end: Pénalités de retard
-    line: ^(?P<product_code>\w+)\s+(?P<product_name>.{50})\s+(?P<quantity>\d+)\s+(U|C(?P<quantity2>\d+))\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>1)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.{50}) +(?P<quantity>\d+) +(U|C(?P<quantity2>\d+)) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>1)
     types:
       quantity: float
       quantity2: float

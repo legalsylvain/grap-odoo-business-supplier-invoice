@@ -34,14 +34,7 @@ fields:
     parser: lines
     start: \s+Référence.*Total HT TVA
     end: \s+Base.*NET A PAYER
-    line: ^\s?(?P<product_code>[A-Z0-9]+)
-      \s+(?P<product_name>.{60})\s+.*
-      \s+(?P<quantity>\d+)
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+(?P<discount>\d+)%
-      \s+(?P<net_price_unit>\d+\.\d+)
-      \s+(?P<price_subtotal>\d+\.\d+)
-      \s+(?P<vat_code>20)
+    line: ^\s?(?P<product_code>[A-Z0-9]+) +(?P<product_name>.{60})\s+.* +(?P<quantity>\d+) +(?P<price_unit>\d+\.\d+) +(?P<discount>\d+)% +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>20)
     types:
       quantity: float
       price_unit: float

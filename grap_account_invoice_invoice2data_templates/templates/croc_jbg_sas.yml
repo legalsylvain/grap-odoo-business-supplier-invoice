@@ -34,14 +34,7 @@ fields:
     parser: lines
     start:  Référence.*Montant HT\s+TVA
     end: frais de recouvrement
-    line: ^(?P<product_code>[\d|\w]+)
-      \s+(?P<product_name>.{65})
-      \s+(?P<quantity>\d+(\.\d+)?)
-      \s+(?P<price_unit>\d+\.\d+)
-      (\s+(?P<discount>\d+\.\d+)\s+(?P<discount_amount>\d+\.\d+))?
-      \s+(?P<net_price_unit>\d+\.\d+)
-      \s+(?P<price_subtotal>\d+\.\d+)
-      \s+(?P<vat_code>5\.50)
+    line: ^(?P<product_code>[\d|\w]+) +(?P<product_name>.{65}) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+)(\s+(?P<discount>\d+\.\d+)\s+(?P<discount_amount>\d+\.\d+))? +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5\.50)
     types:
       quantity: float
       price_unit: float

@@ -34,13 +34,7 @@ fields:
     parser: lines
     start:   Code art.*net HT
     end: Généré le
-    line: ^(?P<product_code>[\d|\w]+)+
-      \s+(?P<product_name>.*)
-      \s+(?P<quantity>\d+(\.\d+)?) Produit
-      \s+(?P<price_unit>\d+\.\d+)
-      \s+(?P<net_price_unit>\d+\.\d+)
-      \s+(?P<vat_code>TR)
-      \s+(?P<price_subtotal>\d+\.\d+)
+    line: ^(?P<product_code>[\d|\w]+)+ +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) Produit +(?P<price_unit>\d+\.\d+) +(?P<net_price_unit>\d+\.\d+) +(?P<vat_code>TR) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float
