@@ -1,7 +1,11 @@
 issuer: Saldac
 
 keywords:
-  - "SIRET : 44206081000011"
+  # Note: Il semblerait qu'il y ait plusieurs établissements secondaire
+  # - 44206081000011
+  # - 44206081000029
+  # Du coup, on note que le SIREN
+  - "SIRET : 442060810"
   - "FR91442060810"
 
 fields:
@@ -34,7 +38,7 @@ fields:
     parser: lines
     start: Référence.*TVA
     end: Code\s+Base HT
-    line: ^\s+(?P<product_code>\w+)(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2)
+    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2)
     types:
       quantity: float
       price_unit: float
@@ -48,3 +52,8 @@ options:
   decimal_separator: '.'
   replace:
     - [',', '.']
+    # replace '1 234.56' by 1234.56
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+    # Some product are on two lines
+    - [' *(.*)\n\s+(\w+) *(\d+\ *\d+\.\d+\ *\d+\.\d+ *2)', '\g<2>   \g<1>   \g<3>']
+    - ['\s+\*spp', '  ']
