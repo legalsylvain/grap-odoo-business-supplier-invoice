@@ -54,3 +54,27 @@ class TestEkibio(TestModule):
                 }
             ],
         )
+
+    def test_ekibio_03(self):
+        self._test_supplier_template(
+            "ekibio__2023-02-17__794596.pdf",
+            line_qty=11,
+            expected_values={
+                "issuer": "Ekibio",
+                "date": datetime(day=17, month=2, year=2023),
+                "date_due": datetime(day=19, month=3, year=2023),
+                "invoice_number": "794596",
+                "amount_untaxed": 822.07,
+                "amount": 941.97,
+            },
+            expected_lines=[
+                {
+                    "product_code": "004951",
+                    "product_name": "GALETTE MAIS 120G",
+                    "vat_code": "1",
+                    "quantity": 12.0,
+                    "price_unit": 1.22,
+                    "price_subtotal": 14.64,
+                }
+            ],
+        )
