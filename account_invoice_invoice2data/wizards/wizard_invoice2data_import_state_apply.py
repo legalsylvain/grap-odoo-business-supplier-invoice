@@ -44,6 +44,8 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
 
         self.invoice_id.write(invoice_vals)
 
+        self.invoice_id.button_reset_tax_line_ids()
+
     def _apply_attach_file(self):
         # Attach the file if not yet attached
         attachments = self.env["ir.attachment"].search(

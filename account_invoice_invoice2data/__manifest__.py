@@ -14,6 +14,7 @@
         # OCA
         "web_notify",
         "purchase_discount",
+        "account_invoice_recompute_tax",
         "account_invoice_triple_discount",
     ],
     "data": [
