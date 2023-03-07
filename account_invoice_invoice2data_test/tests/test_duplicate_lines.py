@@ -14,40 +14,10 @@ class TestDuplicatesLines(TestModule):
         self.invoice_teddy_beer = self.env.ref(
             "account_invoice_invoice2data_test.invoice_teddy_beer"
         )
-        # self.partner_relais_vert = self.env.ref(
-        #     "account_invoice_invoice2data.partner_relais_vert"
-        # )
-        # self.product_kiwi = self.env.ref(
-        #     "account_invoice_invoice2data.product_relais_vert_kiwi"
-        # )
-        # self.product_interfel = self.env.ref(
-        #     "account_invoice_invoice2data.product_relais_vert_interfel"
-        # )
-        # self.product_yacon = self.env.ref(
-        #     "account_invoice_invoice2data.product_relais_vert_yacon"
-        # )
-        # self.product_arachide = self.env.ref(
-        #     "account_invoice_invoice2data.product_relais_vert_arachide"
-        # )
-        # self.invoice_line_1_arachide = self.env.ref(
-        #     "account_invoice_invoice2data_test.invoice_line_relais_vert_1_arachide"
-        # )
-        # self.tax_055 = self.env.ref("account_invoice_invoice2data_test.tax_055")
-        # self.tax_200 = self.env.ref("account_invoice_invoice2data_test.tax_200")
-
-        # self.product_uom_kgm = self.env.ref("uom.product_uom_kgm")
-        # tools.config["invoice2data_templates_dir"] = self.local_templates_dir
-
         # Prepare binary data
         self.invoice_name = "brasserie-teddy-beer__2222-12-01__FA2212-3445.pdf"
         invoice_file = open(str(self._get_invoice_path(self.invoice_name)), "rb")
         self.base64_data = base64.b64encode(invoice_file.read())
-
-        # self.bad_invoice_name = "comptoir-des-lys__2022_12_21__155753.pdf"
-        # bad_invoice_file = open(
-        #     str(self._get_invoice_path(self.bad_invoice_name)), "rb"
-        # )
-        # self.bad_base64_data = base64.b64encode(bad_invoice_file.read())
 
     def test_duplicate_lines(self):
 
@@ -100,7 +70,7 @@ class TestDuplicatesLines(TestModule):
         self.assertEqual(len(wizard.line_ids), 4)
 
         # ######################
-        # Part 2 : Apply Changes (2/2)
+        # Part 4 : Apply Changes (2/2)
         # ######################
 
         wizard.apply_changes()

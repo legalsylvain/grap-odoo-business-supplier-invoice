@@ -55,23 +55,50 @@ class AccountInvoice2dataTemplate(models.Model):
             _logger.error("Path %s doesn't exist." % local_templates_path)
             return
 
-        existing_templates = self.search([])
+        files = []
         for file in sorted(local_templates_path.iterdir()):
             if file.name.endswith(".yml") and not file.name.startswith("_"):
-                stream = open(str(file), "r")
-                try:
-                    _logger.info("Parsing '%s' supplier template file." % file.name)
-                    self._create_or_update_template(
-                        file.name, yaml.safe_load(stream), existing_templates
-                    )
-                except yaml.YAMLError:
-                    _logger.error(
-                        "Unable to parse correctly %s supplier template file."
-                        % file.name
-                    )
-                    continue
+                files.append(file)
 
-    def _prepare_template(self, file_name, yaml_vals):
+        self._update_templates(files)
+
+    def _update_templates(self, files):
+
+        up_to_date_template_ids = []
+        existing_templates = self.search([])
+
+        # Create new templates, or update existing ones
+        for file in files:
+            stream = open(str(file), "r")
+            try:
+                _logger.info("Parsing '%s' supplier template file." % file.name)
+                yaml_vals = yaml.safe_load(stream)
+
+            except yaml.YAMLError:
+                _logger.error(
+                    "Unable to parse correctly %s supplier template file." % file.name
+                )
+                continue
+
+            template_vals = self._prepare_template(file, yaml_vals)
+            existing_template = existing_templates.filtered(
+                lambda x: x.file_name == template_vals["file_name"]
+            )
+
+            if existing_template:
+                existing_template.write(template_vals)
+                up_to_date_template_ids.append(existing_template.id)
+            else:
+                new_template = self.create(template_vals)
+                existing_templates |= new_template
+                up_to_date_template_ids.append(new_template.id)
+
+        # Unlink obsolete templates
+        self.search(
+            [("id", "not in", up_to_date_template_ids), ("file_name", "!=", False)]
+        ).unlink()
+
+    def _prepare_template(self, file, yaml_vals):
         vat_values_list = [
             str(float(k.replace("vat_code_", "")) / 10) + "%"
             for k in yaml_vals["fields"].keys()
@@ -80,19 +107,7 @@ class AccountInvoice2dataTemplate(models.Model):
         return {
             "name": yaml_vals.get("issuer"),
             "vat": yaml_vals.get("fields").get("vat", {}).get("value"),
-            "file_name": file_name,
+            "file_name": file.name,
             "json_content": str(yaml_vals),
             "vat_values": " - ".join(vat_values_list),
         }
-
-    def _create_or_update_template(self, file_name, yaml_vals, existing_templates):
-        template_vals = self._prepare_template(file_name, yaml_vals)
-        existing_template = existing_templates.filtered(
-            lambda x: x.file_name == template_vals["file_name"]
-        )
-
-        if existing_template:
-            existing_template.write(template_vals)
-            return existing_template
-        else:
-            return self.create(template_vals)

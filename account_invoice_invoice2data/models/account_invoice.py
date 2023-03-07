@@ -8,14 +8,23 @@ from odoo import _, api, fields, models
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
-    invoice2data_situation = fields.Selection(
+    invoice2data_state = fields.Selection(
         compute="_compute_invoice2data_info",
         selection=[
-            ("undefined", "Undefined"),
+            ("not_applicable", "Not Applicable"),
             ("available", "Available"),
             ("not_found", "Not Found"),
             ("no_vat", "Vat Number Not Set"),
         ],
+        help="* Not Applicable:"
+        " the invoice state of the invoice doesn't allow pdf import\n"
+        " * Available:"
+        " the supplier invoice can be analyzed\n"
+        " * Not Found:"
+        " The supplier invoice can not be analyzed\n"
+        " * No VAT:"
+        " The supplier doesn't have VAT defined. Unable to"
+        " know if the invoice can be analyzed.",
     )
 
     invoice2data_message = fields.Text(
@@ -31,7 +40,7 @@ class AccountInvoice(models.Model):
                     [("vat", "=", current_vat)]
                 )
                 if template:
-                    invoice.invoice2data_situation = "available"
+                    invoice.invoice2data_state = "available"
                     invoice.invoice2data_message = (
                         _(
                             "The supplier's electronic invoice analysis"
@@ -40,16 +49,16 @@ class AccountInvoice(models.Model):
                         % template.name
                     )
                 else:
-                    invoice.invoice2data_situation = "not_found"
+                    invoice.invoice2data_state = "not_found"
                     # For the time being, do not display anything
             else:
-                invoice.invoice2data_situation = "no_vat"
+                invoice.invoice2data_state = "no_vat"
                 invoice.invoice2data_message = _(
                     "Please enter your supplier's VAT number,"
-                    " to see if the supplier's electronic invoice"
+                    " to know if the supplier's electronic invoice"
                     " analysis is available."
                 )
 
         for invoice in self.filtered(lambda x: x.state != "draft"):
-            invoice.invoice2data_situation = "undefined"
+            invoice.invoice2data_state = "not_applicable"
             invoice.invoice2data_message = False
