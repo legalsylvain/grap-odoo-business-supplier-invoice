@@ -1,8 +1,8 @@
 issuer: Markal
 
 keywords:
-  - SIRET 436 180 582 00021
-  - TVA FR 21 436 180 582
+  - "436 180 582 00021"
+  - "FR 21 436 180 582"
 
 fields:
   vat:

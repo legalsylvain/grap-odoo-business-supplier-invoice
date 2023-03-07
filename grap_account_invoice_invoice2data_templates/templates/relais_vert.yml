@@ -1,8 +1,8 @@
 issuer: Relais Vert
 
 keywords:
-  - SIRET 352 867 493 00137
-  - FR 72 352 867 493
+  - "352 867 493 00137"
+  - "FR 72 352 867 493"
 
 fields:
   vat:

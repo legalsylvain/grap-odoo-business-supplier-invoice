@@ -1,8 +1,8 @@
 issuer: Scop Epice
 
 keywords:
-  - "Siret 443 784 335 00053"
-  - "TVA Intracom FR 81 443 784 335"
+  - "443 784 335 00053"
+  - "FR 81 443 784 335"
 
 fields:
   vat:
