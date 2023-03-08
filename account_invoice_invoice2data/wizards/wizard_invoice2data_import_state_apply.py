@@ -4,6 +4,8 @@
 
 
 from odoo import _, models
+from odoo.tools.float_utils import float_compare
+from odoo.tools.misc import formatLang
 
 
 class WizardInvoice2dataImportStateApply(models.TransientModel):
@@ -14,6 +16,38 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
         self._check_invoice_state()
         self._apply_write_invoice()
         self._apply_attach_file()
+        self._check_totals()
+
+    def _check_totals(self):
+        self.ensure_one()
+        if float_compare(
+            self.pdf_amount_untaxed,
+            self.invoice_id.amount_untaxed,
+            precision_digits=self.currency_id.decimal_places,
+        ):
+            difference = abs(self.pdf_amount_untaxed - self.invoice_id.amount_untaxed)
+            if difference < 0.10:
+                self.env.user.notify_warning(
+                    _(
+                        "The total amount untaxed is a bit different from the PDF amount.\n\n"
+                        " Diferrences : (%s)"
+                        % formatLang(
+                            self.env, difference, currency_obj=self.currency_id
+                        )
+                    ),
+                    sticky=True,
+                )
+            else:
+                self.env.user.notify_danger(
+                    _(
+                        "The total amount untaxed is different from the PDF amount.\n\n"
+                        " Diferrences : (%s)"
+                        % formatLang(
+                            self.env, difference, currency_obj=self.currency_id
+                        )
+                    ),
+                    sticky=True,
+                )
 
     def _apply_write_invoice(self):
         lines_vals = self.line_ids._prepare_invoice_lines_vals()
