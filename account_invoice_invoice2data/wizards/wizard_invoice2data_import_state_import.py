@@ -95,7 +95,11 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
 
     def _update_supplier(self):
         self.ensure_one()
-        if self.pdf_vat and not self.partner_id.vat:
+        if (
+            self.pdf_vat
+            and not self.partner_id.vat
+            and not self.supplier_name_different
+        ):
             self.env.user.notify_info(
                 _("The Vat Number %s has been set to the supplier %s.")
                 % (self.pdf_vat, self.partner_id.display_name)
