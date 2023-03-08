@@ -18,7 +18,7 @@ class TestVitafrais(TestModule):
                 "invoice_number": "23013043",
                 "amount_untaxed": 453.52,
                 "amount": 478.73,
-                "amount_extra_fuel_surcharge": 1.83,
+                "amount_extra_fuel_surcharge_200": 1.83,
             },
             expected_lines=[
                 {

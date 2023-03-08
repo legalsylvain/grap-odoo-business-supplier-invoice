@@ -1,0 +1,59 @@
+issuer: Biodis
+
+keywords:
+  - "34896602900046"
+  - "FR88348966029"
+
+fields:
+  vat:
+    parser: static
+    value: "FR88348966029"
+  amount:
+    parser: regex
+    type: float
+    regex: Net à Payer TTC +(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total H.T. +(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Réf\. facture +(\w+)
+  date:
+    parser: regex
+    type: date
+    regex: DU +(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance +(\d{2}\/\d{2}\/\d{4})
+  amount_extra_fuel_surcharge_200:
+    parser: regex
+    type: float
+    regex: FRAIS ENERGIE +(\d+\.\d+) €
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_200:
+    parser: static
+    value: "2"
+  lines:
+    parser: lines
+    start: Réf.*UNITAIRE
+    end: Base TPF +TPF
+    line: ^(?P<product_code>\w+) +(?P<product_name>.{80}) +(?P<certification>(NON )?BIO|ECOCERT DETE) +(?P<barcode>\d+) +(?P<quantity>\d+(\.\d+)?) +(?P<uom_name>U|KG) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>-?\d+\.\d+) +(?P<vat_code>1|2)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    # replace '1 234.56' by 1234.56
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']

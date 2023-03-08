@@ -278,7 +278,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     @api.model
     def _get_extra_products(self):
         return {
-            "amount_extra_fuel_surcharge": {
+            "amount_extra_fuel_surcharge_200": {
                 "product_code": "CARBURANT",
                 "product_name": _("Fuel Surcharge"),
                 "vat_amount": 20.0,

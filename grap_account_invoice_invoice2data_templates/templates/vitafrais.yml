@@ -27,7 +27,7 @@ fields:
     parser: regex
     type: date
     regex: Echéance.*\n(\d{2}\/\d{2}\/\d{4})
-  amount_extra_fuel_surcharge:
+  amount_extra_fuel_surcharge_200:
     parser: regex
     type: float
     regex: Surcharge carburant +(\d+\.\d+)
