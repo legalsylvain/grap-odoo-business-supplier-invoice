@@ -68,7 +68,10 @@ class WizardInvoice2dataImport(models.TransientModel):
     )
 
     invoice_amount = fields.Monetary(
-        currency_field="currency_id", related="invoice_id.amount_total", readonly=True
+        string="Amount Vat Incl",
+        currency_field="currency_id",
+        related="invoice_id.amount_total",
+        readonly=True,
     )
 
     pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)

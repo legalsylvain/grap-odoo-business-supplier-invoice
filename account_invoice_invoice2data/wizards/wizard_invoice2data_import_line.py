@@ -288,11 +288,6 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                 "product_name": _("Taxe Interfel TPF"),
                 "vat_amount": 20.0,
             },
-            "amount_extra_discount_200": {
-                "product_code": "DISC-20.0",
-                "product_name": _("discount on products with 20.0% VAT"),
-                "vat_amount": 20.0,
-            },
             "amount_extra_trade_discount_055": {
                 "product_code": "TRADE-DISC-05.5",
                 "product_name": _("Trade Discount on products with 05.5% VAT"),

@@ -127,7 +127,7 @@
     </record>
 
     <record id="product_teddy_beer_consigne" model="product.product">
-        <field name="name">Bouteille 75cl consigné</field>
+        <field name="name">Bouteille 75cl consignée</field>
         <field name="supplier_taxes_id" eval="[(6, 0, [ref('account_invoice_invoice2data.tax_200')])]"/>
     </record>
 

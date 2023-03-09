@@ -1,0 +1,885 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * account_invoice_invoice2data
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-09 13:21+0000\n"
+"PO-Revision-Date: 2023-03-09 13:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "\" seems very different\n"
+"                        from the supplier name found in the PDF invoice \""
+msgstr "\" semble très différent\n"
+"                        du nom du fournisseur trouvé dans la facture PDF \""
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "\".\n"
+"                        Are you sure you chose the right PDF file?"
+msgstr "\".\n"
+"                        Êtes vous sûr·e d'avoir sélectionner le bon fichier?"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:118
+#, python-format
+msgid "%s\n"
+"\n"
+"Please send the pdf to the IT department for correction.\n"
+"\n"
+"At this time, you will need to manually verify the supplier invoice."
+msgstr "%s\n"
+"\n"
+"Veuillez envoyer la facture PDF au service informatique pour correction.\n"
+"\n"
+"Pour le moment, vuos devrez vérifier manuellement la facture fournisseur."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:61
+#, python-format
+msgid "%s\n"
+"[PDF analysis] Unit Price %s set to 0, because the line is not present in the PDF."
+msgstr "%s\n"
+"[analyse PDF] Le prix unitaire %s a été mis à 0, car la ligne n'est pas présente dans le PDF."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:196
+#, python-format
+msgid "%s : %s%s -> %s%s"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:50
+#, python-format
+msgid "%s not available."
+msgstr "%s non accessible."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:47
+#, python-format
+msgid "'invoice2data_templates_dir' not set in the odoo Config File"
+msgstr "'invoice2data_templates_dir' n'est pas paramétrer dans le fichier de configuration Odoo"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,help:account_invoice_invoice2data.field_account_invoice__invoice2data_state
+msgid "* Not Applicable: the invoice state of the invoice doesn't allow pdf import\n"
+" * Available: the supplier invoice can be analyzed\n"
+" * Not Found: The supplier invoice can not be analyzed\n"
+" * No VAT: The supplier doesn't have VAT defined. Unable to know if the invoice can be analyzed."
+msgstr "* Non applicable : l'état de la facture ne permet pas d'import PDF\n"
+" * Disponible: La facture du fournisseur peut être analysée\n"
+" * Non trouvé: La facture fournisseur ne peut pas être analysée\n"
+" * Pas de TVA: La fournisseur n'a pas de n° de TVA intracom défini. Impossible de savoir si la facture peut être analysée."
+
+#. module: account_invoice_invoice2data
+#: model:uom.uom,name:account_invoice_invoice2data.uom_5_kg
+msgid "5 kg"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__amount_untaxed_difference
+msgid "Amount Untaxed Difference"
+msgstr "Différence de Total HT"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_amount
+msgid "Amount Vat Incl"
+msgstr "Montant TTC"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Apply Changes"
+msgstr "Appliquer les changements"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_arachide
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_arachide_product_template
+msgid "Arachide"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: selection:account.invoice,invoice2data_state:0
+msgid "Available"
+msgstr "Disponible"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_teddy_beer_consigne
+#: model:product.template,name:account_invoice_invoice2data.product_teddy_beer_consigne_product_template
+msgid "Bouteille 75cl consignée"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_champignon
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_champignon_product_template
+msgid "Champignon Porto Bello"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__changes_description
+msgid "Changes Description"
+msgstr "Description des changements"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__create_uid
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__create_uid
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__create_date
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__create_date
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__currency_id
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__data
+msgid "Data"
+msgstr "Données"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:149
+#, python-format
+msgid "Discount"
+msgstr "Remise"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:164
+#, python-format
+msgid "Discount n°2"
+msgstr "Remise n°2"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__display_name
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__display_name
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Enter VAT"
+msgstr "Saisir le numéro de TVA"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_epinard
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_epinard_product_template
+msgid "Epinard"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__file_name
+msgid "File Name"
+msgstr "Nom de Fichier"
+
+#. module: account_invoice_invoice2data
+#: sql_constraint:account.invoice2data.template:0
+msgid "File name should be unique for invoice2data templates."
+msgstr "Le nom du fichier doit être unique dans les templates invoice2data."
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_filename
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:283
+#, python-format
+msgid "Fuel Surcharge"
+msgstr "Supplément pour le carburant"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__fuzzy_message_amount_untaxed_difference
+msgid "Fuzzy Message Amount Untaxed Difference"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__has_changes
+msgid "Has Changes"
+msgstr "A des changements"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__has_discount
+msgid "Has Discount"
+msgstr "A une remise"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__has_discount2
+msgid "Has Discount2"
+msgstr "A une remise n°2"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__id
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__id
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__id
+msgid "ID"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "If not, please provide (if not already done) the VAT number of your supplier so that the IT department can perhaps develop the invoice analysis for this supplier."
+msgstr "Dans le cas contraire, veuillez fournir si ce n'est pas déjà fait, le numéro de TVA intracom de votre fournisseur (si ce n'est pas déjà faitafin que le service informatique puisse peut-être développer l'analyse de la facture pour ce fournisseur."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "If you are used to successfully importing invoices for this supplier, please contact the IT department and mention the supplier's name, the invoice number and the PDF file."
+msgstr "Si habituellement l'import de factures pour ce fournisseur est opérationnel, veuillez contacter le service informatique en mentionnant le nom du fournisseur, le numéro de la facture, et le fichier PDF."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "If you have uploaded a pdf file from a scan, then it is normal that it does not work. The pdf analysis only works with structured pdf's sent by email by the suppliers."
+msgstr "Si vous avez téléverser un fichier PDF scanné, il est normal que cela ne fonctionne pas. L'analyse PDF fonctionnement seulement avec des fichiers PDF structuré qui sont envoyés par mail par vos fournisseurs."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+#: selection:wizard.invoice2data.import,state:0
+msgid "Import"
+msgstr "Confirmer"
+
+#. module: account_invoice_invoice2data
+#: selection:wizard.invoice2data.import,state:0
+msgid "Import Failed"
+msgstr "Echec d'import"
+
+#. module: account_invoice_invoice2data
+#: model:ir.actions.act_window,name:account_invoice_invoice2data.action_wizard_invoice2data_import
+msgid "Import Vendor Bill"
+msgstr "Importer une facture fournisseur PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model,name:account_invoice_invoice2data.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__invoice_line_id
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_difference_line_ids
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+#: selection:wizard.invoice2data.import,state:0
+msgid "Invoice Lines Differences"
+msgstr "Lignes de facture différentes"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__not_found_invoice_line_ids
+msgid "Invoice Lines not found"
+msgstr "Lignes de facture non trouvées"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Invoice Lines to Ignore"
+msgstr "Ligne de facture à ignorer"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Invoice Lines to Update"
+msgstr "Lignes de facture à mettre à jour"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__to_delete_invoice_line_ids
+msgid "Invoice Lines to delete"
+msgstr "Lignes de facture à supprimer"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice__invoice2data_message
+msgid "Invoice2Data Message"
+msgstr "Message Invoice2Data"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice__invoice2data_state
+msgid "Invoice2Data State"
+msgstr "Etat Invoice2Data"
+
+#. module: account_invoice_invoice2data
+#: model:ir.actions.act_window,name:account_invoice_invoice2data.action_account_invoice2data_template
+#: model:ir.ui.menu,name:account_invoice_invoice2data.menu_account_invoice2data_template
+msgid "Invoice2data Templates"
+msgstr "Templates Invoice2data"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__is_product_mapped
+msgid "Is Product Mapped"
+msgstr "Est un article relié"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__json_content
+msgid "Json Content"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_kiwi
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_kiwi_product_template
+msgid "Kiwi jaune"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template____last_update
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import____last_update
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__write_uid
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__write_uid
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__write_date
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__write_date
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__line_ids
+msgid "Line"
+msgstr "Ligne"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,help:account_invoice_invoice2data.field_wizard_invoice2data_import_line__sequence
+msgid "Line number in the pdf invoice."
+msgstr "Numéro de la ligne dans la facture PDF."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:269
+#, python-format
+msgid "Many products found for the supplier %s and the code '%s'. \n"
+" - %s"
+msgstr "Plusieurs produits trouvés pour le fournisseur %s et le code '%s'. \n"
+" - %s"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Map Products"
+msgstr "Relier les articles"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Mapping"
+msgstr "Liaison"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__message_vat_difference
+msgid "Message Vat Difference"
+msgstr "Message de TVA différente"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:99
+#, python-format
+msgid "New Line Creation"
+msgstr "Création d'une ligne"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__new_uom_id
+msgid "New UoM"
+msgstr "Nouvelle UdM"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:53
+#, python-format
+msgid "No template was found for invoice analysis."
+msgstr "Aucun template trouvé pour l'analyse de facture."
+
+#. module: account_invoice_invoice2data
+#: selection:account.invoice,invoice2data_state:0
+msgid "Not Applicable"
+msgstr "Indisponible"
+
+#. module: account_invoice_invoice2data
+#: selection:account.invoice,invoice2data_state:0
+msgid "Not Found"
+msgstr "Non trouvé"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Odoo Invoice Lines not found"
+msgstr "Lignes de facture Odoo non trouvées"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:475
+#, python-format
+msgid "PDF Analysis"
+msgstr "Analyse PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_file
+msgid "PDF Invoice"
+msgstr "Facture PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_amount
+msgid "Pdf Amount"
+msgstr "Montant TTC PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_amount_untaxed
+msgid "Pdf Amount Untaxed"
+msgstr "Montant HT PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_date
+msgid "Pdf Date"
+msgstr "Date de facture PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_date_due
+msgid "Pdf Date Due"
+msgstr "Date d'échéance PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_discount
+msgid "Pdf Discount"
+msgstr "Remise PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_discount2
+msgid "Pdf Discount2"
+msgstr "Remise n°2 PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_has_discount
+msgid "Pdf Has Discount"
+msgstr "A une remise PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_has_discount2
+msgid "Pdf Has Discount2"
+msgstr "A une remise n°2 PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_has_product_code
+msgid "Pdf Has Product Code"
+msgstr "A une code article PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_has_vat_mapping
+msgid "Pdf Has Vat Mapping"
+msgstr "A un mapping de TVA PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_invoice_number
+msgid "Pdf Invoice Number"
+msgstr "Numéro de facture PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_issuer
+msgid "Pdf Issuer"
+msgstr "Emetteur PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_price_subtotal
+msgid "Pdf Price Subtotal"
+msgstr "Sous-total PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_price_unit
+msgid "Pdf Price Unit"
+msgstr "Prix Unitaire PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_product_code
+msgid "Pdf Product Code"
+msgstr "Code article PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_product_name
+msgid "Pdf Product Name"
+msgstr "Nom article PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_quantity
+msgid "Pdf Quantity"
+msgstr "Qté PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__pdf_vat
+msgid "Pdf Vat"
+msgstr "TVA PDF"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__pdf_vat_amount
+msgid "Pdf Vat Amount"
+msgstr "Taux de TVA PDF"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/models/account_invoice.py:56
+#, python-format
+msgid "Please enter your supplier's VAT number, to know if the supplier's electronic invoice analysis is available."
+msgstr "Veuillez saisir le numéro de TVA Intracom de votre fournisseur, pour savoir si l'analyse de facture électronique de fournisseur est disponible."
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__product_mapping_line_ids
+msgid "Product Mapping"
+msgstr "Liaison d'article"
+
+#. module: account_invoice_invoice2data
+#: selection:wizard.invoice2data.import,state:0
+msgid "Products Mapping"
+msgstr "Liaison d'articles"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:120
+#, python-format
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_raisin
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_raisin_product_template
+msgid "Raisin sultanine n°9"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__state
+msgid "State"
+msgstr "État"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__partner_id
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_id
+msgid "Supplier Invoice"
+msgstr "Facture Fournisseur"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__supplier_name_different
+msgid "Supplier Name Different"
+msgstr "Nom du fournisseur différent"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Supplier Product Code not found"
+msgstr "Code article du fournisseur non trouvé"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__vat
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__partner_vat
+msgid "Supplier Vat Number"
+msgstr "Numéro TVA du fournisseur"
+
+#. module: account_invoice_invoice2data
+#: model:account.tax.group,name:account_invoice_invoice2data.tax_group_200
+msgid "Tax Group 20,0%"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:account.tax.group,name:account_invoice_invoice2data.tax_group_055
+msgid "Tax Group 5,5%"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_gazole
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_gazole_product_template
+msgid "Taxe Gazole"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:288
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_interfel
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_interfel_product_template
+#, python-format
+msgid "Taxe Interfel TPF"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_account_invoice2data_template_form
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Technical Information"
+msgstr "Informations techniques"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model,name:account_invoice_invoice2data.model_account_invoice2data_template
+msgid "Template for invoice2data Supplier Invoices"
+msgstr "Template Invoice2data pour les factures fournisseur"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:104
+#, python-format
+msgid "The PDF file %s has been attached to the current invoice."
+msgstr "Le fichier PDF %s a été reliée à la facture en cours."
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,help:account_invoice_invoice2data.field_wizard_invoice2data_import__partner_vat
+msgid "The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements."
+msgstr "Le numéro d'identification fiscale. Complétez-le si le contact est soumis aux taxes gouvernementales. Utilisé dans certaines déclarations juridiques."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:104
+#, python-format
+msgid "The Vat Number %s has been set to the supplier %s."
+msgstr "Le Numéro de TVA Intracom %s a été appliqué au fournisseur %s."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "The analysis of the PDF failed.<br/>"
+msgstr "L'analyse du PDF a échoué."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:218
+#, python-format
+msgid "The analysis of the PDF file for the supplier %s did not go completely well.\n"
+"- The amount of the analyzed lines is %s, but the total amount before tax is %s. (Missing Amount : %s)\n"
+" - The analysis found %d lines."
+msgstr "L'analyse du PDF pour le fournissuer %s ne s'est pas complètement bien passée.\n"
+"- Le total HT des lignes analysées est de %s, mais le total HT de la facture est de %s. (Montant manquant : %s)\n"
+" - L'analyse a trouvé %d lignes."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:182
+#, python-format
+msgid "The product %s has a VAT of %s %% at purchase, but the supplier set a VAT of %s."
+msgstr "L'articl %s a une TVA de %s %% à l'achat, mais le fournisseur applique une TVA de %s."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "The supplier name entered in Odoo \""
+msgstr "Le nom du fournisseur saisi dans Odoo\""
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/models/account_invoice.py:45
+#, python-format
+msgid "The supplier's electronic invoice analysis is available to Supplier %s."
+msgstr "L'analyse des factures électroniques est disponbile pour le fournisseur %s."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:34
+#, python-format
+msgid "The total amount untaxed is a bit different from the PDF amount.\n"
+"\n"
+" Difference : (%s)"
+msgstr "Le total HT calculé est légèrement différent de celui de la facture PDF.\n"
+"\n"
+" Différence : (%s)"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:45
+#, python-format
+msgid "The total amount untaxed is different from the PDF amount.\n"
+"\n"
+" Difference : (%s)"
+msgstr "Le total HT calculé est différent de celui de la facture PDF.\n"
+"\n"
+" Différence : (%s)"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__to_delete_invoice_line_qty
+msgid "To Delete Invoice Line Qty"
+msgstr "Nombre de ligne de facture à supprimer"
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Total Vat Excl"
+msgstr "Total HT"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:293
+#, python-format
+msgid "Trade Discount on products with 05.5% VAT"
+msgstr "Remise commerciale sur article à TVA 5,5%"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:298
+#, python-format
+msgid "Trade Discount on products with 20.0% VAT"
+msgstr "Remise commerciale sur article à TVA 20,0%"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_teddy_beer_tranquille
+#: model:product.template,name:account_invoice_invoice2data.product_teddy_beer_tranquille_product_template
+msgid "Tranquille Achille - 75cl"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:315
+#, python-format
+msgid "Unable to map the vat code '%s'"
+msgstr "Impossible de relier le code TVA '%s'"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:258
+#, python-format
+msgid "Unable to search product without product code neither product name."
+msgstr "Impossible de rechercher un article sans le code article ni le nom de l'article."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:402
+#, python-format
+msgid "Unimplemented feature : Product %s is still related many times with the supplier %s.\n"
+" Please update manually the information on the product form view."
+msgstr "Fonctionnalité non implémentée : L'article %s est déjà relié plusieurs fois au fournisseur %s.\n"
+" Veuillez mettre à jour manuellement les informations en allant sur la fiche article."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:59
+#, python-format
+msgid "Unimplemented file type : '%s'"
+msgstr "Type de fichier non implémenté : '%s'"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:134
+#, python-format
+msgid "Unit Price"
+msgstr "Prix Unitaire"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_gazole
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_interfel
+#: model:product.product,uom_name:account_invoice_invoice2data.product_teddy_beer_consigne
+#: model:product.product,uom_name:account_invoice_invoice2data.product_teddy_beer_miel
+#: model:product.product,uom_name:account_invoice_invoice2data.product_teddy_beer_tranquille
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_gazole_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_interfel_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_teddy_beer_consigne_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_teddy_beer_miel_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_teddy_beer_tranquille_product_template
+msgid "Unit(s)"
+msgstr "Unité(s)"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_amount_untaxed
+msgid "Untaxed Amount"
+msgstr "Montant HT"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:175
+#, python-format
+msgid "UoM"
+msgstr "UdM"
+
+#. module: account_invoice_invoice2data
+#: selection:account.invoice,invoice2data_state:0
+msgid "Vat Number Not Set"
+msgstr "Numéro de TVA intracom non défini"
+
+#. module: account_invoice_invoice2data
+#: sql_constraint:account.invoice2data.template:0
+msgid "Vat Number should be unique for invoice2data templates."
+msgstr "Le numéro de TVA intracom doit être unique pour les templates Invoice2data."
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__vat_values
+msgid "Vat Values"
+msgstr "Valeurs de TVA"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__wizard_id
+msgid "Wizard"
+msgstr "Assistant"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model,name:account_invoice_invoice2data.model_wizard_invoice2data_import_line
+msgid "Wizard Line to import Bill invoices via invoice2data"
+msgstr "Lignes d'assistant pour l'import de facture fournisseur via Invoice2data"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model,name:account_invoice_invoice2data.model_wizard_invoice2data_import
+msgid "Wizard to import Bill invoices via invoice2data"
+msgstr "Assistant pour l'import de facture fournisseur via Invoice2data"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_relais_vert_yacon
+#: model:product.template,name:account_invoice_invoice2data.product_relais_vert_yacon_product_template
+msgid "Yacon"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,help:account_invoice_invoice2data.field_wizard_invoice2data_import__partner_id
+msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
+msgstr "Vous pouvez chercher un contact par son nom, son numéro de TVA intracom ou son mail"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:165
+#, python-format
+msgid "You can not run this wizard on a non draft invoice"
+msgstr "Vous ne pouvez pas executer cet assistant sur une facture qui n'est pas en brouillon"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:443
+#, python-format
+msgid "[PDF analysis] %s"
+msgstr "[analyse PDF] %s"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__current_uom_id
+msgid "current UoM"
+msgstr "Actuelle UdM"
+
+#. module: account_invoice_invoice2data
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_arachide
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_champignon
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_epinard
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_kiwi
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_raisin
+#: model:product.product,uom_name:account_invoice_invoice2data.product_relais_vert_yacon
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_arachide
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_champignon
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_epinard
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_gazole
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_interfel
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_kiwi
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_raisin
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_relais_vert_yacon
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_consigne
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_miel
+#: model:product.product,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_tranquille
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_arachide_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_champignon_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_epinard_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_kiwi_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_raisin_product_template
+#: model:product.template,uom_name:account_invoice_invoice2data.product_relais_vert_yacon_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_arachide_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_champignon_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_epinard_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_gazole_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_interfel_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_kiwi_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_raisin_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_relais_vert_yacon_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_consigne_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_miel_product_template
+#: model:product.template,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_tranquille_product_template
+msgid "kg"
+msgstr ""
+
+#. module: account_invoice_invoice2data
+#: model:product.product,name:account_invoice_invoice2data.product_teddy_beer_miel
+#: model:product.template,name:account_invoice_invoice2data.product_teddy_beer_miel_product_template
+msgid "Ô Miel - 75cl"
+msgstr ""
+

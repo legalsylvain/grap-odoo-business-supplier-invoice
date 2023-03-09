@@ -18,7 +18,7 @@ class TestComptoirDesLys(TestModule):
                 "invoice_number": "155753",
                 "amount_untaxed": 308.16,
                 "amount": 369.79,
-                "amount_extra_discount_200": -34.24,
+                "amount_extra_trade_discount_200": -34.24,
             },
             expected_lines=[
                 {
