@@ -149,7 +149,7 @@
                                             attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
                                         />
                                         <field name="current_uom_id"/>
-                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"/>
+                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"  options="{'bg_color': '#D2D2FF: True'}"/>
                                         <field name="invoice_line_id"/>
                                         <field name="changes_description"/>
                                         <field name="currency_id" invisible="1"/>
