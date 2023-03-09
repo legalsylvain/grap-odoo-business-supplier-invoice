@@ -12,11 +12,12 @@
     "depends": [
         "account",
         # OCA
-        "web_notify",
+        "account_invoice_recompute_tax",
+        "account_invoice_supplier_ref_unique",
+        "account_invoice_triple_discount",
         "purchase_discount",
         "purchase_triple_discount",
-        "account_invoice_recompute_tax",
-        "account_invoice_triple_discount",
+        "web_notify",
     ],
     "data": [
         "security/ir.model.access.csv",

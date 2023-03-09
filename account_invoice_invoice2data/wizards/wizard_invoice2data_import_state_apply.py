@@ -69,7 +69,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
 
         invoice_vals = {
             "date_invoice": self.pdf_date,
-            "reference": self.pdf_invoice_number,
+            "supplier_invoice_number": self.pdf_invoice_number,
             "invoice_line_ids": lines_vals,
         }
 

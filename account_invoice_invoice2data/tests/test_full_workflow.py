@@ -189,7 +189,7 @@ class TestFullWorkflow(TestModule):
         wizard.apply_changes()
 
         # Check impact on invoice
-        self.assertEqual(self.invoice_relais_vert.reference, "FC11716389")
+        self.assertEqual(self.invoice_relais_vert.supplier_invoice_number, "FC11716389")
 
         # Check that attachment has been added
         self.assertEqual(len(self._get_attachments(self.invoice_relais_vert)), 1)
