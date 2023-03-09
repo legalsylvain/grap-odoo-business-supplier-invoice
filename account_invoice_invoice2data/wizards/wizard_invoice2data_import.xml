@@ -64,7 +64,7 @@
                         The analysis of the PDF failed.<br/>
                         <ul>
                             <li>If you have uploaded a pdf file from a scan, then it is normal that it does not work. The pdf analysis only works with structured pdf's sent by email by the suppliers.</li>
-                            <li>If you are used to successfully importing invoices for this supplier, please contact the IT department and mention the supplier's name and invoice number.</li>
+                            <li>If you are used to successfully importing invoices for this supplier, please contact the IT department and mention the supplier's name, the invoice number and the PDF file.</li>
                             <li>If not, please provide (if not already done) the VAT number of your supplier so that the IT department can perhaps develop the invoice analysis for this supplier.</li>
                         </ul>
                     </div>

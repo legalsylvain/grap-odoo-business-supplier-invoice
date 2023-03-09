@@ -50,7 +50,7 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
             raise UserError(_("%s not available.") % str(local_templates_dir))
         templates = invoice2data.extract.loader.read_templates(local_templates_dir)
         if not len(templates):
-            raise UserError(_("No Template found to for bill invoices analyze."))
+            raise UserError(_("No template was found for invoice analysis."))
 
         # Get data, and check filetype
         file_data = base64.b64decode(self.invoice_file)
@@ -102,7 +102,8 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
         ):
             self.env.user.notify_info(
                 _("The Vat Number %s has been set to the supplier %s.")
-                % (self.pdf_vat, self.partner_id.display_name)
+                % (self.pdf_vat, self.partner_id.display_name),
+                sticky=True,
             )
             self.partner_id.vat = self.pdf_vat
 

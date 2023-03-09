@@ -30,7 +30,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
                 self.env.user.notify_warning(
                     _(
                         "The total amount untaxed is a bit different from the PDF amount.\n\n"
-                        " Diferrences : (%s)"
+                        " Difference : (%s)"
                         % formatLang(
                             self.env, difference, currency_obj=self.currency_id
                         )
@@ -41,7 +41,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
                 self.env.user.notify_danger(
                     _(
                         "The total amount untaxed is different from the PDF amount.\n\n"
-                        " Diferrences : (%s)"
+                        " Difference : (%s)"
                         % formatLang(
                             self.env, difference, currency_obj=self.currency_id
                         )
