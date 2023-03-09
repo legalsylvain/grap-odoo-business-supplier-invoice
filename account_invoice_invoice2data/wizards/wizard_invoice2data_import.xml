@@ -142,14 +142,14 @@
                                         <field name="pdf_price_unit"
                                             options="{'currency_field': 'currency_id', 'field_digits': True}"
                                         />
-                                        <field name="current_uom_id"/>
-                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"/>
                                         <field name="pdf_discount"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
                                         />
                                         <field name="pdf_discount2"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
                                         />
+                                        <field name="current_uom_id"/>
+                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"/>
                                         <field name="invoice_line_id"/>
                                         <field name="changes_description"/>
                                         <field name="currency_id" invisible="1"/>
@@ -175,14 +175,14 @@
                                     <field name="pdf_price_unit"
                                             options="{'currency_field': 'currency_id', 'field_digits': True}"
                                     />
-                                    <field name="current_uom_id"/>
-                                    <field name="new_uom_id" readonly="1"/>
                                     <field name="pdf_discount"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
                                     />
                                     <field name="pdf_discount2"
                                             attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)],}"
                                     />
+                                    <field name="current_uom_id"/>
+                                    <field name="new_uom_id" readonly="1"/>
                                     <field name="pdf_price_subtotal"
                                         options="{'currency_field': 'currency_id', 'field_digits': True}"
                                         sum="Total Vat Excl"/>
