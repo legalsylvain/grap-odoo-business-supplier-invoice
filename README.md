@@ -25,8 +25,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_invoice_invoice2data](account_invoice_invoice2data/) | 12.0.1.0.3 |  | Account Invoice - Invoice2data import (GRAP)
-[account_invoice_invoice2data_templates](account_invoice_invoice2data_templates/) | 12.0.1.0.3 |  | Account Invoice - Templates for Invoice2data import (GRAP)
-[account_invoice_invoice2data_test](account_invoice_invoice2data_test/) | 12.0.1.0.3 |  | Account Invoice - Test for Invoice2data Import (GRAP)
+[grap_account_invoice_invoice2data_templates](grap_account_invoice_invoice2data_templates/) | 12.0.1.0.3 |  | Account Invoice - Templates for Invoice2data import (GRAP)
 
 [//]: # (end addons)
 
