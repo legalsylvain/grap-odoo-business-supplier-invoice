@@ -33,10 +33,6 @@ jobs:
     env:
       INVOICE2DATA_KEY: "${{ secrets.INVOICE2DATA_KEY }}"
     steps:
-      - name: Install system dependencies (Linux)
-        run: |
-          apt update
-          apt install -y tesseract-ocr poppler-utils imagemagick
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
