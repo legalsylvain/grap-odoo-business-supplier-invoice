@@ -6,20 +6,20 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import base64
-import mimetypes
-import os
-import tempfile
+import jaro
 
-import invoice2data
-
-from odoo import _, fields, models, tools
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
+from odoo.tools.misc import formatLang
 
 
 class WizardInvoice2dataImport(models.TransientModel):
     _name = "wizard.invoice2data.import"
     _description = "Wizard to import Bill invoices via invoice2data"
+
+    _JARO_DIFFERENCE_THRESHOLD = 0.9
+    _MAX_AMOUNT_UNTAXED_DIFFERENCE = 0.10
 
     invoice_file = fields.Binary(string="PDF Invoice", required=True)
 
@@ -28,6 +28,7 @@ class WizardInvoice2dataImport(models.TransientModel):
     state = fields.Selection(
         selection=[
             ("import", "Import"),
+            ("import_failed", "Import Failed"),
             ("product_mapping", "Products Mapping"),
             ("line_differences", "Invoice Lines Differences"),
         ],
@@ -51,6 +52,30 @@ class WizardInvoice2dataImport(models.TransientModel):
         readonly=True,
     )
 
+    partner_vat = fields.Char(
+        string="Supplier Vat Number", related="partner_id.vat", readonly=False
+    )
+
+    currency_id = fields.Many2one(
+        string="Currency",
+        comodel_name="res.currency",
+        related="invoice_id.currency_id",
+        readonly=True,
+    )
+
+    invoice_amount_untaxed = fields.Monetary(
+        currency_field="currency_id", related="invoice_id.amount_untaxed", readonly=True
+    )
+
+    invoice_amount = fields.Monetary(
+        string="Amount Vat Incl",
+        currency_field="currency_id",
+        related="invoice_id.amount_total",
+        readonly=True,
+    )
+
+    pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)
+
     line_ids = fields.One2many(
         comodel_name="wizard.invoice2data.import.line", inverse_name="wizard_id"
     )
@@ -66,7 +91,19 @@ class WizardInvoice2dataImport(models.TransientModel):
         comodel_name="wizard.invoice2data.import.line",
         inverse_name="wizard_id",
         string="Invoice Lines Differences",
-        domain=[("changes_description", "!=", False)],
+        domain=[("has_changes", "=", True)],
+    )
+
+    not_found_invoice_line_ids = fields.Many2many(
+        comodel_name="account.invoice.line",
+        string="Invoice Lines not found",
+        related="to_delete_invoice_line_ids",
+        store=False,
+        readonly=True,
+    )
+
+    to_delete_invoice_line_qty = fields.Integer(
+        compute="_compute_to_delete_invoice_line_qty"
     )
 
     to_delete_invoice_line_ids = fields.Many2many(
@@ -77,11 +114,175 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_invoice_number = fields.Char(readonly=True)
 
-    pdf_amount = fields.Float(readonly=True)
+    pdf_issuer = fields.Char(readonly=True)
+
+    pdf_vat = fields.Char(readonly=True)
+
+    supplier_name_different = fields.Boolean(compute="_compute_supplier_name_different")
+
+    pdf_amount_untaxed = fields.Monetary(currency_field="currency_id", readonly=True)
+
+    pdf_amount = fields.Monetary(currency_field="currency_id", readonly=True)
 
     pdf_date = fields.Date(readonly=True)
 
     pdf_date_due = fields.Date(readonly=True)
+
+    pdf_has_product_code = fields.Boolean(compute="_compute_pdf_has_product_code")
+
+    pdf_has_discount = fields.Boolean(compute="_compute_pdf_has_discount")
+
+    pdf_has_discount2 = fields.Boolean(compute="_compute_pdf_has_discount2")
+
+    pdf_has_vat_mapping = fields.Boolean(readonly=True)
+
+    has_discount = fields.Boolean(compute="_compute_has_discount")
+
+    has_discount2 = fields.Boolean(compute="_compute_has_discount2")
+
+    amount_untaxed_difference = fields.Monetary(
+        compute="_compute_fuzzy_message_amount_untaxed_difference",
+        currency_field="currency_id",
+    )
+
+    fuzzy_message_amount_untaxed_difference = fields.Text(
+        compute="_compute_fuzzy_message_amount_untaxed_difference"
+    )
+
+    message_vat_difference = fields.Text(
+        compute="_compute_message_vat_difference",
+    )
+
+    @api.model
+    def create(self, vals):
+        wizard = super().create(vals)
+        wizard._check_invoice_state()
+        return wizard
+
+    def _check_invoice_state(self):
+        self.ensure_one()
+        if self.invoice_id.state != "draft":
+            raise UserError(_("You can not run this wizard on a non draft invoice"))
+
+    @api.depends(
+        "pdf_has_vat_mapping",
+        "line_ids.pdf_vat_amount",
+        "line_ids.product_id.supplier_taxes_id",
+    )
+    def _compute_message_vat_difference(self):
+        for wizard in self.filtered(
+            lambda x: x.pdf_has_vat_mapping and x.state != "import"
+        ):
+            message_list = []
+            for line in wizard.line_ids.filtered(
+                lambda x: len(x.mapped("product_id.supplier_taxes_id")) == 1
+            ):
+                if line.pdf_vat_amount != line.product_id.supplier_taxes_id[0].amount:
+                    message_list.append(
+                        _(
+                            "The product %s has a VAT of %s %% at purchase,"
+                            " but the supplier set a VAT of %s."
+                        )
+                        % (
+                            line.product_id.display_name,
+                            line.product_id.supplier_taxes_id[0].amount,
+                            line.pdf_vat_amount,
+                        )
+                    )
+            wizard.message_vat_difference = "\n".join(message_list) or False
+
+        for wizard in self.filtered(
+            lambda x: not x.pdf_has_vat_mapping or x.state == "import"
+        ):
+            wizard.message_vat_difference = False
+
+    @api.depends("currency_id", "line_ids.pdf_price_subtotal", "pdf_amount_untaxed")
+    def _compute_fuzzy_message_amount_untaxed_difference(self):
+        for wizard in self:
+            total_amount_lines = sum(wizard.line_ids.mapped("pdf_price_subtotal"))
+            total_amount_invoice = wizard.pdf_amount_untaxed
+            currency = wizard.currency_id
+            if not total_amount_lines and not total_amount_invoice:
+                wizard.amount_untaxed_difference = 0.0
+                wizard.fuzzy_message_amount_untaxed_difference = False
+                continue
+            if not float_compare(
+                total_amount_lines,
+                total_amount_invoice,
+                precision_digits=currency.decimal_places,
+            ):
+                wizard.amount_untaxed_difference = 0.0
+                wizard.fuzzy_message_amount_untaxed_difference = False
+                continue
+            wizard.amount_untaxed_difference = total_amount_invoice - total_amount_lines
+            wizard.fuzzy_message_amount_untaxed_difference = _(
+                "The analysis of the PDF file for the supplier %s"
+                " did not go completely well.\n"
+                "- The amount of the analyzed lines is %s,"
+                " but the total amount before tax is %s."
+                " (Missing Amount : %s)\n"
+                " - The analysis found %d lines."
+            ) % (
+                wizard.pdf_issuer,
+                formatLang(wizard.env, total_amount_lines, currency_obj=currency),
+                formatLang(wizard.env, total_amount_invoice, currency_obj=currency),
+                formatLang(
+                    wizard.env, wizard.amount_untaxed_difference, currency_obj=currency
+                ),
+                len(wizard.line_ids),
+            )
+
+    @api.depends("pdf_issuer", "partner_id.name", "pdf_vat")
+    def _compute_supplier_name_different(self):
+        for wizard in self:
+            # We only check if the name is different if a vat number
+            # is present as a static value, in the template file
+            # If not present, it can be a generic template file, used
+            # for many suppliers. It's the case in a multicompany context
+            # to import sale invoices. (intercompany invoices)
+            if wizard.pdf_issuer and wizard.pdf_vat:
+                wizard.supplier_name_different = (
+                    jaro.jaro_winkler_metric(
+                        wizard.pdf_issuer.lower(), wizard.partner_id.name.lower()
+                    )
+                    < self._JARO_DIFFERENCE_THRESHOLD
+                )
+            else:
+                wizard.supplier_name_different = False
+
+    @api.depends("to_delete_invoice_line_ids")
+    def _compute_to_delete_invoice_line_qty(self):
+        for wizard in self:
+            wizard.to_delete_invoice_line_qty = len(wizard.to_delete_invoice_line_ids)
+
+    @api.depends("line_ids.pdf_product_code")
+    def _compute_pdf_has_product_code(self):
+        for wizard in self:
+            self.pdf_has_product_code = any(wizard.mapped("line_ids.pdf_product_code"))
+
+    @api.depends("line_ids.pdf_discount")
+    def _compute_pdf_has_discount(self):
+        for wizard in self:
+            self.pdf_has_discount = any(wizard.mapped("line_ids.pdf_discount"))
+
+    @api.depends("line_ids.pdf_discount2")
+    def _compute_pdf_has_discount2(self):
+        for wizard in self:
+            self.pdf_has_discount2 = any(wizard.mapped("line_ids.pdf_discount2"))
+
+    @api.depends("invoice_id.invoice_line_ids.discount")
+    def _compute_has_discount(self):
+        for wizard in self:
+            self.has_discount = any(
+                wizard.mapped("invoice_id.invoice_line_ids.discount")
+            )
+
+    @api.depends("invoice_id.invoice_line_ids.discount2")
+    def _compute_has_discount2(self):
+        for wizard in self:
+            self.has_discount2 = any(
+                wizard.mapped("invoice_id.invoice_line_ids.discount2")
+            )
 
     def _get_action_from_state(self, state):
         action = self.env["ir.actions.act_window"].for_xml_id(
@@ -91,126 +292,6 @@ class WizardInvoice2dataImport(models.TransientModel):
         action["res_id"] = self.id
         return action
 
-    def import_invoice(self):
+    def action_close(self):
         self.ensure_one()
-        result = self._extract_json_from_pdf()
-        self._initialize_wizard_invoice(result)
-        self._initialize_wizard_lines(result)
-        if not all(self.mapped("line_ids.is_product_mapped")):
-            return self._get_action_from_state("product_mapping")
-        else:
-            self._analyze_invoice_lines()
-            return self._get_action_from_state("line_differences")
-
-    def _initialize_wizard_invoice(self, result):
-        for invoice_field in ["amount", "invoice_number", "date", "date_due"]:
-            if invoice_field in result:
-                value = result[invoice_field]
-                if "date" in invoice_field:
-                    value = value.date()
-                setattr(self, "pdf_%s" % invoice_field, value)
-
-    def map_products(self):
-        self.line_ids._create_supplierinfo()
-        if not all(self.mapped("line_ids.is_product_mapped")):
-            return self._get_action_from_state("product_mapping")
-        else:
-            self._analyze_invoice_lines()
-            return self._get_action_from_state("line_differences")
-
-    def _analyze_invoice_lines(self):
-        self.line_ids._analyze_invoice_lines()
-        self.to_delete_invoice_line_ids = self.mapped(
-            "invoice_id.invoice_line_ids"
-        ).filtered(lambda x: x.id not in self.mapped("line_ids.invoice_line_id").ids)
-
-    def _initialize_wizard_lines(self, pdf_data):
-        self.line_ids.unlink()
-        WizardLine = self.env["wizard.invoice2data.import.line"]
-        WizardLine.create(WizardLine._prepare_from_pdf_data(self, pdf_data))
-
-    def _extract_json_from_pdf(self):
-        self.ensure_one()
-
-        # Load Templates
-        local_templates_dir = tools.config.get("invoice2data_templates_dir", False)
-
-        if not local_templates_dir:
-            local_templates_dir = self.env.context.get(
-                "invoice2data_templates_dir", False
-            )
-
-        if not local_templates_dir:
-            raise UserError(
-                _("'invoice2data_templates_dir' not set in the odoo Config File")
-            )
-        if not os.path.isdir(local_templates_dir):
-            raise UserError(_("%s not available.") % str(local_templates_dir))
-        templates = invoice2data.extract.loader.read_templates(local_templates_dir)
-        if not len(templates):
-            raise UserError(_("No Template found to for bill invoices analyze."))
-
-        # Get data, and check filetype
-        file_data = base64.b64decode(self.invoice_file)
-        filetype = mimetypes.guess_type(self.invoice_filename)
-        if not filetype or filetype[0] != "application/pdf":
-            raise UserError(_("Unimplemented file type : '%s'") % str(filetype))
-
-        # Write data in a temporary file
-        fd, tmp_file_name = tempfile.mkstemp()
-        try:
-            os.write(fd, file_data)
-        finally:
-            os.close(fd)
-
-        try:
-            result = invoice2data.main.extract_data(tmp_file_name, templates=templates)
-        except Exception as e:
-            raise UserError(_("PDF Invoice parsing failed. Error message: %s") % e)
-        if not result:
-            raise UserError(_("This PDF invoice doesn't match a known templates"))
-
-        return result
-
-    def apply_changes(self):
-        self.ensure_one()
-        lines_vals = [x._prepare_invoice_line_vals() for x in self.line_ids]
-
-        sequence = len(lines_vals)
-        for line in self.to_delete_invoice_line_ids:
-            sequence += 1
-            line_vals = {
-                "sequence": sequence,
-                "price_unit": 0,
-                "name": _(
-                    "%s\n"
-                    "[PDF analysis] Unit Price %s set to 0,"
-                    " because the line is not present in the PDF."
-                )
-                % (line.name, line.quantity),
-            }
-            lines_vals.append((1, line.id, line_vals))
-
-        vals = {
-            "invoice_line_ids": lines_vals,
-        }
-        if self.pdf_date:
-            vals.update(
-                {
-                    "date_invoice": self.pdf_date,
-                }
-            )
-        if self.pdf_date_due:
-            vals.update(
-                {
-                    "date_due": self.pdf_date_due,
-                }
-            )
-        if self.pdf_invoice_number:
-            vals.update(
-                {
-                    "reference": self.pdf_invoice_number,
-                }
-            )
-
-        self.invoice_id.write(vals)
+        return

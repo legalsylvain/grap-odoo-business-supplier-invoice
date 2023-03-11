@@ -6,7 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
-account_invoice_invoice2data_templates/tests/invoices/*.pdf
+account_invoice_invoice2data/tests/invoices/*.pdf
+grap_account_invoice_invoice2data_templates/tests/invoices/*.pdf
 
 
 # Distribution / packaging

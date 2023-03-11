@@ -1,0 +1,53 @@
+issuer: Ecodis
+
+keywords:
+  - "42921631000046"
+  - "FR35429216310"
+
+fields:
+  vat:
+    parser: static
+    value: "FR35429216310"
+  amount:
+    parser: regex
+    type: float
+    regex: \*(\d+.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT.*\s+(\d+.\d+)
+  invoice_number:
+    parser: regex
+    regex: Numéro pièce.*\n\s+\d{2}\/\d{2}\/\d{4}\s+(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date.*\n\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance\n.*(\d{2}\/\d{2}\/\d{4})\n
+  vat_code_055:
+    parser: static
+    value: "2"
+  vat_code_200:
+    parser: static
+    value: "1"
+  lines:
+    parser: lines
+    start: Désignation +Quantité
+    end: Total Bon de livraison
+    line: ^ +(?P<product_code>\w+)\s +(?P<product_name>.{60}) +(?P<quantity>\d+\.\d+) +(?P<quantity2>\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>2|1)
+    types:
+      quantity: float
+      quantity2: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

@@ -1,0 +1,57 @@
+issuer: Saldac
+
+keywords:
+  # Note: Il semblerait qu'il y ait plusieurs établissements secondaire
+  # - 44206081000011
+  # - 44206081000029
+  - "FR91442060810"
+
+fields:
+  vat:
+    parser: static
+    value: "FR91442060810"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture N°.*\s+(FA\d+\/\d+)
+  date:
+    parser: regex
+    type: date
+    regex: FA\d+\/\d+\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: FA\d+\/\d+\s+\d{2}\/\d{2}\/\d{4}.*(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "2"
+  lines:
+    parser: lines
+    start: Référence.*TVA
+    end: Code\s+Base HT
+    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    # replace '1 234.56' by 1234.56
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+    # Some product are on two lines
+    - [' *(.*)\n\s+(\w+) *(\d+\ *\d+\.\d+\ *\d+\.\d+ *2)', '\g<2>   \g<1>   \g<3>']
+    - ['\s+\*spp', '  ']

@@ -1,0 +1,50 @@
+issuer: Ferme Bio Margerie
+
+keywords:
+  - "388 461 808 00015"
+  - "Fr 82 388 461 808"
+
+fields:
+  vat:
+    parser: static
+    value: "FR82388461808"
+  amount:
+    parser: regex
+    type: float
+    regex: TTC net à payer\s+(\d+\.\d+) €
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+) €
+  invoice_number:
+    parser: regex
+    regex: N° Facture\s+(FA\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance .\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "5.5%"
+  lines:
+    parser: lines
+    start: Ref Article.*TVA
+    end: Total.*\s+Mode de Réglement
+    line: ^(?P<product_code>\w+) +(?P<product_name>.{40}) +(?P<packaging>\d+) +(?P<quantity>\d+) +\w+ +(?P<packaging_qty>\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) + +(?P<vat_code>5.5%)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

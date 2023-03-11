@@ -1,0 +1,58 @@
+issuer: Vitafrais
+
+keywords:
+  - "43945915700053"
+  - "FR43439459157"
+
+fields:
+  vat:
+    parser: static
+    value: "FR43439459157"
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL TTC +(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT +(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture n° . +(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date . +(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*\n(\d{2}\/\d{2}\/\d{4})
+  amount_extra_fuel_surcharge_200:
+    parser: regex
+    type: float
+    regex: Surcharge carburant +(\d+\.\d+)
+  vat_code_055:
+    parser: static
+    value: "5.50"
+  vat_code_200:
+    parser: static
+    value: "20.00"
+  lines:
+    parser: lines
+    start: Article +Quantité + .*Total HT Taxe
+    end: Base taxe
+    line: ^(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?)\s?(UN|Kg) +(?P<price_unit>\d+\.\d+) +((?P<discount>\d+)%)? +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['\sBIO\s', '']

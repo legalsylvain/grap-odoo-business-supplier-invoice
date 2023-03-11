@@ -1,0 +1,49 @@
+issuer: Supersec
+
+keywords:
+  - "BE0841839838"
+
+fields:
+  vat:
+    parser: static
+    value: "BE0841839838"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Numéro\s+(SS_\d+\s+\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date\s+(\d{2}\/\d{2}\/\d{4}).*\s+Date
+  date_due:
+    parser: regex
+    type: date
+    regex: avant le (\d{2}\/\d{2}\/\d{4})
+  lines:
+    parser: lines
+    start: \s+Description.*Total TTC
+    end: Total HTVA
+    line: ^ +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) € +\d+% +(?P<price_subtotal>\d+\.\d+) € +\d+\.\d+ €$
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['\*', '']
+    # Remove price unit that are just after the name
+    - ['- \d+(\.\d+)?€ \/\s+(Kg)?', '    ']

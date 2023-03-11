@@ -1,0 +1,53 @@
+issuer: Papilles Sauvages
+
+keywords:
+  - "84414600100020"
+  - "FR39844146001"
+
+fields:
+  vat:
+    parser: static
+    value: "FR39844146001"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: N° .\s+(FAC\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date .\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance\(s\)\s+\d+\.\d+ €\s+au\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "5.50"
+  vat_code_200:
+    parser: static
+    value: "20.00"
+  lines:
+    parser: lines
+    start:  Libellé.*Montant HT\s+TVA
+    end: frais de recouvrement|Détail de la TVA
+    line: ^\s?(?P<product_code>[\d|\w]+)+ ?(?P<product_name>.{60}) +(?P<quantity>\d+(\.\d+)?) +Pièce +(?P<price_unit>\d+\.\d+) € +(?P<discount>\d+\.\d+)% +(?P<price_subtotal>\d+\.\d+) € +(?P<vat_code>5\.50|20.00)%
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

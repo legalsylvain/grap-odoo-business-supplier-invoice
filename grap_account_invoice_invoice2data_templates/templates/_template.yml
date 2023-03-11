@@ -1,0 +1,55 @@
+issuer: XXX
+
+keywords:
+  - "SIRETXXX"
+  - VATXXX
+
+fields:
+  vat:
+    parser: static
+    value: "VATXXX"
+  amount:
+    parser: regex
+    type: float
+    regex: (\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: (\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: XXX
+  date:
+    parser: regex
+    type: date
+    regex: (\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: (\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "XXX"
+  vat_code_200:
+    parser: static
+    value: "XXX"
+  lines:
+    parser: lines
+    start: XXX
+    end: XXX
+    line: (?P<product_code>\w+)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    # replace '1 234.56' by 1234.56
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']

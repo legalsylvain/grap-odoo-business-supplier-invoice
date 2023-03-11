@@ -1,0 +1,53 @@
+issuer: Senfas
+
+keywords:
+  - "37940287800043"
+  - "FR73379402878"
+
+fields:
+  vat:
+    parser: static
+    value: "FR73379402878"
+  amount:
+    parser: regex
+    type: float
+    regex: Total\s+\d+\.\d+\s+\d+\.\d+\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total\s+(\d+\.\d+)\s+\d+\.\d+\s+\d+\.\d+
+  invoice_number:
+    parser: regex
+    regex: Facture\s+\d{2}\/\d{2}\/\d{2}\s+(FA\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Facture\s+(\d{2}\/\d{2}\/\d{2})
+  date_due:
+    parser: regex
+    type: date
+    regex: Conditions de règlement . le (\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "C55"
+  vat_code_200:
+    parser: static
+    value: "C20"
+  lines:
+    parser: lines
+    start: \s*Référence +.*TVA
+    end: \s*Dans le cas où
+    line: ^\s*(?P<product_code>\w+) +(?P<product_name>.*) +(?P<packaging_name>(\w|é)+) +(?P<quantity>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<discount>\d+)% +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>C20|C55)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

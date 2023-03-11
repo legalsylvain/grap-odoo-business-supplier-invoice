@@ -1,0 +1,57 @@
+issuer: La Ferme des Grands Noyers
+
+keywords:
+  - "34361441800022"
+  - "FR16343614418"
+
+fields:
+  vat:
+    parser: static
+    value: "FR16343614418"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: (FV \d+ \d+)\s+\d{2}\/\d{2}\/\d{4}
+  date:
+    parser: regex
+    type: date
+    regex: FV \d+ \d+\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: au plus tard le\s+(\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "5.50%"
+  vat_code_200:
+    parser: static
+    value: "20.00%"
+  fuzzy_total_amount_untaxed:
+    parser: static
+    value: true
+    type: boolean
+  lines:
+    parser: lines
+    start: Désignation.*Total HT
+    end: Total HT
+    line: ^\s*(?P<product_name>.{50}) +(?P<price_unit>\d+\.\d+) € +(?P<quantity>\d+) +(?P<vat_code>5.50%|20.00%) +(?P<price_subtotal>\d+\.\d+)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

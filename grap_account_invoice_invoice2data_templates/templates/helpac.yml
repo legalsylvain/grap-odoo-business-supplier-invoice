@@ -1,0 +1,53 @@
+issuer: Helpac
+
+keywords:
+  - "34797509600046"
+  - "FR48347975096"
+
+fields:
+  vat:
+    parser: static
+    value: "FR48347975096"
+  amount:
+    parser: regex
+    type: float
+    regex: N° Facture.*\s+\d+\.\d+\s+\d+\.\d+%\s+\d+\.\d+\s+(\d+\.\d+)\n
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: N° Facture.*\s+(\d+\.\d+)\s+\d+\.\d+%\s+\d+\.\d+\s+\d+\.\d+\n
+  invoice_number:
+    parser: regex
+    regex: FACTURE N° (\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date . (\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance . (\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "2"
+  vat_code_200:
+    parser: static
+    value: "5"
+  lines:
+    parser: lines
+    start: Réf Interne.*Total HT +Code
+    end: Code +Base +Taux
+    line: ^ +(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+\.\d+) +(?P<unit_name>\w+) +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>2|5)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']

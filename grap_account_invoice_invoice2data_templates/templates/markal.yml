@@ -1,0 +1,70 @@
+issuer: Markal
+
+keywords:
+  - "436 180 582 00021"
+  - "FR 21 436 180 582"
+
+fields:
+  vat:
+    parser: static
+    value: "FR21436180582"
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL T.T.C.\n.*\n.*\s+(\d+\.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL T.T.C.\n.*\n\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture\s+(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date de facturation\n.*(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: ECHEANCE.*\n\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "TR"
+  vat_code_200:
+    parser: static
+    value: "TN"
+  amount_extra_trade_discount_055:
+    parser: regex
+    type: float
+    regex: \s+-\d+\.\d+\s+%\s+TR\s+(-\d+\.\d+)
+  amount_extra_trade_discount_200:
+    parser: regex
+    type: float
+    regex: \s+-\d+\.\d+\s+%\s+TN\s+(-\d+\.\d+)
+  lines:
+    parser: lines
+    start: ARTICLE\s+DESIGNATION.*MT \(EUR\)
+    end: Type de ligne|TOTAL MARCHANDISES
+    line: ^\s?(?P<product_code>[A-Z0-9]+) +(?P<product_name>.{40})(\s+\d+ CAR)? +(?P<quantity>\d+)\s(UVC|SAC) +(?P<brut_price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<vat_code>TN|TR) +(?P<price_subtotal>\d+\.\d+)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    - [',', '.']
+    - ['°', '']
+    - ['\*', '']
+    # Certains codes produits ont un retour
+    # à la ligne qui génère le pattern suivant
+    # ligne 1 : debut de product_code
+    # ligne 2 : toutes les données
+    # ligne 3 : fin de product_code
+    # on substitue pour avoir partie 1 + partie 3 + partie 2
+    - ['\s(\w+)\n(.*\d+\.\d+)\n\s(\w+)', '\g<1>\g<3>\g<2>']

@@ -10,7 +10,12 @@
 
     <record id="partner_relais_vert" model="res.partner">
         <field name="name">Relais Vert</field>
-        <field name="vat">FR 72 352 867 493</field>
+        <field name="supplier" eval="True"/>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="partner_teddy_beer" model="res.partner">
+        <field name="name">Brasserie Teddy Beer</field>
         <field name="supplier" eval="True"/>
         <field name="company_type">company</field>
     </record>

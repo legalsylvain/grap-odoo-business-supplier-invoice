@@ -13,51 +13,150 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"/>
+                    <field name="state" widget="statusbar" statusbar_visible="import,product_mapping,line_differences"/>
                 </header>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('fuzzy_message_amount_untaxed_difference', '=', False)]}">
+                        <field name="fuzzy_message_amount_untaxed_difference"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('message_vat_difference', '=', False)]}">
+                        <field name="message_vat_difference"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                        attrs="{'invisible': [('supplier_name_different', '=', False)]}">
+                        The supplier name entered in Odoo "<b><field name="partner_id"/></b>" seems very different
+                        from the supplier name found in the PDF invoice "<b><field name="pdf_issuer"/></b>".
+                        Are you sure you chose the right PDF file?
+                    </div>
                 <group name="group_import" col="4" >
-                    <field name="invoice_file" filename="invoice_filename"/>
-                    <field name="invoice_filename" force_save="1"/>
                     <field name="invoice_id" force_save="1"/>
                     <field name="partner_id"/>
-                    <field name="pdf_invoice_number" attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
-                    <field name="pdf_amount" attrs="{'invisible': [('pdf_amount', '=', False)]}"/>
-                    <field name="pdf_date" attrs="{'invisible': [('pdf_date', '=', False)]}"/>
-                    <field name="pdf_date_due" attrs="{'invisible': [('pdf_date_due', '=', False)]}"/>
+                    <field name="invoice_file" filename="invoice_filename" states="import"/>
+                    <field name="invoice_filename" force_save="1" states="import"/>
+                    <field name="pdf_invoice_number"
+                        attrs="{'invisible': [('pdf_invoice_number', '=', False)]}"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="to_delete_invoice_line_qty" invisible="1"/>
+                    <field name="pdf_has_product_code" invisible="1"/>
+                    <field name="pdf_has_discount" invisible="1"/>
+                    <field name="pdf_has_discount2" invisible="1"/>
+                    <field name="pdf_has_vat_mapping" invisible="1"/>
+                    <field name="has_discount" invisible="1"/>
+                    <field name="has_discount2" invisible="1"/>
+                    <field name="supplier_name_different" invisible="1"/>
                 </group>
+                <group name="group_import_result" col="4" states="product_mapping,line_differences">
+                    <field name="pdf_date"/>
+                    <field name="pdf_date_due"/>
+                    <newline/>
+                    <field name="pdf_amount_untaxed" widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="invoice_amount_untaxed" widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="pdf_amount" widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="invoice_amount" widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </group>
+                <group name="import_failed" col="2" states="import_failed">
+                    <div class="alert alert-warning" role="alert" colspan="2">
+                        The analysis of the PDF failed.<br/>
+                        <ul>
+                            <li>If you have uploaded a pdf file from a scan, then it is normal that it does not work. The pdf analysis only works with structured pdf's sent by email by the suppliers.</li>
+                            <li>If you are used to successfully importing invoices for this supplier, please contact the IT department and mention the supplier's name, the invoice number and the PDF file.</li>
+                            <li>If not, please provide (if not already done) the VAT number of your supplier so that the IT department can perhaps develop the invoice analysis for this supplier.</li>
+                        </ul>
+                    </div>
+                    <field name="partner_vat" attrs="{'required': [('state', '=', 'import_failed')]}"/>
+                </group>
+
                 <group>
                     <notebook>
-                        <page string="Product Mapping" states="product_mapping">
-                            <field name="product_mapping_line_ids" nolabel="1">
-                                <tree editable="bottom" create="false" delete="false">
-                                    <field name="sequence"/>
-                                    <field name="pdf_product_code"/>
-                                    <field name="pdf_product_name"/>
-                                    <field name="pdf_quantity"/>
-                                    <field name="pdf_price_unit"/>
-                                    <field name="pdf_discount"/>
-                                    <field name="is_product_mapped" invisible="1"/>
-                                    <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': 'red: product_id==False'}"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Invoice Lines Differences" states="line_differences">
-                            <group string="Invoice Lines to Update">
-
-                                <field name="invoice_difference_line_ids" nolabel="1">
+                        <page string="Mapping" states="product_mapping">
+                            <group string="Supplier Product Code not found">
+                                <field name="product_mapping_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
-                                        <field name="pdf_product_code"/>
+                                        <field name="pdf_product_code"
+                                            attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                        />
                                         <field name="pdf_product_name"/>
+                                        <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                        />
                                         <field name="pdf_quantity"/>
-                                        <field name="pdf_price_unit"/>
-                                        <field name="pdf_discount"/>
-                                        <field name="invoice_line_id"/>
-                                        <field name="changes_description"/>
+                                        <field name="pdf_price_unit"
+                                            options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                        />
+                                        <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
+                                        />
+                                        <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
+                                        />
+                                        <field name="is_product_mapped" invisible="1"/>
+                                        <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}" options="{'bg_color': '#D2D2FF: product_id==False'}"/>
+                                        <field name="currency_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </group>
-                            <group string="Invoice Lines to Remove">
+                            <group string="Odoo Invoice Lines not found" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                                <field name="not_found_invoice_line_ids" nolabel="1">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"
+                                            options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                        />
+                                        <field name="uom_id"/>
+                                        <field name="discount"
+                                            attrs="{'column_invisible': [('parent.has_discount', '=', False)],}"
+                                        />
+                                        <field name="discount2"
+                                            attrs="{'column_invisible': [('parent.has_discount2', '=', False)],}"
+                                        />
+                                        <field name="price_subtotal"
+                                            options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                        />
+                                        <field name="currency_id" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Invoice Lines Differences" states="line_differences">
+                            <group string="Invoice Lines to Update">
+                                <field name="invoice_difference_line_ids" nolabel="1">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="sequence"/>
+                                        <field name="pdf_product_code"
+                                            attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                        />
+                                        <field name="pdf_product_name"/>
+                                        <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                        />
+                                        <field name="pdf_quantity"/>
+                                        <field name="pdf_price_unit"
+                                            options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                        />
+                                        <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)]}"
+                                        />
+                                        <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)]}"
+                                        />
+                                        <field name="current_uom_id"/>
+                                        <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"  options="{'bg_color': '#D2D2FF: True'}"/>
+                                        <field name="invoice_line_id"/>
+                                        <field name="changes_description"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Invoice Lines to Ignore" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
                                 <field name="to_delete_invoice_line_ids" nolabel="1" />
                             </group>
                         </page>
@@ -65,15 +164,33 @@
                             <field name="line_ids" nolabel="1">
                                 <tree editable="bottom" create="false" delete="false">
                                     <field name="sequence"/>
-                                    <field name="pdf_product_code"/>
+                                    <field name="pdf_product_code"
+                                        attrs="{'column_invisible': [('parent.pdf_has_product_code', '=', False)]}"
+                                    />
                                     <field name="pdf_product_name"/>
+                                    <field name="pdf_vat_amount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_vat_mapping', '=', False)]}"
+                                    />
                                     <field name="pdf_quantity"/>
-                                    <field name="pdf_price_unit"/>
-                                    <field name="pdf_discount"/>
+                                    <field name="pdf_price_unit"
+                                            options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                    />
+                                    <field name="pdf_discount"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount', '=', False)],}"
+                                    />
+                                    <field name="pdf_discount2"
+                                            attrs="{'column_invisible': [('parent.pdf_has_discount2', '=', False)],}"
+                                    />
+                                    <field name="current_uom_id"/>
+                                    <field name="new_uom_id" readonly="1"/>
+                                    <field name="pdf_price_subtotal"
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                        sum="Total Vat Excl"/>
                                     <field name="is_product_mapped" invisible="1"/>
-                                    <field name="product_id" required="1" attrs="{'readonly': [('is_product_mapped', '=', True)]}"/>
+                                    <field name="product_id" readonly="1"/>
                                     <field name="invoice_line_id" />
                                     <field name="changes_description" />
+                                    <field name="currency_id" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -83,6 +200,7 @@
                 </group>
                 <footer>
                     <button name="import_invoice" type="object" class="btn-primary" string="Import" states="import"/>
+                    <button name="action_close" type="object" class="btn-primary" string="Enter VAT" states="import_failed"/>
                     <button name="map_products" type="object" class="btn-primary" string="Map Products" states="product_mapping"/>
                     <button name="apply_changes" type="object" class="btn-primary" string="Apply Changes" states="line_differences"/>
                 </footer>
