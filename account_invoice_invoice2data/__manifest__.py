@@ -25,7 +25,10 @@
         "views/view_account_invoice.xml",
         "views/view_account_invoice2data_template.xml",
     ],
-    "external_dependencies": {"python": ["invoice2data", "jaro"]},
+    "external_dependencies": {
+        "python": ["invoice2data", "jaro"],
+        "deb": ["tesseract-ocr", "poppler-utils", "imagemagick"],
+    },
     "demo": [
         "demo/uom_uom.xml",
         "demo/res_partner.xml",
