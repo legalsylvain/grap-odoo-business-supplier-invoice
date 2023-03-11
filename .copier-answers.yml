@@ -1,11 +1,12 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: 1e045d8
+_commit: 5a39237
 _src_path: https://github.com/grap/oca-addons-repo-template-new.git
 ci: GitHub
 dependency_installation_mode: PIP
 generate_requirements_txt: true
 github_check_license: true
-github_ci_extra_env: {}
+github_ci_extra_env:
+    INVOICE2DATA_KEY: ${{ secrets.INVOICE2DATA_KEY }}
 github_enable_codecov: true
 github_enable_makepot: false
 github_enable_stale_action: false

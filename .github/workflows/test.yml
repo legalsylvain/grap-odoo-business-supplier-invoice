@@ -1,4 +1,4 @@
-name: test Odoo addons
+name: tests
 
 on:
   pull_request:
@@ -11,13 +11,16 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container: ${{ matrix.container }}
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.6-odoo12.0:latest
+            makepot: "false"
+            name: test with Odoo
     services:
       postgres:
         image: postgres:9.6
@@ -27,6 +30,8 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    env:
+      INVOICE2DATA_KEY: "${{ secrets.INVOICE2DATA_KEY }}"
     steps:
       - name: Install system dependencies (Linux)
         run: |
@@ -41,16 +46,9 @@ jobs:
         run: manifestoo -d . check-licenses
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
+        continue-on-error: true
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
-        env:
-          INVOICE2DATA_KEY: ${{ secrets.INVOICE2DATA_KEY }}
-          TEST_10: ${{ secrets.YOUR_SECRET_REPOSITORY_LEGALSYLVAIN_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
-          TEST_11: ${{ secrets.YOUR_SECRET_REPOSITORY_GRAP_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
-          TEST_12: ${{ secrets.YOUR_SECRET_ORGANIZATION_GRAP }}
-          TEST_20: ${{ vars.YOUR_VARIABLE_REPOSITORY_LEGALSYLVAIN_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
-          TEST_21: ${{ vars.YOUR_VARIABLE_REPOSITORY_GRAP_GRAP_ODOO_BUSINESS_SUPPLIER_INVOICE }}
-          TEST_22: ${{ vars.YOUR_VARIABLE_ORGANIZATION_GRAP }}
         run: oca_run_tests
       - uses: codecov/codecov-action@v1
