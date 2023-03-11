@@ -14,12 +14,28 @@ Account Invoice - Templates for Invoice2data import (GRAP)
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-grap%2Fgrap--odoo--business--supplier--invoice-lightgray.png?logo=github
-    :target: https://github.com/grap/grap-odoo-business-supplier-invoice/tree/12.0/account_invoice_invoice2data_templates
+    :target: https://github.com/grap/grap-odoo-business-supplier-invoice/tree/12.0/grap_account_invoice_invoice2data_templates
     :alt: grap/grap-odoo-business-supplier-invoice
 
 |badge1| |badge2| |badge3| 
 
 This module contains invoice2data templates for GRAP company.
+
+**Suppliers**
+
+- Agrosourcing
+- Comptoir des Lys
+- Coop de Yenne
+- Croc JBG SAS
+- Ekibio
+- Gonuts
+- Gravier
+- Markal
+- Papilles Sauvages
+- Relais Local
+- Relais Vert
+- T'air de Famille
+- Vitafrais
 
 **Table of contents**
 
@@ -31,6 +47,33 @@ Development
 
 The module analyse the PDF using ``invoice2data`` python library.
 (https://github.com/invoice-x/invoice2data)
+
+
+**To develop a template for a new supplier**
+
+1. put the PDF in the folder ``./account_invoice_invoice2data_templates/tests/invoices``
+   with the name ``supplier-name__date-invoice__invoice-number.pdf``
+
+2. create a new test in ``./account_invoice_invoice2data_templates/tests/``
+   named ``test_supplier_name.pdf``
+
+3. create a new template in ``./account_invoice_invoice2data_templates/templates/``
+   named ``supplier_name.yml``
+
+To test your template :
+
+.. code-block:: shell
+
+   invoice2data\
+      --debug\
+      --exclude-built-in-templates\
+      --template-folder=./grap_account_invoice_invoice2data_templates/templates/\
+      ./grap_account_invoice_invoice2data_templates/tests/invoices/XXX.pdf
+
+Note :
+
+Use ``--debug`` if you want to have the text extracted from the pdf.
+You can then test your regular expression with https://regex101.com/.
 
 **Regex Attention**
 
@@ -58,30 +101,22 @@ is equivalent to
 Known issues / Roadmap
 ======================
 
-- Write Tests !
+**Ignored Supliers**
 
-- Add encryption mechanism to allow to push real invoices
-  on public git repository.
+- Jardins de Gaia :
+  Retours à la ligne de l'enfer dans les lignes des produits.
+  Présence de texte invisible.
 
-**Supplier To do**
+- Olival d'Ouro, Terre de Sens :
+  Facture avec des TVA manquantes. Compliqué de parser un tableau avec un champ
+  obligatoire qui n'est pas tout le temps mis.
 
-- Markal
-- jardin de Gaia
-- gravier
-- comptoir des lys
+- Pronatura :
+  Pas de code produit. Certains lignes de PO génère 2 lignes de factures.
+  Le champs quantité n'est pas toujours dans la même colonne.
 
-
-- Frutas Oscar Morell
-- T Air de Famille
-- Olival d'Ouro, Terre de Sens
-- La dent du chat (Coop de Yenne)
-- Bergerie du pecher, Charreyre
-- Floréal (actionfruta)
-- Papilles Sauvages
-- Le bateleur
-- Gonuts
-- Croc Snack JBG SAS
-- devidal Yssingeau salaison
+- Frutas Oscar Morell :
+  Pas de code produit. Facture reprenant plusieurs BL.
 
 Bug Tracker
 ===========
@@ -89,7 +124,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/grap/grap-odoo-business-supplier-invoice/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/grap/grap-odoo-business-supplier-invoice/issues/new?body=module:%20account_invoice_invoice2data_templates%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/grap/grap-odoo-business-supplier-invoice/issues/new?body=module:%20grap_account_invoice_invoice2data_templates%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -109,6 +144,6 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `grap/grap-odoo-business-supplier-invoice <https://github.com/grap/grap-odoo-business-supplier-invoice/tree/12.0/account_invoice_invoice2data_templates>`_ project on GitHub.
+This module is part of the `grap/grap-odoo-business-supplier-invoice <https://github.com/grap/grap-odoo-business-supplier-invoice/tree/12.0/grap_account_invoice_invoice2data_templates>`_ project on GitHub.
 
 You are welcome to contribute.
