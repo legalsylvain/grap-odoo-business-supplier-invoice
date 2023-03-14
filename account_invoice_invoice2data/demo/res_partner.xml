@@ -12,12 +12,18 @@
         <field name="name">Relais Vert</field>
         <field name="supplier" eval="True"/>
         <field name="company_type">company</field>
+        <field name="property_account_payable_id" ref="account_invoice_invoice2data.account_payable"/>
     </record>
 
     <record id="partner_teddy_beer" model="res.partner">
         <field name="name">Brasserie Teddy Beer</field>
         <field name="supplier" eval="True"/>
         <field name="company_type">company</field>
+        <field name="property_account_payable_id" ref="account_invoice_invoice2data.account_payable"/>
+    </record>
+
+    <record id="base.res_partner_1" model="res.partner">
+        <field name="property_account_payable_id" ref="account_invoice_invoice2data.account_payable"/>
     </record>
 
 </odoo>

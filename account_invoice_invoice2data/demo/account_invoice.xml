@@ -17,7 +17,7 @@
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" search="[('type', '=', 'purchase')]"/>
+        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
     </record>
 
     <record id="invoice_line_relais_vert_1_arachide" model="account.invoice.line">
@@ -91,7 +91,7 @@
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" search="[('type', '=', 'purchase')]"/>
+        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
     </record>
 
     <record id="invoice_line_teddy_beer_tranquille" model="account.invoice.line">
@@ -124,7 +124,7 @@
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" search="[('type', '=', 'purchase')]"/>
+        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
     </record>
 
 </odoo>
