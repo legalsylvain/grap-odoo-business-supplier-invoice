@@ -32,11 +32,14 @@ fields:
   vat_code_055:
     parser: static
     value: "2"
+  vat_code_200:
+    parser: static
+    value: "4"
   lines:
     parser: lines
     start: Référence.*TVA
     end: Code\s+Base HT
-    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2)
+    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2|4)
     types:
       quantity: float
       price_unit: float

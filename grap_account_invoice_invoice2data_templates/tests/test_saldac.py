@@ -33,6 +33,30 @@ class TestSaldac(TestModule):
 
     def test_saldac_02(self):
         self._test_supplier_template(
+            "saldac__2023-01-27__FA23-0391.pdf",
+            line_qty=10,
+            expected_values={
+                "issuer": "Saldac",
+                "date": datetime(day=27, month=1, year=2023),
+                "date_due": datetime(day=26, month=2, year=2023),
+                "invoice_number": "FA23/0391",
+                "amount_untaxed": 668.33,
+                "amount": 710.81,
+            },
+            expected_lines=[
+                {
+                    "product_code": "SUCRE5KG",
+                    "product_name": "Sucre de canne complet Pérou. bio sac de 5 kg. certifié",
+                    "vat_code": "2",
+                    "quantity": 3.0,
+                    "price_unit": 17.40,
+                    "price_subtotal": 52.20,
+                }
+            ],
+        )
+
+    def test_saldac_03(self):
+        self._test_supplier_template(
             "saldac__2023-03-01__FA23-0825.pdf",
             line_qty=12,
             expected_values={
