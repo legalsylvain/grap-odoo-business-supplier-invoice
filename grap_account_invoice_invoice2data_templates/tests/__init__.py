@@ -19,6 +19,7 @@ from . import test_gonuts
 from . import test_gravier
 from . import test_helpac
 from . import test_herbiolys
+from . import test_jean_herve
 from . import test_markal
 from . import test_papilles_sauvages
 from . import test_relais_local

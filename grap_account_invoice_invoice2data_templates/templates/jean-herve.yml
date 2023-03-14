@@ -1,0 +1,60 @@
+issuer: Jean Hervé
+
+keywords:
+  - "38084661800029"
+  - "FR49380846618"
+
+fields:
+  vat:
+    parser: static
+    value: "FR49380846618"
+  amount:
+    parser: regex
+    type: float
+    regex: H.T. . +\d+\.\d+€ +(\d+\.\d+)€
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: H.T. . +(\d+\.\d+)€
+  invoice_number:
+    parser: regex
+    regex: FACTURE N° (\d+)
+  date:
+    parser: regex
+    type: date
+    regex: DATE.*\n.*(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*\n.*(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_200:
+    parser: static
+    value: "2"
+  amount_extra_shipping_costs_200:
+    parser: regex
+    type: float
+    regex: PORT +2 +(\d+\.\d+)
+  lines:
+    parser: lines
+    start: REF. +DESIGNATION
+    end: NET A PAYER EUR
+    line: ^(?P<product_code>\w+) +(?P<product_name>.{0,40}) +(?P<purchase_qty>\d+) \w+ +(?P<quantity>\d+) \w+ +(?P<weight>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>1|2)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
