@@ -41,7 +41,7 @@ msgstr "%s\n"
 "\n"
 "Veuillez envoyer la facture PDF au service informatique pour correction.\n"
 "\n"
-"Pour le moment, vuos devrez vérifier manuellement la facture fournisseur."
+"Pour le moment, vous devrez vérifier manuellement la facture fournisseur."
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:61
