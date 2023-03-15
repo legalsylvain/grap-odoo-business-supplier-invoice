@@ -202,7 +202,7 @@ class WizardInvoice2dataImport(models.TransientModel):
             total_amount_lines = sum(wizard.line_ids.mapped("pdf_price_subtotal"))
             total_amount_invoice = wizard.pdf_amount_untaxed
             currency = wizard.currency_id
-            if not total_amount_lines and not total_amount_invoice:
+            if not total_amount_lines or not total_amount_invoice:
                 wizard.amount_untaxed_difference = 0.0
                 wizard.fuzzy_message_amount_untaxed_difference = False
                 continue
