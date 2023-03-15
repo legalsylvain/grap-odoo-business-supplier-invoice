@@ -12,14 +12,14 @@
         <field name="code">I2D-PUR</field>
         <field name="name">Invoice2data - Purchase Journal</field>
         <field name="type">purchase</field>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
     <record id="bank_journal" model="account.journal">
         <field name="code">I2D-BNK</field>
         <field name="name">Invoice2data - Bank Journal</field>
         <field name="type">bank</field>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
 </odoo>

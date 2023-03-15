@@ -22,6 +22,9 @@ class TestAbstract(TransactionCase):
         self.invoice2data_key = self.invoice2data_key and self.invoice2data_key.encode(
             "utf-8"
         )
+        self.env.user.company_id = self.env.ref(
+            "account_invoice_invoice2data.invoice2data_company"
+        )
 
     def _get_invoice_path(self, invoice_file_name):
         invoice_path = self.pdf_folder_path / invoice_file_name

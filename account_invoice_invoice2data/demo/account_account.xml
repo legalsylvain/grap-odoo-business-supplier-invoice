@@ -12,6 +12,7 @@
         <field name="code">I2D-607</field>
         <field name="name">Invoice2data - Expense</field>
         <field name="user_type_id" ref="account.data_account_type_expenses"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
     <record id="account_payable" model="account.account">
@@ -19,6 +20,7 @@
         <field name="reconcile" eval="True"/>
         <field name="name">Invoice2data - Payable</field>
         <field name="user_type_id" ref="account.data_account_type_payable"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
 </odoo>

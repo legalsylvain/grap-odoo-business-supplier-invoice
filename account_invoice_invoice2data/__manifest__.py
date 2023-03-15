@@ -30,8 +30,11 @@
         "deb": ["tesseract-ocr", "poppler-utils", "imagemagick"],
     },
     "demo": [
+        "demo/res_groups.xml",
         "demo/uom_uom.xml",
+        "demo/res_company.xml",
         "demo/account_account.xml",
+        "demo/ir_property.xml",
         "demo/account_journal.xml",
         "demo/res_partner.xml",
         "demo/account_tax_group.xml",

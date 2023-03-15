@@ -13,72 +13,73 @@
     <!-- ==================================-->
 
     <record id="invoice_relais_vert" model="account.invoice">
-        <field name="partner_id" ref="account_invoice_invoice2data.partner_relais_vert"/>
+        <field name="partner_id" ref="partner_relais_vert"/>
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
+        <field name="journal_id" ref="purchase_journal"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
     <record id="invoice_line_relais_vert_1_arachide" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_arachide"/>
+        <field name="product_id" ref="product_relais_vert_arachide"/>
         <field name="name">[39518] Arachide</field>
         <field name="quantity">1</field>
         <field name="price_unit">32.01</field>
-        <field name="uom_id" ref="account_invoice_invoice2data.uom_5_kg"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="uom_id" ref="uom_5_kg"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_relais_vert_2_champignon" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_champignon"/>
+        <field name="product_id" ref="product_relais_vert_champignon"/>
         <field name="name">[CHPB] Champignon Porto Bello</field>
         <field name="quantity">2</field>
         <field name="discount">5</field>
         <field name="price_unit">9.01</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_relais_vert_3_epinard" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_epinard"/>
+        <field name="product_id" ref="product_relais_vert_epinard"/>
         <field name="name">[EPFE] Epinard</field>
         <field name="quantity">99</field>
         <field name="price_unit">3.43</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_relais_vert_4_yacon" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_yacon"/>
+        <field name="product_id" ref="product_relais_vert_yacon"/>
         <field name="name">[YOC] Yacon</field>
         <field name="quantity">2</field>
         <field name="price_unit">6.99</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_relais_vert_5_kiwi" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_kiwi"/>
+        <field name="product_id" ref="product_relais_vert_kiwi"/>
         <field name="name">[KIJAIT] Kiwi</field>
         <field name="quantity">10</field>
         <field name="price_unit">3.73</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_relais_vert_6_raisin" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_relais_vert"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_relais_vert_raisin"/>
+        <field name="product_id" ref="product_relais_vert_raisin"/>
         <field name="name">[RASUL] Raisin Sultanine</field>
         <field name="quantity">12.5</field>
         <field name="price_unit">3.07</field>
         <field name="uom_id" ref="uom.product_uom_kgm"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
 
@@ -87,31 +88,32 @@
     <!-- ==================================-->
 
     <record id="invoice_teddy_beer" model="account.invoice">
-        <field name="partner_id" ref="account_invoice_invoice2data.partner_teddy_beer"/>
+        <field name="partner_id" ref="partner_teddy_beer"/>
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
+        <field name="journal_id" ref="purchase_journal"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
     <record id="invoice_line_teddy_beer_tranquille" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_teddy_beer"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_teddy_beer_tranquille"/>
+        <field name="product_id" ref="product_teddy_beer_tranquille"/>
         <field name="name">[tranquille75] Tranquille Achille - 75cl</field>
         <field name="quantity">6</field>
         <field name="price_unit">10</field>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
     <record id="invoice_line_teddy_beer_miel" model="account.invoice.line">
         <field name="invoice_id" ref="invoice_teddy_beer"/>
-        <field name="product_id" ref="account_invoice_invoice2data.product_teddy_beer_miel"/>
+        <field name="product_id" ref="product_teddy_beer_miel"/>
         <field name="name">[miel75] Ô Miel - 75cl</field>
         <field name="quantity">6</field>
         <field name="price_unit">10</field>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="account_id" ref="account_invoice_invoice2data.account_expense"/>
+        <field name="account_id" ref="account_expense"/>
     </record>
 
 
@@ -124,7 +126,8 @@
         <field name="account_id" ref="account_payable"/>
         <field name="type">in_invoice</field>
         <field name="date_invoice" eval="False"/>
-        <field name="journal_id" ref="account_invoice_invoice2data.purchase_journal"/>
+        <field name="journal_id" ref="purchase_journal"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
 </odoo>
