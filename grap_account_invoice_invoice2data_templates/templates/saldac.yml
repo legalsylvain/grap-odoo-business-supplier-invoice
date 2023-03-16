@@ -32,11 +32,14 @@ fields:
   vat_code_055:
     parser: static
     value: "2"
+  vat_code_200:
+    parser: static
+    value: "4"
   lines:
     parser: lines
     start: Référence.*TVA
     end: Code\s+Base HT
-    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2)
+    line: ^ *(?P<product_code>\w+) *(?P<product_name>.*)\s+(?P<quantity>\d+)\s+(?P<price_unit>\d+\.\d+)\s+(?P<price_subtotal>\d+\.\d+)\s+(?P<vat_code>2|4)
     types:
       quantity: float
       price_unit: float
@@ -49,9 +52,11 @@ options:
     - '%d/%m/%Y'
   decimal_separator: '.'
   replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
     - [',', '.']
-    # replace '1 234.56' by 1234.56
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
     - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
     # Some product are on two lines
     - [' *(.*)\n\s+(\w+) *(\d+\ *\d+\.\d+\ *\d+\.\d+ *2)', '\g<2>   \g<1>   \g<3>']
     - ['\s+\*spp', '  ']

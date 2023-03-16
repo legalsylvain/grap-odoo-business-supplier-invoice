@@ -278,6 +278,11 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     @api.model
     def _get_extra_products(self):
         return {
+            "amount_extra_shipping_costs_200": {
+                "product_code": "PORT",
+                "product_name": _("Shipping Cost"),
+                "vat_amount": 20.0,
+            },
             "amount_extra_fuel_surcharge_200": {
                 "product_code": "CARBURANT",
                 "product_name": _("Fuel Surcharge"),
@@ -337,7 +342,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                     "pdf_vat_amount": self._get_vat_amount(wizard, pdf_data, line_data),
                     "pdf_quantity": quantity,
                     "pdf_price_unit": line_data["price_unit"],
-                    "pdf_price_subtotal": line_data["price_subtotal"],
+                    "pdf_price_subtotal": line_data.get("price_subtotal", 0.0),
                     "pdf_discount": line_data.get("discount", 0.0),
                     "pdf_discount2": line_data.get("discount2", 0.0),
                     "data": str(line_data),

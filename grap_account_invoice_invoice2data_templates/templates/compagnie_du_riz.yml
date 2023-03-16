@@ -1,0 +1,64 @@
+issuer: Compagnie du Riz
+
+keywords:
+  - "45100185300048"
+  - "FR04451001853"
+
+fields:
+  vat:
+    parser: static
+    value: "FR04451001853"
+  amount:
+    parser: regex
+    type: float
+    regex: \d+\.\d+ EUR +(\d+\.\d+) EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: TOTAL H.T.*\n +(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture (\d+)
+  date:
+    parser: regex
+    type: date
+    regex: DATE DE BASE.*\n.*\d{2}\/\d{2}\/\d{2} +(\d{2}\/\d{2}\/\d{2})
+  date_due:
+    parser: regex
+    type: date
+    regex: DATE DE BASE.*\n.*(\d{2}\/\d{2}\/\d{2}) +\d{2}\/\d{2}\/\d{2}
+  vat_code_055:
+    parser: static
+    value: "TR"
+  vat_code_200:
+    parser: static
+    value: "TN"
+  fuzzy_total_amount_untaxed:
+    parser: static
+    type: boolean
+    value: true
+  lines:
+    parser: lines
+    start: ARTICLE +DESIGNATION
+    end: TOTAL HORS TAXES
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<barcode>\d{13}) +(?P<package_qty>\d+) *(?P<package_name>\w+) +(?P<quantity>\d+) *(?P<uom>\w+) +(?P<lot>\w+) +(?P<date>\d{2}\/\d{2}\/\d{2}) +(?P<brut_price_unit>\d+\.\d+)\/\w+ +(?P<price_unit>\d+\.\d+)\/\w+ +(?P<vat_code>TR|TN)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    # Some product_code are too long and so there is a line break after
+    # Removing the line break.
+    # Ref : 1049BIBVINAIG in compagnie-du-riz__2023-02-06__28227.pdf
+    - ['\n(\w+)\n', '\n\g<1>']

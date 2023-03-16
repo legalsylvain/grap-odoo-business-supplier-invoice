@@ -15,6 +15,7 @@
         <field name="amount">5.5</field>
         <field name="price_include" eval="False"/>
         <field name="tax_group_id" ref="tax_group_055"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
     <record id="tax_200" model="account.tax">
@@ -24,6 +25,7 @@
         <field name="amount">20.0</field>
         <field name="price_include" eval="False"/>
         <field name="tax_group_id" ref="tax_group_200"/>
+        <field name="company_id" ref="invoice2data_company"/>
     </record>
 
 </odoo>
