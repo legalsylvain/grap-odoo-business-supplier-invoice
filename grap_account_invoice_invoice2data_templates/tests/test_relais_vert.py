@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestRelaisVert(TestModule):
-    def test_relais_vert(self):
+    def test_relais_vert_01(self):
         self._test_supplier_template(
             "relais-vert__2023-02-06__FC11716389.pdf",
             line_qty=6,
@@ -27,6 +27,30 @@ class TestRelaisVert(TestModule):
                     "quantity": 10.0,
                     "price_unit": 3.73,
                     "price_subtotal": 37.30,
+                }
+            ],
+        )
+
+    def test_relais_vert_02(self):
+        self._test_supplier_template(
+            "relais-vert__2023-03-25__FC11741819.pdf",
+            line_qty=51,
+            expected_values={
+                "issuer": "Relais Vert",
+                "date": datetime(day=25, month=3, year=2023),
+                "invoice_number": "FC11741819",
+                "amount_untaxed": 1000.85,
+                "amount": 1056.48,
+                "amount_extra_parafiscal_tax_interfel_200": 0.0,
+            },
+            expected_lines=[
+                {
+                    "product_code": "16061",
+                    "product_name": "VEGE’ORIENTALES X5 (200G) WHEATY",
+                    "vat_code": "1",
+                    "quantity": 5.0,
+                    "price_unit": 2.76,
+                    "price_subtotal": 13.80,
                 }
             ],
         )
