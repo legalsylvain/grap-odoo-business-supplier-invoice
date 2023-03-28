@@ -54,3 +54,30 @@ class TestRelaisLocal(TestModule):
                 }
             ],
         )
+
+    def test_relais_local_03(self):
+        self._test_supplier_template(
+            "relais-local__2023-03-28__FC230318459.pdf",
+            # 21 lines in the real life, but the
+            # salade lines is bad, so we enable
+            # fuzzy_total_amount_untaxed
+            line_qty=20,
+            expected_values={
+                "issuer": "Relais Local",
+                "date": datetime(day=28, month=3, year=2023),
+                "date_due": datetime(day=18, month=4, year=2023),
+                "invoice_number": "FC230318459",
+                "amount_untaxed": 426.06,
+                "amount": 449.49,
+            },
+            expected_lines=[
+                {
+                    "product_code": "120517",
+                    "product_name": "GINGEMBRE",
+                    "vat_code": "3",
+                    "quantity": 2.0,
+                    "price_unit": 5.20,
+                    "price_subtotal": 10.40,
+                }
+            ],
+        )

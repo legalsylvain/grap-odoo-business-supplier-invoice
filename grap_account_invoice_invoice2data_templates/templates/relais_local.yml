@@ -38,6 +38,10 @@ fields:
   vat_code_200:
     parser: static
     value: "1"
+  fuzzy_total_amount_untaxed:
+    parser: static
+    value: true
+    type: boolean
   lines:
     parser: lines
     start: REF.*Montant HT Tva
