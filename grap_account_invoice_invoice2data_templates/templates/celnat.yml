@@ -1,0 +1,67 @@
+issuer: Celnat
+
+keywords:
+  - "58565009600027"
+  - "FR67585650096"
+
+fields:
+  vat:
+    parser: static
+    value: "FR67585650096"
+  amount:
+    parser: regex
+    type: float
+    regex: (\d+\.\d+) EUR\n
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT.*T.T.C.\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture +(\d+ \d+)
+  date:
+    parser: regex
+    type: date
+    regex: Le +(\d{2}/\d{2}/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance +(\d{2}/\d{2}/\d{2})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_100:
+    parser: static
+    value: "8"
+  vat_code_200:
+    parser: static
+    value: "2"
+  lines:
+    parser: lines
+    start: Net HT +Montant
+    end: Total HT +Escompte
+    line: (?P<product_code>^\w+(\/)?\w+) * (?P<product_name>.{70}) +(?P<quantity>\d+(\.\d+)?) +(?P<quantity2>\d+(\.\d+)?) +(?P<brut_price_unit>\d+\.\d+) +(?P<bad_discount>\d+(\.\d+)?) +(?P<bad_discount_2>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) ?(?P<vat_code>1|2|8)
+    types:
+      quantity: float
+      quantity2: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  languages:
+    - fr
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    # Remove Units Name. ('3 Kgs   6' -> '3     6')
+    - ['(\d+) Kgs +(\d+)', '\g<1>       \g<2>']
+
+    # Remove packaging ('500G x6  10' -> '6    10')
+    - ['\w+ x(\d+) +(\d+)', '\g<1>       \g<2>']

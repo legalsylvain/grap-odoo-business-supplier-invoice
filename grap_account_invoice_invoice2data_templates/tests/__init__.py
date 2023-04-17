@@ -8,6 +8,7 @@ from . import test_biodis
 from . import test_brasserie_teddy_bear
 from . import test_cafes_dagobert
 from . import test_cds
+from . import test_celnat
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
