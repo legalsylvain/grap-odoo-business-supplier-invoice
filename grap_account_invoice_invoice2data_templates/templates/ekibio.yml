@@ -43,7 +43,7 @@ fields:
     parser: lines
     start: Code et Désignation.*Montant HT +T
     end: FACTURE No|Sous-total BL
-    line: ^ ?(?P<product_code>\d+)(?P<product_name>.{60}) +(?P<certification>\d\d\d +)?(?P<referential>\d\d\d) +(?P<package_qty>\d+) +(?P<quantity>\d+\.\d+) +(?P<brut_price_unit>\d+\.\d+) *(?P<discount_name>(\w:\d+(\.\d+)?% )*) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d)
+    line: ^ ?(?P<product_code>\d+)(?P<product_name>.*) +(?P<referential>\d\d\d) +(?P<package_qty>\d+) +(?P<quantity>\d+\.\d+) +(?P<brut_price_unit>\d+\.\d+) *(?P<discount_name>(\w:\d+(\.\d+)?% )*) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d)
     types:
       quantity: float
       price_unit: float
@@ -59,3 +59,5 @@ options:
     - [',', '.']
     # Remove the thousands separator. ('1 234.56' -> '1234.56')
     - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+    # Replace optional certification + Referentiel by Referentiel
+    - ['(?P<certification>\d\d\d   +)(?P<referential>\d\d\d)   ', '\g<2>']
