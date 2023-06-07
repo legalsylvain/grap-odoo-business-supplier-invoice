@@ -452,6 +452,13 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                         {"name": "%s\n%s" % (line.invoice_line_id.name, extra_text)}
                     )
 
+                if line.invoice_line_id.sequence != line.sequence:
+                    vals.update(
+                        {
+                            "sequence": line.sequence,
+                        }
+                    )
+
                 if vals:
                     lines_vals.append((1, line.invoice_line_id.id, vals))
             else:
