@@ -78,3 +78,35 @@ class TestEkibio(TestModule):
                 }
             ],
         )
+
+    def test_ekibio_04(self):
+        self._test_supplier_template(
+            "ekibio__2023-04-13__804686.pdf",
+            line_qty=57,
+            expected_values={
+                "issuer": "Ekibio",
+                "date": datetime(day=13, month=4, year=2023),
+                "date_due": datetime(day=13, month=5, year=2023),
+                "invoice_number": "804686",
+                "amount_untaxed": 1738.17,
+                "amount": 1898.72,
+            },
+            expected_lines=[
+                {
+                    "product_code": "007308",
+                    "product_name": "DOUBLE CONCENTRE DE TOMATES 200G",
+                    "vat_code": "1",
+                    "quantity": 12.0,
+                    "price_unit": 1.84,
+                    "price_subtotal": 22.08,
+                },
+                {
+                    "product_code": "007426",
+                    "product_name": "TOMATES PELEES ENTIERES 400G",
+                    "vat_code": "1",
+                    "quantity": 12.0,
+                    "price_unit": 1.18,
+                    "price_subtotal": 14.16,
+                },
+            ],
+        )
