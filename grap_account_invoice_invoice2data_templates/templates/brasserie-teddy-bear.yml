@@ -34,7 +34,7 @@ fields:
     parser: lines
     start: Désignation +TVA
     end: Conditions de règlement
-    line: ^ +(?P<product_code>\w+) - (?P<product_name>.*) +(?P<vat_code>20%) +(?P<price_unit>\d+\.\d+) +(?P<quantity>\d+) +(?P<price_subtotal>\d+\.\d+)
+    line: ^ *(?P<product_code>\w+) - (?P<product_name>.*) +(?P<vat_code>20%) +(?P<price_unit>-?\d+\.\d+) +(?P<quantity>\d+) +(?P<price_subtotal>-?\d+\.\d+)
     types:
       quantity: float
       price_unit: float
