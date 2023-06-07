@@ -6,10 +6,10 @@ from datetime import datetime
 from .test_module import TestModule
 
 
-class TestCrocJBGSAS(TestModule):
+class TestCrocJBGSASA(TestModule):
     def test_croc_jbg_sas(self):
         self._test_supplier_template(
-            "croc-jbg-sas__2023-01-26__FA4549.pdf",
+            "croc-jbg-sas_A__2023-01-26__FA4549.pdf",
             line_qty=5,
             expected_values={
                 "issuer": "Croc JBG SAS",

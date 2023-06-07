@@ -1,0 +1,55 @@
+issuer: Croc JBG SAS
+
+keywords:
+  - "83189917400013"
+  - "FR54 831 899 174"
+
+exclude_keywords:
+  - "P.U. remisé"
+
+fields:
+  vat:
+    parser: static
+    value: "FR54831899174"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC\s+(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Net HT\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: (FA\d+)\s+\d{2}\/\d{2}\/\d{4}
+  date:
+    parser: regex
+    type: date
+    regex: FA\d+\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*\n\n\s+(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "5.50"
+  lines:
+    parser: lines
+    start:  Référence.*TVA
+    end: frais de recouvrement
+    line: ^(?P<product_code>[\d|\w]+) +(?P<product_name>.{65}) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5\.50)
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']

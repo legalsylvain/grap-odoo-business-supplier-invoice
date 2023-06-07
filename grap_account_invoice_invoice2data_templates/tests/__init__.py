@@ -10,7 +10,8 @@ from . import test_cafes_dagobert
 from . import test_cds
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
-from . import test_croc_jbg_sas
+from . import test_croc_jbg_sas_A
+from . import test_croc_jbg_sas_B
 from . import test_ecodis
 from . import test_ekibio
 from . import test_ferme_bio_margerie
