@@ -3,6 +3,7 @@ from . import test_module
 from . import test_all_templates
 
 from . import test_actibio
+from . import test_agrobiodrom
 from . import test_agrosourcing
 from . import test_biodis
 from . import test_brasserie_teddy_bear
