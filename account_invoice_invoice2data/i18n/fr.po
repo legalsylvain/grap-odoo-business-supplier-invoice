@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 13:21+0000\n"
-"PO-Revision-Date: 2023-03-09 13:21+0000\n"
+"POT-Creation-Date: 2023-06-07 16:46+0000\n"
+"PO-Revision-Date: 2023-06-07 16:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -129,6 +129,18 @@ msgid "Changes Description"
 msgstr "Description des changements"
 
 #. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:288
+#, python-format
+msgid "Contribution to Additional Energy Costs (20,0%)"
+msgstr "Contribution aux surcoûts énergétiques (20,0%)"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:283
+#, python-format
+msgid "Contribution to Additional Energy Costs (5,5%)"
+msgstr "Contribution aux surcoûts énergétiques (5,5%)"
+
+#. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__create_uid
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__create_uid
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__create_uid
@@ -152,6 +164,26 @@ msgstr "Devise"
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__data
 msgid "Data"
 msgstr "Données"
+
+#. module: account_invoice_invoice2data
+#: model:res.company,overdue_msg:account_invoice_invoice2data.invoice2data_company
+msgid "Dear Sir/Madam,\n"
+"\n"
+"Our records indicate that some payments on your account are still due. Please find details below.\n"
+"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
+"If you have any queries regarding your account, Please contact us.\n"
+"\n"
+"Thank you in advance for your cooperation.\n"
+"Best Regards,"
+msgstr "Madame, Monsieur,\n"
+"\n"
+"D'après nos relevés, nous sommes encore en attente à ce jour de paiements de votre part, dont les détails sont indiqués ci-dessous.\n"
+"Si ces sommes ont déjà été réglées, vous pouvez ignorer ce rappel. Dans le cas contraire, nous vous remercions de bien vouloir nous faire parvenir votre règlement.\n"
+"Si vous avez d'autres questions concernant votre compte, vous pouvez nous contacter directement.\n"
+"\n"
+"En vous remerciant par avance.\n"
+"\n"
+"Cordialement,"
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:149
@@ -199,7 +231,7 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:283
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:298
 #, python-format
 msgid "Fuel Surcharge"
 msgstr "Supplément pour le carburant"
@@ -423,7 +455,7 @@ msgid "Odoo Invoice Lines not found"
 msgstr "Lignes de facture Odoo non trouvées"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:475
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:490
 #, python-format
 msgid "PDF Analysis"
 msgstr "Analyse PDF"
@@ -562,6 +594,12 @@ msgid "Raisin sultanine n°9"
 msgstr ""
 
 #. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:293
+#, python-format
+msgid "Shipping Cost"
+msgstr "Frais de transport"
+
+#. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__state
 msgid "State"
 msgstr "État"
@@ -609,7 +647,7 @@ msgid "Taxe Gazole"
 msgstr ""
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:288
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:303
 #: model:product.product,name:account_invoice_invoice2data.product_relais_vert_interfel
 #: model:product.template,name:account_invoice_invoice2data.product_relais_vert_interfel_product_template
 #, python-format
@@ -707,13 +745,13 @@ msgid "Total Vat Excl"
 msgstr "Total HT"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:293
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:308
 #, python-format
 msgid "Trade Discount on products with 05.5% VAT"
 msgstr "Remise commerciale sur article à TVA 5,5%"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:298
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:313
 #, python-format
 msgid "Trade Discount on products with 20.0% VAT"
 msgstr "Remise commerciale sur article à TVA 20,0%"
@@ -725,7 +763,7 @@ msgid "Tranquille Achille - 75cl"
 msgstr ""
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:315
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:330
 #, python-format
 msgid "Unable to map the vat code '%s'"
 msgstr "Impossible de relier le code TVA '%s'"
@@ -737,7 +775,7 @@ msgid "Unable to search product without product code neither product name."
 msgstr "Impossible de rechercher un article sans le code article ni le nom de l'article."
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:402
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:417
 #, python-format
 msgid "Unimplemented feature : Product %s is still related many times with the supplier %s.\n"
 " Please update manually the information on the product form view."
@@ -829,7 +867,7 @@ msgid "You can not run this wizard on a non draft invoice"
 msgstr "Vous ne pouvez pas executer cet assistant sur une facture qui n'est pas en brouillon"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:443
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:458
 #, python-format
 msgid "[PDF analysis] %s"
 msgstr "[analyse PDF] %s"

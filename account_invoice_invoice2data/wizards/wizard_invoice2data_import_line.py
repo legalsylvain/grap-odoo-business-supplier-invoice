@@ -278,6 +278,16 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     @api.model
     def _get_extra_products(self):
         return {
+            "amount_extra_energy_cost_055": {
+                "product_code": "ENERGY055",
+                "product_name": _("Contribution to Additional Energy Costs (5,5%)"),
+                "vat_amount": 5.5,
+            },
+            "amount_extra_energy_cost_200": {
+                "product_code": "ENERGY200",
+                "product_name": _("Contribution to Additional Energy Costs (20,0%)"),
+                "vat_amount": 20.0,
+            },
             "amount_extra_shipping_costs_200": {
                 "product_code": "PORT",
                 "product_name": _("Shipping Cost"),
