@@ -63,7 +63,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
                     "[PDF analysis] Unit Price %s set to 0,"
                     " because the line is not present in the PDF."
                 )
-                % (line.name, line.quantity),
+                % (line.name, line.price_unit),
             }
             lines_vals.append((1, line.id, line_vals))
 
