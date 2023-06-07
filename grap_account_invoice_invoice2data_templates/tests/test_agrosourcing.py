@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestAgrosourcing(TestModule):
-    def test_agrosourcing(self):
+    def test_agrosourcing_01(self):
         self._test_supplier_template(
             "agrosourcing__2023-01-11__082083.pdf",
             line_qty=11,
@@ -28,6 +28,31 @@ class TestAgrosourcing(TestModule):
                     "price_unit": 4.24,
                     "discount": 15,
                     "price_subtotal": 45.05,
+                }
+            ],
+        )
+
+    def test_agrosourcing_02(self):
+        self._test_supplier_template(
+            "agrosourcing__2023-06-03__088043.pdf",
+            line_qty=8,
+            expected_values={
+                "issuer": "Agrosourcing",
+                "date": datetime(day=3, month=6, year=2023),
+                "date_due": datetime(day=3, month=7, year=2023),
+                "invoice_number": "088043",
+                "amount_untaxed": 435.27,
+                "amount": 459.21,
+            },
+            expected_lines=[
+                {
+                    "product_code": "001048",
+                    "product_name": "Pâte à tartiner - 75% - 4 kg x 2",
+                    "vat_code": "1",
+                    "quantity": 8.0,
+                    "price_unit": 13.37,
+                    "discount": 0.0,
+                    "price_subtotal": 106.96,
                 }
             ],
         )
