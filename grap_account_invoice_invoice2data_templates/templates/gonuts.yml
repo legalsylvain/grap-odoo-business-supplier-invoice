@@ -2,7 +2,8 @@ issuer: Gonuts
 
 keywords:
   - "82877423200023"
-  - "FR 84 828 774 232"
+  # Do not set vat number, because it is not always present
+  # in the PDF
 
 fields:
   vat:

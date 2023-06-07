@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestGonuts(TestModule):
-    def test_gonuts(self):
+    def test_gonuts_1(self):
         self._test_supplier_template(
             "gonuts__2022-12-19__FC002092.pdf",
             line_qty=3,
@@ -28,6 +28,31 @@ class TestGonuts(TestModule):
                     "price_unit": 6.30,
                     "discount": 0,
                     "price_subtotal": 56.70,
+                }
+            ],
+        )
+
+    def test_gonuts_2(self):
+        self._test_supplier_template(
+            "gonuts__2023-04-06__FC002648.pdf",
+            line_qty=3,
+            expected_values={
+                "issuer": "Gonuts",
+                "date": datetime(day=6, month=4, year=2023),
+                "date_due": datetime(day=6, month=5, year=2023),
+                "invoice_number": "FC002648",
+                "amount_untaxed": 116.90,
+                "amount": 123.33,
+            },
+            expected_lines=[
+                {
+                    "product_code": "00255",
+                    "product_name": "BEURRE CACAHUETES EXTRA CRUNCHY 500G",
+                    "vat_code": "TR",
+                    "quantity": 6,
+                    "price_unit": 5.75,
+                    "discount": 0,
+                    "price_subtotal": 34.50,
                 }
             ],
         )
