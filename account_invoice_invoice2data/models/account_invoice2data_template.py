@@ -8,7 +8,7 @@ from pathlib import Path
 
 import yaml
 
-from odoo import fields, models, tools
+from odoo import api, fields, models, tools
 
 _logger = logging.getLogger(__name__)
 
@@ -16,8 +16,9 @@ _logger = logging.getLogger(__name__)
 class AccountInvoice2dataTemplate(models.Model):
     _name = "account.invoice2data.template"
     _description = "Template for invoice2data Supplier Invoices"
+    _order = "name"
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, index=True)
 
     vat = fields.Char(string="Supplier Vat Number")
 
@@ -28,6 +29,11 @@ class AccountInvoice2dataTemplate(models.Model):
     json_content = fields.Text()
 
     _sql_constraints = [
+        (
+            "unique_name",
+            "unique(name)",
+            "Name should be unique for invoice2data templates.",
+        ),
         (
             "unique_file_name",
             "unique(file_name)",
@@ -40,6 +46,31 @@ class AccountInvoice2dataTemplate(models.Model):
         ),
     ]
 
+    invoice_ids = fields.One2many(
+        comodel_name="account.invoice",
+        inverse_name="invoice2data_template_id",
+    )
+
+    invoice_qty = fields.Integer(
+        string="Invoices Quantity",
+        compute="_compute_invoice_qty_multi",
+    )
+
+    invoice_line_qty = fields.Integer(
+        string="Invoice Lines Quantity",
+        compute="_compute_invoice_qty_multi",
+    )
+
+    # Compute Section
+    @api.depends("invoice_ids")
+    def _compute_invoice_qty_multi(self):
+        for template in self:
+            template.invoice_qty = len(template.invoice_ids)
+            template.invoice_line_qty = len(
+                template.mapped("invoice_ids.invoice_line_ids")
+            )
+
+    # Core Section
     def init(self):
         local_templates_dir = tools.config.get("invoice2data_templates_dir", False)
 
@@ -62,6 +93,7 @@ class AccountInvoice2dataTemplate(models.Model):
 
         self._update_templates(files)
 
+    # Custom Section
     def _update_templates(self, files):
 
         up_to_date_template_ids = []

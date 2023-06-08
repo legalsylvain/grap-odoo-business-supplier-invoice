@@ -26,3 +26,4 @@ class TestModule(TestAbstract):
             self.local_templates_dir
         )
         self.pdf_folder_path = Path(os.path.realpath(__file__)).parent / "invoices"
+        self.env["account.invoice2data.template"].init()

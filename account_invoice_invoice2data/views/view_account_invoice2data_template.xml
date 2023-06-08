@@ -10,11 +10,13 @@
     <record id="view_account_invoice2data_template_tree" model="ir.ui.view">
         <field name="model">account.invoice2data.template</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-muted="invoice_qty == 0">
                 <field name="name"/>
                 <field name="vat"/>
                 <field name="vat_values"/>
                 <field name="file_name"/>
+                <field name="invoice_qty" sum="Total"/>
+                <field name="invoice_line_qty" sum="Total"/>
             </tree>
         </field>
     </record>
@@ -52,9 +54,9 @@
     </record>
 
     <menuitem id="menu_account_invoice2data_template"
-        parent="account.account_account_menu"
+        parent="account.menu_finance_payables"
         action="action_account_invoice2data_template"
-        sequence="20"
+        sequence="500"
     />
 
 </odoo>

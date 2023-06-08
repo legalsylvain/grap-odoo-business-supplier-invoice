@@ -50,6 +50,9 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
                 )
 
     def _apply_write_invoice(self):
+        invoice2data_template = self.env["account.invoice2data.template"].search(
+            [("name", "=", self.pdf_issuer)]
+        )
         lines_vals = self.line_ids._prepare_invoice_lines_vals()
 
         sequence = len(lines_vals)
@@ -70,6 +73,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
         invoice_vals = {
             "date_invoice": self.pdf_date,
             "supplier_invoice_number": self.pdf_invoice_number,
+            "invoice2data_template_id": invoice2data_template.id,
             "invoice_line_ids": lines_vals,
         }
 

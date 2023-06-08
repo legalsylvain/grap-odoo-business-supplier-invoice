@@ -191,7 +191,7 @@ msgstr "Nom de Fichier"
 #. module: account_invoice_invoice2data
 #: sql_constraint:account.invoice2data.template:0
 msgid "File name should be unique for invoice2data templates."
-msgstr "Le nom du fichier doit être unique dans les templates invoice2data."
+msgstr "Le nom du fichier doit être unique dans les modèles d'import fournisseur."
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__invoice_filename
@@ -313,7 +313,7 @@ msgstr "Etat Invoice2Data"
 #: model:ir.actions.act_window,name:account_invoice_invoice2data.action_account_invoice2data_template
 #: model:ir.ui.menu,name:account_invoice_invoice2data.menu_account_invoice2data_template
 msgid "Invoice2data Templates"
-msgstr "Templates Invoice2data"
+msgstr "Modèles d'import fournisseur"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__is_product_mapped
@@ -789,7 +789,7 @@ msgstr "Numéro de TVA intracom non défini"
 #. module: account_invoice_invoice2data
 #: sql_constraint:account.invoice2data.template:0
 msgid "Vat Number should be unique for invoice2data templates."
-msgstr "Le numéro de TVA intracom doit être unique pour les templates Invoice2data."
+msgstr "Le numéro de TVA intracom doit être unique pour les modèles d'import fournisseur."
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__vat_values
