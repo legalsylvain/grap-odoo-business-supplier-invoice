@@ -51,6 +51,10 @@ class TestFullWorkflow(TestModule):
         )
         self.bad_base64_data = base64.b64encode(bad_invoice_file.read())
 
+        self.template_relais_vert = self.env["account.invoice2data.template"].search(
+            [("vat", "=", "FR72352867493")]
+        )[0]
+
     def _get_attachments(self, invoice):
         return self.env["ir.attachment"].search(
             [("res_model", "=", "account.invoice"), ("res_id", "=", invoice.id)]
@@ -68,6 +72,9 @@ class TestFullWorkflow(TestModule):
         # unlink previous attachment to make the test idempotens
         self._get_attachments(self.invoice_relais_vert).unlink()
         self.partner_relais_vert.vat = False
+
+        self.assertEqual(self.template_relais_vert.invoice_qty, 0)
+        self.assertEqual(self.template_relais_vert.invoice_line_qty, 0)
 
         # #######################
         # Part 1 : Import Invoice
@@ -204,6 +211,12 @@ class TestFullWorkflow(TestModule):
         self.assertEqual(
             invoice_line_interfel.invoice_line_tax_ids.ids,
             [self.tax_200.id],
+        )
+
+        self.assertEqual(self.template_relais_vert.invoice_qty, 1)
+        self.assertEqual(
+            self.template_relais_vert.invoice_line_qty,
+            len(self.invoice_relais_vert.invoice_line_ids),
         )
 
         # #######################################

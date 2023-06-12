@@ -8,6 +8,11 @@ from odoo import _, api, fields, models
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
+    invoice2data_template_id = fields.Many2one(
+        comodel_name="account.invoice2data.template",
+        help="Invoice2data template Used to analyse" " the supplier invoice",
+    )
+
     invoice2data_state = fields.Selection(
         compute="_compute_invoice2data_info",
         selection=[
