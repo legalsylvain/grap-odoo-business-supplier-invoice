@@ -43,7 +43,9 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     pdf_product_name = fields.Char(readonly=True)
 
-    pdf_quantity = fields.Float(readonly=True)
+    pdf_quantity = fields.Float(
+        readonly=True, digits=dp.get_precision("Product Unit of Measure")
+    )
 
     pdf_price_unit = fields.Monetary(currency_field="currency_id", readonly=True)
 
