@@ -87,6 +87,10 @@ class WizardInvoice2dataImport(models.TransientModel):
         domain=[("is_product_mapped", "=", False)],
     )
 
+    invoice_difference_line_qty = fields.Integer(
+        compute="_compute_invoice_difference_line_qty",
+    )
+
     invoice_difference_line_ids = fields.One2many(
         comodel_name="wizard.invoice2data.import.line",
         inverse_name="wizard_id",
@@ -163,6 +167,11 @@ class WizardInvoice2dataImport(models.TransientModel):
         self.ensure_one()
         if self.invoice_id.state != "draft":
             raise UserError(_("You can not run this wizard on a non draft invoice"))
+
+    @api.depends("line_ids.has_changes")
+    def _compute_invoice_difference_line_qty(self):
+        for wizard in self:
+            wizard.invoice_difference_line_qty = len(wizard.invoice_difference_line_ids)
 
     @api.depends(
         "pdf_has_vat_mapping",

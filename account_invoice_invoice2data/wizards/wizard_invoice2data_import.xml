@@ -58,6 +58,7 @@
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     <field name="invoice_amount" widget="monetary"
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    <field name="invoice_difference_line_qty" invisible="1"/>
                 </group>
                 <group name="import_failed" col="2" states="import_failed">
                     <div class="alert alert-warning" role="alert" colspan="2">
@@ -127,7 +128,7 @@
                             </group>
                         </page>
                         <page string="Invoice Lines Differences" states="line_differences">
-                            <group string="Invoice Lines to Update">
+                            <group string="Invoice Lines to Update" attrs="{'invisible': [('invoice_difference_line_qty', '=', 0)]}">
                                 <field name="invoice_difference_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
