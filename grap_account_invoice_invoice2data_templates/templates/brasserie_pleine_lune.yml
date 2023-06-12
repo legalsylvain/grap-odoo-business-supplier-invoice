@@ -1,0 +1,65 @@
+issuer: Brasserie Pleine Lune
+
+keywords:
+  - "53289312000024"
+  - "FR62532893120"
+
+fields:
+  vat:
+    parser: static
+    value: "FR62532893120"
+  amount:
+    parser: regex
+    type: float
+    regex: TOTAL TTC +(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: \d+\.\d+ +\d+\.\d+ + (\d+\.\d+) +\d+\.\d+\n
+  invoice_number:
+    parser: regex
+    regex: Facture.*(VT-\d+)
+  date:
+    parser: regex
+    type: date
+    regex: \d{2}\/\d{2}\/\d{4} +(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Règlement.*(\d{2}\/\d{2}\/\d{4})
+  vat_code_000:
+    parser: static
+    value: "4"
+  vat_code_055:
+    parser: static
+    value: "3"
+  vat_code_200:
+    parser: static
+    value: "1"
+  fuzzy_total_amount_untaxed:
+    parser: static
+    value: true
+    type: boolean
+  lines:
+    parser: lines
+    start: DESIGNATION.*\n
+    end: TOTAL HT
+    line: ^ *(?P<product_code>\w+) +(?P<product_name>.{5,60}) +(?P<ignored_alcool>\d+\.\d+ +)?(?P<ignored_label>\w+ +)?(?P<ignored_packaging>\d+ \w+) +(?P<quantity>\d+) +(?P<uom_name>\w+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<ignored_assise>\d+\.\d+ +)?(?P<vat_code>1|3|4)
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    # custom: handle splitted line.
+    - [' {10}(?P<product_name>.{,80}) +(?P<vat_code>1|3|4)\n(?P<product_code>\w+) +(?P<ignored_alcool>\d+\.\d+ +)?(?P<ignored_label>\w+ +)?(?P<ignored_packaging>\d+ \w+) +(?P<quantity>\d+) +(?P<uom_name>\w+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<ignored_assise>\d+\.\d+)?', '\g<product_code> \g<product_name> \g<ignored_alcool> \g<ignored_label> \g<ignored_packaging> \g<quantity> \g<uom_name> \g<price_unit> \g<price_subtotal> \g<ignored_assise> \g<vat_code>']
