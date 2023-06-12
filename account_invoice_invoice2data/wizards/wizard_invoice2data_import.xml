@@ -157,7 +157,20 @@
                                 </field>
                             </group>
                             <group string="Invoice Lines to Ignore" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
-                                <field name="to_delete_invoice_line_ids" nolabel="1" />
+                                <field name="to_delete_invoice_line_ids" nolabel="1">
+                                    <tree>
+                                        <field name="sequence" />
+                                        <field name="product_id" />
+                                        <field name="name" />
+                                        <field name="quantity" />
+                                        <field name="uom_id" />
+                                        <field name="price_unit" />
+                                        <field name="discount" />
+                                        <field name="discount2" />
+                                        <field name="invoice_line_tax_ids" widget="many2many_tags" />
+                                        <field name="price_subtotal" sum="Total" />
+                                    </tree>
+                                </field>
                             </group>
                         </page>
                         <page string="Technical Information" states="product_mapping,line_differences">
