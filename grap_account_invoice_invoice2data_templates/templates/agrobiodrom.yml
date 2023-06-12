@@ -1,0 +1,63 @@
+issuer: Agrobiodrom
+
+keywords:
+  - "39806192900020"
+  - "FR78398061929"
+
+fields:
+  vat:
+    parser: static
+    value: "FR78398061929"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC +(\d+\.\d+) +EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT +(\d+\.\d+) +EUR
+  invoice_number:
+    parser: regex
+    regex: N° Facture.*\s+(\w+)
+  date:
+    parser: regex
+    type: date
+    regex: Date exp.*\s+(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*(\d{2}\/\d{2}\/\d{4})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_100:
+    parser: static
+    value: "3"
+  vat_code_200:
+    parser: static
+    value: "2"
+  amount_extra_parafiscal_tax_interfel_200:
+    parser: regex
+    type: float
+    regex: INTERFEL +(\d+\.\d+)
+  lines:
+    parser: lines
+    start: Désignation
+    end: Total TVA
+    line: ^ +(\d+) +(?P<product_name>.{40}) +(?P<origin>(\w|-)+) +(?P<package>\d+\.\d+) +(?P<ignored>.*) +(?P<brut_weight>\d+\.\d+) +(?P<quantity>\d+(\.\d+)?) +(UN|KG|CO) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>(1|2|3))
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
