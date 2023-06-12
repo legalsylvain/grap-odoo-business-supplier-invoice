@@ -1,0 +1,76 @@
+issuer: Pural
+
+keywords:
+  - "562 007 542 00060"
+  - "FR66562007542"
+
+fields:
+  vat:
+    parser: static
+    value: "FR66562007542"
+  amount:
+    parser: regex
+    type: float
+    regex: Total brut.* (\d+\.\d+) €
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Valeur marchandise.* (\d+\.\d+) €
+  invoice_number:
+    parser: regex
+    regex: N° Facture. +(\w+)
+  date:
+    parser: regex
+    type: date
+    regex: Date +(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: échéance.* +(\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_200:
+    parser: static
+    value: "2"
+  amount_extra_energy_cost_055:
+    parser: regex
+    type: float
+    regex: \d+\.\d+P +(\d+\.\d+) v1
+  amount_extra_energy_cost_200:
+    parser: regex
+    type: float
+    regex: \d+\.\d+P +(\d+\.\d+) v2
+  fuzzy_total_amount_untaxed:
+    parser: static
+    value: true
+    type: boolean
+  lines:
+    parser: lines
+    start: Référence.*
+    end: au capital
+    line: ^ *(?P<product_code>\d+\/\d+)(?P<product_name>.*) +((\d+ uc.{0,50})|(\*.{1,30})) +(?P<quantity>\d+?) +(?P<brut_price_unit>\d+\.\d+) +(?P<discount_ignored_1>\d+\.\d+%=\d+\.\d+ +)?(?P<discount_ignored_2>\d+\.\d+%)=(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +s?(?P<vat_code>1|2)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    # Specific
+    # Restore in 1 line, line splitted in 2, 3 or 4 lines
+    - ['(\d+\/\d+)(.*)\n {40,}(.*)', '\g<1>\g<2> \g<3>']
+    - ['(\d+\/\d+)(.*)\n {40,}(.*)', '\g<1>\g<2> \g<3>']
+    - ['(\d+\/\d+)(.*)\n {40,}(.*)', '\g<1>\g<2> \g<3>']
+    # # Remove bad keyword, sometime bad placed
+    # - [' demeter ', '  ']

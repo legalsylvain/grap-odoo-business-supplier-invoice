@@ -23,6 +23,7 @@ from . import test_jean_herve
 from . import test_compagnie_du_riz
 from . import test_markal
 from . import test_papilles_sauvages
+from . import test_pural
 from . import test_relais_local
 from . import test_relais_vert
 from . import test_saldac
