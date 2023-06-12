@@ -11,30 +11,30 @@ fields:
   amount:
     parser: regex
     type: float
-    regex: Montant total TTC\s+€(\d+\.\d+)
+    regex: Total TTC +(\d+\.\d+)
   amount_untaxed:
     parser: regex
     type: float
-    regex: Montant total HT\s+€(\d+\.\d+)
+    regex: Total HT +(\d+\.\d+)
   invoice_number:
     parser: regex
-    regex: N° de facture . (\w+-\d+)
+    regex: Facture N°(\w+)
   date:
     parser: regex
     type: date
-    regex: Date de facture . (\d{2}\/\d{2}\/\d{4})
+    regex: Date.*(\d{2} \w+ \d{4})
   date_due:
     parser: regex
     type: date
-    regex: Date d'échéance . (\d{2}\/\d{2}\/\d{4})
+    regex: \n(\d{2}\/\d{2}\/\d{4})
   vat_code_055:
     parser: static
-    value: "5.5%"
+    value: "5.5"
   lines:
     parser: lines
-    start: Description.*Total HT
-    end: Montant total HT
-    line: ^ +(?P<product_name>.*) +SKU. (?P<product_code>\w+) +€(?P<price_unit>\d+\.\d+) +(?P<quantity>\d+) +€(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5.5%)
+    start: Description .*Montant HT
+    end: Total HT
+    line: ^(?P<product_code>\w+) (?P<product_name>.*) +(?P<quantity>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>5.5)
     types:
       quantity: float
       price_unit: float
@@ -43,7 +43,7 @@ fields:
 options:
   currency: EUR
   date_formats:
-    - '%d/%m/%y'
+    - '%d/%m/%Y'
   decimal_separator: '.'
   replace:
     # Standardize the decimal separator. ('1,24' -> '1.24')
