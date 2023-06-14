@@ -1,0 +1,60 @@
+issuer: La route des comptoirs
+
+keywords:
+  - "41762548000054"
+  - "FR08417625480"
+
+fields:
+  vat:
+    parser: static
+    value: "FR08417625480"
+  amount:
+    parser: regex
+    type: float
+    regex: Total TTC +(\d+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Total HT +(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Facture +(\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Facture.*\n.*(\d{2}\/\d{2}\/\d{2})
+  date_due:
+    parser: regex
+    type: date
+    regex: Echéance.*(\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "5.5"
+  fuzzy_total_amount_untaxed:
+    parser: static
+    value: true
+    type: boolean
+  lines:
+    parser: lines
+    start: Désignation.*HT
+    end: Total HT
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+) +(?P<ignored_packaging>\w+) +(?P<price_unit>\d+\.\d+)( +(?P<discount>\d+)%)? +(?P<price_subtotal>\d+\.\d+) +(?P<ignored_price_subtotal_vat_incl>\d+\.\d+) +(?P<vat_code>5.5)%
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    # Specificf: handle product_name on 2 lines
+    - ['\n {7,}(?P<product_name>.*)\n(?P<product_code>\w+) +(?P<quantity>\d+)', '\g<product_code>  \g<product_name>   \g<quantity>']
