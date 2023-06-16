@@ -61,3 +61,48 @@ class TestPural(TestModule):
                 }
             ],
         )
+
+    def test_pural_03(self):
+        self._test_supplier_template(
+            "pural__2023-06-15__812251.pdf",
+            line_qty=26,
+            expected_values={
+                "issuer": "Pural",
+                "date": datetime(day=15, month=6, year=2023),
+                "date_due": datetime(day=15, month=7, year=2023),
+                "invoice_number": "812251",
+                "amount_untaxed": 544.46,
+                "amount": 577.32,
+                "amount_extra_energy_cost_055": 2.09,
+                "amount_extra_energy_cost_200": 0.08,
+            },
+            expected_lines=[
+                {  # Line with 0 discount
+                    "product_code": "618/582289",
+                    "product_name": "Muesli petit déjeuner chocolat noir 300 g",
+                    "vat_code": "1",
+                    "quantity": 6.0,
+                    "price_unit": 3.05,
+                    "discount": 0.0,
+                    "price_subtotal": 18.30,
+                },
+                {  # Line with 1 discount
+                    "product_code": "660/143606",
+                    "product_name": "Biscuits épeautre. demeter                 150 g",
+                    "vat_code": "1",
+                    "quantity": 6.0,
+                    "price_unit": 2.27,
+                    "discount": 0.0,
+                    "price_subtotal": 13.62,
+                },
+                {  # Line with 2 discount
+                    "product_code": "693/539",
+                    "product_name": "Jus Detox                                  0.75 l",
+                    "vat_code": "1",
+                    "quantity": 6.0,
+                    "price_unit": 2.52,
+                    "discount": 0.0,
+                    "price_subtotal": 15.12,
+                },
+            ],
+        )
