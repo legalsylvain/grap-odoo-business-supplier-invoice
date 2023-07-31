@@ -27,6 +27,7 @@ This module contains invoice2data templates for GRAP company.
 - Agrobiodrom
 - Agrosourcing
 - Biodis
+- Brasserie Pleine Lune
 - Brasserie Teddy Bear
 - Café Dagobert
 - CDS
@@ -45,6 +46,7 @@ This module contains invoice2data templates for GRAP company.
 - Jean Hervé
 - Markal
 - Papilles Sauvages
+- Pural
 - Relais Local
 - Relais Vert
 - Saldac
