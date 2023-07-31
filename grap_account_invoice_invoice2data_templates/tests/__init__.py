@@ -1,4 +1,5 @@
 from . import test_module
+from . import test_route_des_comptoirs
 
 from . import test_all_templates
 

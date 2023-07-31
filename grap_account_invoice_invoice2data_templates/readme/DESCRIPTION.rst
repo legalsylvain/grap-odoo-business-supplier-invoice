@@ -27,6 +27,7 @@ This module contains invoice2data templates for GRAP company.
 - Papilles Sauvages
 - Pural
 - Relais Local
+- Route des comptoirs
 - Relais Vert
 - Saldac
 - Scop Epice
