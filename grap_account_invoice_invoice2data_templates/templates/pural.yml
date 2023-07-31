@@ -49,7 +49,7 @@ fields:
     parser: lines
     start: Référence.*
     end: au capital
-    line: ^ *(?P<product_code>\d+\/\d+)(?P<product_name>.*) +((\d+ uc.{0,50})|(\*.{1,30})) +(?P<quantity>\d+?) +(?P<brut_price_unit>\d+\.\d+) +(?P<discount_ignored_1>\d+\.\d+%=\d+\.\d+ +)?(?P<discount_ignored_2>\d+\.\d+%)=(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +s?(?P<vat_code>1|2)
+    line: ^ *(?P<product_code>\d+\/\d+)(?P<product_name>.*) +((\d+ uc.{0,50})|(\*.{1,30})) +(?P<quantity>\d+?) +((?P<brut_price_unit_1>\d+\.\d+) +(?P<discount_ignored_1>\d+\.\d+%=))?((?P<brut_price_unit_2>\d+\.\d+) +(?P<discount_ignored_2>\d+\.\d+%=))?(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +s?(?P<vat_code>1|2)
     types:
       quantity: float
       price_unit: float
