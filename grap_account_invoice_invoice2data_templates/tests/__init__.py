@@ -34,4 +34,5 @@ from . import test_scop_epice
 from . import test_senfas
 from . import test_supersec
 from . import test_t_air_de_famille
+from . import test_thera_viva
 from . import test_vitafrais
