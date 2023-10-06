@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestMarkal(TestModule):
-    def test_markal(self):
+    def test_markal_01(self):
         self._test_supplier_template(
             "markal__2023-02-14__00368375.pdf",
             line_qty=29,
@@ -29,6 +29,30 @@ class TestMarkal(TestModule):
                     "quantity": 12.0,
                     "price_unit": 1.19,
                     "price_subtotal": 14.28,
+                }
+            ],
+        )
+
+    def test_markal_02(self):
+        self._test_supplier_template(
+            "markal__2023-10-04__00386108.pdf",
+            line_qty=41,
+            expected_values={
+                "issuer": "Markal",
+                "date": datetime(day=4, month=10, year=2023),
+                "date_due": datetime(day=3, month=11, year=2023),
+                "invoice_number": "00386108",
+                "amount_untaxed": 1456.58,
+                "amount": 1542.51,
+            },
+            expected_lines=[
+                {
+                    "product_code": "LUHUIOVEB5",
+                    "product_name": "LU HUILE OLIVE VIERGE EXTR 5L",
+                    "vat_code": "TR",
+                    "quantity": 10.0,
+                    "price_unit": 35.56,
+                    "price_subtotal": 355.60,
                 }
             ],
         )

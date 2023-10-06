@@ -45,7 +45,7 @@ fields:
     parser: lines
     start: ARTICLE\s+DESIGNATION.*MT \(EUR\)
     end: Type de ligne|TOTAL MARCHANDISES
-    line: ^\s?(?P<product_code>[A-Z0-9]+) +(?P<product_name>.{40})(\s+\d+ CAR)? +(?P<quantity>\d+)\s(UVC|SAC) +(?P<brut_price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<price_unit>\d+\.\d+)\s\/(UVC|SAC) +(?P<vat_code>TN|TR) +(?P<price_subtotal>\d+\.\d+)
+    line: ^\s?(?P<product_code>[A-Z0-9]+) +(?P<product_name>.{40})(\s+\d+ CAR)? +(?P<quantity>\d+)\s(\w+) +(?P<brut_price_unit>\d+\.\d+)\s\/(\w+) +(?P<price_unit>\d+\.\d+)\s\/(\w+) +(?P<vat_code>TN|TR) +(?P<price_subtotal>\d+\.\d+)
     types:
       quantity: float
       price_unit: float
@@ -55,13 +55,14 @@ fields:
 options:
   currency: EUR
   date_formats:
+    - '%d/%m/%Y'
     - '%d/%m/%y'
   decimal_separator: '.'
   replace:
+    # Remove the thousands separator. ('1.234,56' -> '1234.56')
+    - ['(\d+)\.(\d{3}\,\d{2})', '\g<1>\g<2>']
     # Standardize the decimal separator. ('1,24' -> '1.24')
     - [',', '.']
-    # Remove the thousands separator. ('1 234.56' -> '1234.56')
-    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
 
     - ['°', '']
     - ['\*', '']
