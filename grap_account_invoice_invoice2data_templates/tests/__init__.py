@@ -25,6 +25,7 @@ from . import test_herbiolys
 from . import test_jean_herve
 from . import test_markal
 from . import test_papilles_sauvages
+from . import test_paume_de_pain
 from . import test_pural
 from . import test_relais_local
 from . import test_relais_vert
