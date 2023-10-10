@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestEcodis(TestModule):
     def test_ecodis(self):
         self._test_supplier_template(
-            "ecodis__2022-08-11__338035.pdf",
+            "ecodis__2022-08-11__ECS__338035.pdf",
             line_qty=17,
             expected_values={
                 "issuer": "Ecodis",

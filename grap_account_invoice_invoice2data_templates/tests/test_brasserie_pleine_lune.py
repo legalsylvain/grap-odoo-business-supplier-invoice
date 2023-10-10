@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestBrasseriePleineLune(TestModule):
     def test_brasserie_pleine_lune_01(self):
         self._test_supplier_template(
-            "brasserie-pleine-lune__2023-04-20__VT-2023040152.pdf",
+            "brasserie-pleine-lune__2023-04-20__VIN__VT-2023040152.pdf",
             line_qty=9,
             expected_values={
                 "issuer": "Brasserie Pleine Lune",
@@ -43,7 +43,7 @@ class TestBrasseriePleineLune(TestModule):
 
     def test_brasserie_pleine_lune_02(self):
         self._test_supplier_template(
-            "brasserie-pleine-lune__2023-04-22__VT-2023040173.pdf",
+            "brasserie-pleine-lune__2023-04-22__VIN__VT-2023040173.pdf",
             line_qty=9,
             expected_values={
                 "issuer": "Brasserie Pleine Lune",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestBrasserieTeddyBear(TestModule):
     def test_brasserie_teddy_bear_01(self):
         self._test_supplier_template(
-            "brasserie-teddy-beer__2022-12-01__FA2212-3445.pdf",
+            "brasserie-teddy-beer__2022-12-01__GAE__FA2212-3445.pdf",
             line_qty=4,
             expected_values={
                 "issuer": "Brasserie Teddy Bear",
@@ -33,7 +33,7 @@ class TestBrasserieTeddyBear(TestModule):
 
     def test_brasserie_teddy_bear_02(self):
         self._test_supplier_template(
-            "brasserie-teddy-beer__2023-05-30__FA2305-3709.pdf",
+            "brasserie-teddy-beer__2023-05-30__HAL__FA2305-3709.pdf",
             line_qty=14,
             expected_values={
                 "issuer": "Brasserie Teddy Bear",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestScopEpice(TestModule):
     def test_scop_epice(self):
         self._test_supplier_template(
-            "scop-epice__2023-02-15__FV70067.pdf",
+            "scop-epice__2023-02-15__GAE__FV70067.pdf",
             line_qty=6,
             expected_values={
                 "issuer": "Scop Epice",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestSupersec(TestModule):
     def test_supersec(self):
         self._test_supplier_template(
-            "supersec__2023-01-11__SS-23-2638.pdf",
+            "supersec__2023-01-11__EPV__SS-23-2638.pdf",
             line_qty=11,
             expected_values={
                 "issuer": "Supersec",

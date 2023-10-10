@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestJeanHerve(TestModule):
     def test_jean_herve_01(self):
         self._test_supplier_template(
-            "jean-herve__2023-03-06__0230791.pdf",
+            "jean-herve__2023-03-06__3PP__0230791.pdf",
             line_qty=14,
             expected_values={
                 "issuer": "Jean Hervé",

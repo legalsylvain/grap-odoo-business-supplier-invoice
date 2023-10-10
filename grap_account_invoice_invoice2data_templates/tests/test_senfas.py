@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestSenfas(TestModule):
     def test_senfas(self):
         self._test_supplier_template(
-            "senfas__2022_04_22__FA226692.pdf",
+            "senfas__2022_04_22__EPV__FA226692.pdf",
             line_qty=12,
             expected_values={
                 "issuer": "Senfas",

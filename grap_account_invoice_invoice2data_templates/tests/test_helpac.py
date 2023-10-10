@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestHelpac(TestModule):
     def test_helpac(self):
         self._test_supplier_template(
-            "helpac__2023-02-17__127404.pdf",
+            "helpac__2023-02-17__EPV__127404.pdf",
             line_qty=13,
             expected_values={
                 "issuer": "Helpac",

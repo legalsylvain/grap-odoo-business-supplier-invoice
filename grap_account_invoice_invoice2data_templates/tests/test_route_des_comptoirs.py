@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestRouteDesComptoirs(TestModule):
     def test_route_des_comptoirs(self):
         self._test_supplier_template(
-            "route-des-comptoirs__2023-06-13__190852.pdf",
+            "route-des-comptoirs__2023-06-13__HAL__190852.pdf",
             # 10 lines, but a shitty one (20 INFU)
             line_qty=9,
             expected_values={

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestAgrosourcing(TestModule):
     def test_actibio_01(self):
         self._test_supplier_template(
-            "actibio__2022-06-01__22FV06621.pdf",
+            "actibio__2022-06-01__EPV__22FV06621.pdf",
             line_qty=6,
             expected_values={
                 "issuer": "Actibio",
@@ -34,7 +34,7 @@ class TestAgrosourcing(TestModule):
 
     def test_actibio_02(self):
         self._test_supplier_template(
-            "actibio__2023-03-07__23FV02108.pdf",
+            "actibio__2023-03-07__3PP__23FV02108.pdf",
             line_qty=25,
             expected_values={
                 "issuer": "Actibio",

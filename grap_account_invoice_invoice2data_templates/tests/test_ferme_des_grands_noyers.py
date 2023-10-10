@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestFermeDesGrandsNoyers(TestModule):
     def test_fermeDesGrandsNoyers(self):
         self._test_supplier_template(
-            "ferme-des-grands-noyers__2022-12-31__FV-2022-146.pdf",
+            "ferme-des-grands-noyers__2022-12-31__EPV__FV-2022-146.pdf",
             line_qty=9,
             expected_values={
                 "issuer": "La Ferme des Grands Noyers",

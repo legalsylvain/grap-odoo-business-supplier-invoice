@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestSaldac(TestModule):
     def test_saldac_01(self):
         self._test_supplier_template(
-            "saldac__2022-12-07__FA22-4381.pdf",
+            "saldac__2022-12-07__ECS__FA22-4381.pdf",
             line_qty=5,
             expected_values={
                 "issuer": "Saldac",
@@ -33,7 +33,7 @@ class TestSaldac(TestModule):
 
     def test_saldac_02(self):
         self._test_supplier_template(
-            "saldac__2023-01-27__FA23-0391.pdf",
+            "saldac__2023-01-27__3PP__FA23-0391.pdf",
             line_qty=10,
             expected_values={
                 "issuer": "Saldac",
@@ -57,7 +57,7 @@ class TestSaldac(TestModule):
 
     def test_saldac_03(self):
         self._test_supplier_template(
-            "saldac__2023-03-01__FA23-0825.pdf",
+            "saldac__2023-03-01__ACR__FA23-0825.pdf",
             line_qty=12,
             expected_values={
                 "issuer": "Saldac",
