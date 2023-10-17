@@ -1,5 +1,4 @@
 from . import test_module
-from . import test_route_des_comptoirs
 
 from . import test_all_templates
 
@@ -11,6 +10,7 @@ from . import test_brasserie_pleine_lune
 from . import test_brasserie_teddy_bear
 from . import test_cafes_dagobert
 from . import test_cds
+from . import test_compagnie_du_riz
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
@@ -23,12 +23,12 @@ from . import test_gravier
 from . import test_helpac
 from . import test_herbiolys
 from . import test_jean_herve
-from . import test_compagnie_du_riz
 from . import test_markal
 from . import test_papilles_sauvages
 from . import test_pural
 from . import test_relais_local
 from . import test_relais_vert
+from . import test_route_des_comptoirs
 from . import test_saldac
 from . import test_scop_epice
 from . import test_senfas
