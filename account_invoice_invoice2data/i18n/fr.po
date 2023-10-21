@@ -451,8 +451,8 @@ msgstr "Non trouvé"
 
 #. module: account_invoice_invoice2data
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
-msgid "Odoo Invoice Lines not found"
-msgstr "Lignes de facture Odoo non trouvées"
+msgid "Odoo invoice lines not found in PDF"
+msgstr "Lignes de facture Odoo non trouvées du PDF"
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:490

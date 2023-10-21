@@ -102,7 +102,7 @@
                                     </tree>
                                 </field>
                             </group>
-                            <group string="Odoo Invoice Lines not found" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                            <group string="Odoo Invoice Lines not found in PDF" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
                                 <field name="not_found_invoice_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="product_id"/>
