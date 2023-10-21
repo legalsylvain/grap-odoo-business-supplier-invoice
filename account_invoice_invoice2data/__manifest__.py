@@ -18,6 +18,7 @@
         "purchase_discount",
         "purchase_triple_discount",
         "web_notify",
+        "web_tree_dynamic_colored_field",
     ],
     "data": [
         "security/ir.model.access.csv",

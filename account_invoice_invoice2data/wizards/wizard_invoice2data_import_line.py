@@ -59,7 +59,13 @@ class WizardInvoice2dataImportLine(models.TransientModel):
 
     data = fields.Text(readonly=True)
 
-    has_changes = fields.Boolean(
+    changes_type = fields.Selection(
+        selection=[
+            ("no", "No Changes"),
+            ("creation", "Creation"),
+            ("price", "Price Changes"),
+            ("quantity", "Quantity Changes"),
+        ],
         compute="_compute_change_description",
         store=True,
     )
@@ -96,14 +102,26 @@ class WizardInvoice2dataImportLine(models.TransientModel):
     def _compute_change_description(self):
         for line in self:
             invoice_line = line.invoice_line_id
-            changes = []
             if not invoice_line:
-                changes.append(_("New Line Creation"))
+                line.changes_type = "creation"
+                line.changes_description = _("New Line Creation")
             else:
-                changes = [x["description"] for x in line._analyse_differences()]
-
-            line.changes_description = changes and "\n".join(changes) or ""
-            line.has_changes = bool(changes)
+                differences = line._analyse_differences()
+                if not differences:
+                    line.changes_type = "no"
+                    line.changes_description = ""
+                else:
+                    if {"quantity"}.intersection(
+                        [x["field_name"] for x in differences]
+                    ):
+                        line.changes_type = "quantity"
+                    elif {"price_unit", "discount", "discount2"}.intersection(
+                        [x["field_name"] for x in differences]
+                    ):
+                        line.changes_type = "price"
+                    line.changes_description = "\n".join(
+                        [x["description"] for x in differences]
+                    )
 
     def _analyse_differences(self):
         self.ensure_one()

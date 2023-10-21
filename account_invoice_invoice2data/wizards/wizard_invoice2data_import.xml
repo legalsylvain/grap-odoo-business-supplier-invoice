@@ -152,7 +152,11 @@
                                         <field name="current_uom_id"/>
                                         <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"  options="{'bg_color': '#D2D2FF: True'}"/>
                                         <field name="invoice_line_id"/>
-                                        <field name="changes_description"/>
+                                        <field name="changes_type" />
+                                        <field name="changes_description"
+                                            options="{
+                                                'bg_color': '#FFFFC8:changes_type == &quot;price&quot;;#FFCC88:changes_type == &quot;quantity&quot;'}"
+                                            />
                                         <field name="currency_id" invisible="1"/>
                                     </tree>
                                 </field>
