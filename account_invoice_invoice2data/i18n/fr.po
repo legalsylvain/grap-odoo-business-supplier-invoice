@@ -44,7 +44,7 @@ msgstr "%s\n"
 "Pour le moment, vous devrez vérifier manuellement la facture fournisseur."
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:61
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:64
 #, python-format
 msgid "%s\n"
 "[PDF analysis] Unit Price %s set to 0, because the line is not present in the PDF."
@@ -52,7 +52,7 @@ msgstr "%s\n"
 "[analyse PDF] Le prix unitaire %s a été mis à 0, car la ligne n'est pas présente dans le PDF."
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:196
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:198
 #, python-format
 msgid "%s : %s%s -> %s%s"
 msgstr ""
@@ -135,13 +135,13 @@ msgid "Changes Description"
 msgstr "Description des changements"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:288
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:290
 #, python-format
 msgid "Contribution to Additional Energy Costs (20,0%)"
 msgstr "Contribution aux surcoûts énergétiques (20,0%)"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:283
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:285
 #, python-format
 msgid "Contribution to Additional Energy Costs (5,5%)"
 msgstr "Contribution aux surcoûts énergétiques (5,5%)"
@@ -357,6 +357,11 @@ msgstr "Message Invoice2Data"
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice__invoice2data_state
 msgid "Invoice2Data State"
 msgstr "Etat Invoice2Data"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice__invoice2data_template_id
+msgid "Invoice2Data Template"
+msgstr "Modèle Invoice2data"
 
 #. module: account_invoice_invoice2data
 #: model:ir.actions.act_window,name:account_invoice_invoice2data.action_account_invoice2data_template
@@ -720,7 +725,7 @@ msgid "The analysis of the PDF failed.<br/>"
 msgstr "L'analyse du PDF a échoué."
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:237
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:239
 #, python-format
 msgid "The analysis of the PDF file for the supplier %s did not go completely well.\n"
 "- The amount of the analyzed lines is %s, but the total amount before tax is %s. (Missing Amount : %s)\n"
@@ -908,7 +913,13 @@ msgstr "Vous ne pouvez pas executer cet assistant sur une facture qui n'est pas 
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:460
 #, python-format
 msgid "[PDF analysis] %s"
-msgstr "[analyse PDF] %s"
+msgstr "[Analyse PDF] %s"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:498
+#, python-format
+msgid "[PDF analysis] Line Creation"
+msgstr "[Analyse PDF] Création de la ligne"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__current_uom_id

@@ -495,7 +495,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                 vals = {
                     "sequence": line.sequence,
                     "product_id": line.product_id.id,
-                    "name": name,
+                    "name": name + "\n" + _("[PDF analysis] Line Creation"),
                     "origin": _("PDF Analysis"),
                     "account_id": account.id,
                     "quantity": line.pdf_quantity,
