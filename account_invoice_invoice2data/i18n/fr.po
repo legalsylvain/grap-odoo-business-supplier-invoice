@@ -621,8 +621,8 @@ msgstr "Nom du fournisseur différent"
 
 #. module: account_invoice_invoice2data
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
-msgid "Supplier Product Code not found"
-msgstr "Code article du fournisseur non trouvé"
+msgid "PDF lines for which the product was not found in Odoo"
+msgstr "Lignes du PDF pour lesquelles l'article n'a pas été trouvé dans Odoo"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__vat

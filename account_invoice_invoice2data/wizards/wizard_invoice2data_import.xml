@@ -75,7 +75,7 @@
                 <group>
                     <notebook>
                         <page string="Mapping" states="product_mapping">
-                            <group string="Supplier Product Code not found">
+                            <group string="PDF lines for which the product was not found in Odoo">
                                 <field name="product_mapping_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
