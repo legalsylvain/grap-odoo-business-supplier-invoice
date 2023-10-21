@@ -153,7 +153,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         compute="_compute_fuzzy_message_amount_untaxed_difference"
     )
 
-    message_vat_difference = fields.Text(
+    message_vat_difference = fields.Html(
         compute="_compute_message_vat_difference",
     )
 
@@ -189,8 +189,8 @@ class WizardInvoice2dataImport(models.TransientModel):
                 if line.pdf_vat_amount != line.product_id.supplier_taxes_id[0].amount:
                     message_list.append(
                         _(
-                            "The product %s has a VAT of %s %% at purchase,"
-                            " but the supplier set a VAT of %s."
+                            "The product %s has a VAT of <b>%s %%</b> at purchase,"
+                            " but the supplier set a VAT of <b>%s %%</b>."
                         )
                         % (
                             line.product_id.display_name,
@@ -198,7 +198,19 @@ class WizardInvoice2dataImport(models.TransientModel):
                             line.pdf_vat_amount,
                         )
                     )
-            wizard.message_vat_difference = "\n".join(message_list) or False
+            if message_list:
+                wizard.message_vat_difference = (
+                    "<ul>"
+                    + "".join(["<li>" + x + "</li>" for x in message_list])
+                    + "</ul>"
+                    + _(
+                        "<b>Please exit the wizard, change the VAT rate"
+                        " for each product by opening each invoice line,"
+                        " then relaunch the wizard.</b>"
+                    )
+                )
+            else:
+                wizard.message_vat_difference = False
 
         for wizard in self.filtered(
             lambda x: not x.pdf_has_vat_mapping or x.state == "import"
