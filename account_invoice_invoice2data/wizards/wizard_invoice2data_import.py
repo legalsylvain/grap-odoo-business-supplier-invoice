@@ -113,7 +113,6 @@ class WizardInvoice2dataImport(models.TransientModel):
     to_delete_invoice_line_ids = fields.Many2many(
         comodel_name="account.invoice.line",
         string="Invoice Lines to delete",
-        readonly=True,
     )
 
     pdf_invoice_number = fields.Char(readonly=True)

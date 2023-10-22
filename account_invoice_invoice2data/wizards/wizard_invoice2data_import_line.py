@@ -63,8 +63,8 @@ class WizardInvoice2dataImportLine(models.TransientModel):
         selection=[
             ("no", "No Changes"),
             ("creation", "Creation"),
-            ("price", "Price Changes"),
-            ("quantity", "Quantity Changes"),
+            ("price", "Price Change"),
+            ("quantity", "Quantity Change"),
         ],
         compute="_compute_change_description",
         store=True,

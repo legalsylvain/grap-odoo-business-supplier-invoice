@@ -161,7 +161,11 @@
                                     </tree>
                                 </field>
                             </group>
-                            <group string="Invoice Lines to Ignore" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                            <group string="Invoice Lines to Disable" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                    <div class="alert alert-warning" role="alert" colspan="4">
+                        The following lines were not found in the PDF invoice. Please remove from the list the lines that actually exist. The remaining lines will be deactivated (quantity set to 0) when you validate the wizard.
+                    </div>
+
                                 <field name="to_delete_invoice_line_ids" nolabel="1">
                                     <tree>
                                         <field name="sequence" />
