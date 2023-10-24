@@ -129,3 +129,11 @@ repos:
       - id: pylint_odoo
         args:
           - --rcfile=.pylintrc-mandatory
+  - repo: https://github.com/mondeja/pre-commit-po-hooks
+    rev: v1.7.3
+    hooks:
+      - id: obsolete-messages
+      - id: fuzzy-messages
+      - id: remove-django-translators
+      - id: max-lines
+        args: ["10000"]
