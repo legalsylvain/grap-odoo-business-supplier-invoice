@@ -54,3 +54,27 @@ class TestRelaisVert(TestModule):
                 }
             ],
         )
+
+    def test_relais_vert_03(self):
+        self._test_supplier_template(
+            "relais-vert__2023-11-22__PRE__FC11879919.pdf",
+            line_qty=58,
+            expected_values={
+                "issuer": "Relais Vert",
+                "date": datetime(day=22, month=11, year=2023),
+                "invoice_number": "FC11879919",
+                "amount_untaxed": 982.57,
+                "amount": 1049.25,
+                "amount_extra_parafiscal_tax_interfel_200": 0.38,
+            },
+            expected_lines=[
+                {
+                    "product_code": "39817",
+                    "product_name": "LENTILLES VERTES FRANCE (5KG) NATUR'AVENIR",
+                    "vat_code": "1",
+                    "quantity": 1.0,
+                    "price_unit": 19.18,
+                    "price_subtotal": 19.18,
+                }
+            ],
+        )

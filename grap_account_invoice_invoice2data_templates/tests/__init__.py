@@ -25,13 +25,15 @@ from . import test_herbiolys
 from . import test_jean_herve
 from . import test_markal
 from . import test_papilles_sauvages
+from . import test_paume_de_pain
 from . import test_pural
 from . import test_relais_local
 from . import test_relais_vert
-from . import test_route_des_comptoirs
-from . import test_saldac
 from . import test_scop_epice
 from . import test_senfas
 from . import test_supersec
+from . import test_route_des_comptoirs
+from . import test_saldac
 from . import test_t_air_de_famille
+from . import test_thera_viva
 from . import test_vitafrais
