@@ -345,8 +345,8 @@ msgstr "Ligne de facture à désactiver"
 
 #. module: account_invoice_invoice2data
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
-msgid "Invoice Lines to Update"
-msgstr "Lignes de facture à mettre à jour"
+msgid "Odoo Invoice Lines to be Updated"
+msgstr "Lignes de facture Odoo qui seront mises à jour"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__to_delete_invoice_line_ids
@@ -467,8 +467,8 @@ msgstr "Le nom devrait être unique pour les modèles Invoice2data"
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:107
 #, python-format
-msgid "New Line Creation"
-msgstr "Création d'une ligne"
+msgid "New Line Creation in Odoo"
+msgstr "Création d'une ligne dans Odoo"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__new_uom_id
@@ -982,7 +982,7 @@ msgstr ""
 #. module: account_invoice_invoice2data
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
 msgid "The following lines were not found in the PDF invoice. Please remove from the list the lines that actually exist. The remaining lines will be deactivated (quantity set to 0) when you validate the wizard."
-msgstr "Les lignes suivantes n'ont pas été trouvées dans la facture PDF. Veuillez retirer de la liste les lignes qui existent réellement. Les lignes restantes seront seront désactivées (quantité à 0) quand vous validerez l'assistant."
+msgstr "Les lignes suivantes n'ont pas été trouvées dans la facture PDF. Veuillez retirer ci-dessous celles qui existent réellement. Les autres seront désactivées (quantité à 0) quand vous validerez l'assistant."
 
 #. module: account_invoice_invoice2data
 #: model:product.product,name:account_invoice_invoice2data.product_teddy_beer_miel

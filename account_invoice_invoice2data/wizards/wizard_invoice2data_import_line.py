@@ -104,7 +104,7 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             invoice_line = line.invoice_line_id
             if not invoice_line:
                 line.changes_type = "creation"
-                line.changes_description = _("New Line Creation")
+                line.changes_description = _("New Line Creation in Odoo")
             else:
                 differences = line._analyse_differences()
                 if not differences:

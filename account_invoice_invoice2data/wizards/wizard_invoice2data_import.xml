@@ -128,7 +128,7 @@
                             </group>
                         </page>
                         <page string="Invoice Lines Differences" states="line_differences">
-                            <group string="Invoice Lines to Update" attrs="{'invisible': [('invoice_difference_line_qty', '=', 0)]}">
+                            <group string="Odoo Invoice Lines to be Updated" attrs="{'invisible': [('invoice_difference_line_qty', '=', 0)]}">
                                 <field name="invoice_difference_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
@@ -167,16 +167,15 @@
                     </div>
 
                                 <field name="to_delete_invoice_line_ids" nolabel="1">
-                                    <tree>
-                                        <field name="sequence" />
-                                        <field name="product_id" />
-                                        <field name="name" />
-                                        <field name="quantity" />
-                                        <field name="uom_id" />
-                                        <field name="price_unit" />
-                                        <field name="discount" />
-                                        <field name="discount2" />
-                                        <field name="invoice_line_tax_ids" widget="many2many_tags" />
+                                    <tree editable="bottom" create="false">
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="quantity" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="discount" readonly="1"/>
+                                        <field name="discount2" readonly="1"/>
+                                        <field name="invoice_line_tax_ids" widget="many2many_tags" readonly="1"/>
                                         <field name="price_subtotal" sum="Total" />
                                     </tree>
                                 </field>
