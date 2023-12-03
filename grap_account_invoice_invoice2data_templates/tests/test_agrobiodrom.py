@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestAgrobiodrom(TestModule):
     def test_agrobiodrom(self):
         self._test_supplier_template(
-            "agrobiodrom__2023-05-27__264951.pdf",
+            "agrobiodrom__2023-05-27__HAL__264951.pdf",
             line_qty=31,
             expected_values={
                 "issuer": "Agrobiodrom",

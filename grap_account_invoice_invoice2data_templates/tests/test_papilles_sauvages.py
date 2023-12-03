@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestPapillesSauvages(TestModule):
     def test_papilles_sauvages(self):
         self._test_supplier_template(
-            "papilles-sauvages__2022-11-16__FAC00002114.pdf",
+            "papilles-sauvages__2022-11-16__ECS__FAC00002114.pdf",
             line_qty=1,
             expected_values={
                 "issuer": "Papilles Sauvages",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestTAirDeFamille(TestModule):
     def test_t_air_de_famille(self):
         self._test_supplier_template(
-            "t-air-de-famille__2023-02-01__FA20230020.pdf",
+            "t-air-de-famille__2023-02-01__GAE__FA20230020.pdf",
             line_qty=4,
             expected_values={
                 "issuer": "T'air de Famille",

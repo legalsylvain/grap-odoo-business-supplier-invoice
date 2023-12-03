@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestHerbiolys(TestModule):
     def test_herbiolys(self):
         self._test_supplier_template(
-            "herbiolys__2023-02-13__FC_228723.pdf",
+            "herbiolys__2023-02-13__EPV__FC_228723.pdf",
             line_qty=15,
             expected_values={
                 "issuer": "Herbiolys",

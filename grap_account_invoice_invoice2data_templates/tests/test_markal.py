@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestMarkal(TestModule):
     def test_markal_01(self):
         self._test_supplier_template(
-            "markal__2023-02-14__00368375.pdf",
+            "markal__2023-02-14__NOU__00368375.pdf",
             line_qty=29,
             expected_values={
                 "issuer": "Markal",

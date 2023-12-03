@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestCafesDagobert(TestModule):
     def test_cafes_dagobert(self):
         self._test_supplier_template(
-            "cafes-dagobert__2023-03-03__FC222028.pdf",
+            "cafes-dagobert__2023-03-03__HAL__FC222028.pdf",
             line_qty=4,
             expected_values={
                 "issuer": "Les Cafés Dagobert",

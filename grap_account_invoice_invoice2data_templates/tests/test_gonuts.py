@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestGonuts(TestModule):
     def test_gonuts_1(self):
         self._test_supplier_template(
-            "gonuts__2022-12-19__FC002092.pdf",
+            "gonuts__2022-12-19__ECS__FC002092.pdf",
             line_qty=3,
             expected_values={
                 "issuer": "Gonuts",
@@ -34,7 +34,7 @@ class TestGonuts(TestModule):
 
     def test_gonuts_2(self):
         self._test_supplier_template(
-            "gonuts__2023-04-06__FC002648.pdf",
+            "gonuts__2023-04-06__HAL__FC002648.pdf",
             line_qty=3,
             expected_values={
                 "issuer": "Gonuts",

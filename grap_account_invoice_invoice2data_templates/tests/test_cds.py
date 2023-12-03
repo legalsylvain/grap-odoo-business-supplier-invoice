@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestCds(TestModule):
     def test_cds(self):
         self._test_supplier_template(
-            "cds__2023-01-30__37136.pdf",
+            "cds__2023-01-30__ACR__37136.pdf",
             line_qty=4,
             expected_values={
                 "issuer": "CDS",

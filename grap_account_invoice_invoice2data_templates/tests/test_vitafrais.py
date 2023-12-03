@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestVitafrais(TestModule):
     def test_vitafrais(self):
         self._test_supplier_template(
-            "vitafrais__2023-02-13__23013043.pdf",
+            "vitafrais__2023-02-13__GAE__23013043.pdf",
             line_qty=27,
             expected_values={
                 "issuer": "Vitafrais",

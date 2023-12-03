@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestComptoirDesLys(TestModule):
     def test_comptoir_des_lys(self):
         self._test_supplier_template(
-            "comptoir-des-lys__2022_12_21__155753.pdf",
+            "comptoir-des-lys__2022_12_21__GAE__155753.pdf",
             line_qty=11,
             expected_values={
                 "issuer": "Comptoir des Lys",

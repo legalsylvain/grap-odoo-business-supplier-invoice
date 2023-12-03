@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestCoopDeYenne(TestModule):
     def test_coop_de_yenne_01(self):
         self._test_supplier_template(
-            "coop-de-yenne__2023-01-09__30101035.pdf",
+            "coop-de-yenne__2023-01-09__ECS__30101035.pdf",
             line_qty=2,
             expected_values={
                 "issuer": "Coop de Yenne",
@@ -34,7 +34,7 @@ class TestCoopDeYenne(TestModule):
 
     def test_coop_de_yenne_02(self):
         self._test_supplier_template(
-            "coop-de-yenne__2023-02-28__30202038.pdf",
+            "coop-de-yenne__2023-02-28__ACR__30202038.pdf",
             line_qty=5,
             expected_values={
                 "issuer": "Coop de Yenne",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestCompanyDuRiz(TestModule):
     def test_compagnie_du_riz(self):
         self._test_supplier_template(
-            "compagnie-du-riz__2023-02-06__28227.pdf",
+            "compagnie-du-riz__2023-02-06__3PP__28227.pdf",
             line_qty=17,
             expected_values={
                 "issuer": "Compagnie du Riz",

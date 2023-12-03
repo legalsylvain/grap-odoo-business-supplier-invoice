@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestFermeBioMargerie(TestModule):
     def test_ferme_bio_margerie(self):
         self._test_supplier_template(
-            "ferme-bio-margerie__2023-01-27__FA018307.pdf",
+            "ferme-bio-margerie__2023-01-27__GAE__FA018307.pdf",
             line_qty=6,
             expected_values={
                 "issuer": "Ferme Bio Margerie",

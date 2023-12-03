@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestAgrosourcing(TestModule):
     def test_agrosourcing_01(self):
         self._test_supplier_template(
-            "agrosourcing__2023-01-11__082083.pdf",
+            "agrosourcing__2023-01-11__ECS__082083.pdf",
             line_qty=11,
             expected_values={
                 "issuer": "Agrosourcing",
@@ -34,7 +34,7 @@ class TestAgrosourcing(TestModule):
 
     def test_agrosourcing_02(self):
         self._test_supplier_template(
-            "agrosourcing__2023-06-03__088043.pdf",
+            "agrosourcing__2023-06-03__HAL__088043.pdf",
             line_qty=8,
             expected_values={
                 "issuer": "Agrosourcing",

@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestRelaisLocal(TestModule):
     def test_relais_local_01(self):
         self._test_supplier_template(
-            "relais-local__2023-01-03__FC230116989.pdf",
+            "relais-local__2023-01-03__ECS__FC230116989.pdf",
             line_qty=13,
             expected_values={
                 "issuer": "Relais Local",
@@ -33,7 +33,7 @@ class TestRelaisLocal(TestModule):
 
     def test_relais_local_02(self):
         self._test_supplier_template(
-            "relais-local__2023-02-27__FC230217945.pdf",
+            "relais-local__2023-02-27__EPV__FC230217945.pdf",
             line_qty=21,
             expected_values={
                 "issuer": "Relais Local",
@@ -57,7 +57,7 @@ class TestRelaisLocal(TestModule):
 
     def test_relais_local_03(self):
         self._test_supplier_template(
-            "relais-local__2023-03-28__FC230318459.pdf",
+            "relais-local__2023-03-28__DTB__FC230318459.pdf",
             # 21 lines in the real life, but the
             # salade lines is bad, so we enable
             # fuzzy_total_amount_untaxed

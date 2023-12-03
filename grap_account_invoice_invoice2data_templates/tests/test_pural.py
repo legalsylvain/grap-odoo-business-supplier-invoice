@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestPural(TestModule):
     def test_pural_01(self):
         self._test_supplier_template(
-            "pural__2023-04-13__805551.pdf",
+            "pural__2023-04-13__HAL__805551.pdf",
             # there is 35 lines, but one is not found
             line_qty=34,
             expected_values={
@@ -37,7 +37,7 @@ class TestPural(TestModule):
 
     def test_pural_02(self):
         self._test_supplier_template(
-            "pural__2023-05-12__809155.pdf",
+            "pural__2023-05-12__HAL__809155.pdf",
             line_qty=25,
             expected_values={
                 "issuer": "Pural",
@@ -64,7 +64,7 @@ class TestPural(TestModule):
 
     def test_pural_03(self):
         self._test_supplier_template(
-            "pural__2023-06-15__812251.pdf",
+            "pural__2023-06-15__HAL__812251.pdf",
             line_qty=26,
             expected_values={
                 "issuer": "Pural",

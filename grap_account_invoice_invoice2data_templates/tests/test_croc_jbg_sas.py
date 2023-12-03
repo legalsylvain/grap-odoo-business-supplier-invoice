@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestCrocJBGSAS(TestModule):
     def test_croc_jbg_sas_01(self):
         self._test_supplier_template(
-            "croc-jbg-sas__2023-01-26__FA4549.pdf",
+            "croc-jbg-sas__2023-01-26__ECS__FA4549.pdf",
             line_qty=5,
             expected_values={
                 "issuer": "Croc JBG SAS",
@@ -34,7 +34,7 @@ class TestCrocJBGSAS(TestModule):
 
     def test_croc_jbg_sas_02(self):
         self._test_supplier_template(
-            "croc-jbg-sas__2023-05-04__FA5044.pdf",
+            "croc-jbg-sas__2023-05-04__HAL__FA5044.pdf",
             line_qty=5,
             expected_values={
                 "issuer": "Croc JBG SAS",

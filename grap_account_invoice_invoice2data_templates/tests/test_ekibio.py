@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestEkibio(TestModule):
     def test_ekibio_01(self):
         self._test_supplier_template(
-            "ekibio__2023-02-02__791601.pdf",
+            "ekibio__2023-02-02__EPV__791601.pdf",
             line_qty=35,
             expected_values={
                 "issuer": "Ekibio",
@@ -33,7 +33,7 @@ class TestEkibio(TestModule):
 
     def test_ekibio_02(self):
         self._test_supplier_template(
-            "ekibio__2023-02-07__792437.pdf",
+            "ekibio__2023-02-07__GAE__792437.pdf",
             line_qty=18,
             expected_values={
                 "issuer": "Ekibio",
@@ -57,7 +57,7 @@ class TestEkibio(TestModule):
 
     def test_ekibio_03(self):
         self._test_supplier_template(
-            "ekibio__2023-02-17__794596.pdf",
+            "ekibio__2023-02-17__ACR__794596.pdf",
             line_qty=11,
             expected_values={
                 "issuer": "Ekibio",
@@ -81,7 +81,7 @@ class TestEkibio(TestModule):
 
     def test_ekibio_04(self):
         self._test_supplier_template(
-            "ekibio__2023-04-13__804686.pdf",
+            "ekibio__2023-04-13__3PP__804686.pdf",
             line_qty=57,
             expected_values={
                 "issuer": "Ekibio",

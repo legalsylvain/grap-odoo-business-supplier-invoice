@@ -9,7 +9,7 @@ from .test_module import TestModule
 class TestGravier(TestModule):
     def test_gravier(self):
         self._test_supplier_template(
-            "gravier__2022-11-16__FA1375938.pdf",
+            "gravier__2022-11-16__ECS__FA1375938.pdf",
             line_qty=4,
             expected_values={
                 "issuer": "Gravier",
