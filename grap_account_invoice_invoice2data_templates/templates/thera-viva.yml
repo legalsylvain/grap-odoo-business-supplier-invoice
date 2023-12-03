@@ -1,0 +1,56 @@
+issuer: Thera Viva
+
+keywords:
+  - "FR94827503988"
+
+fields:
+  vat:
+    parser: static
+    value: "FR94827503988"
+  amount:
+    parser: regex
+    type: float
+    regex: (\d+\.\d+) +EUR
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Taux Montant.*\n\s+(\d+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: Numéro pièce.*\n\d{2}\/\d{2}\/\d{4} +(\w+)
+  date:
+    parser: regex
+    type: date
+    regex: Date.*\n(\d{2}\/\d{2}\/\d{4})
+  date_due:
+    parser: regex
+    type: date
+    regex: Ech.*(\d{2}\/\d{2}\/\d{2})
+  vat_code_055:
+    parser: static
+    value: "2"
+  vat_code_200:
+    parser: static
+    value: "1"
+  lines:
+    parser: lines
+    start: Code
+    end: Total HT
+    line: (?P<product_code>\w+) +(?P<product_name>.{0,50}) +(?P<useless_data>\d\d.*) +(?P<quantity>\d+) +U +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>1|2)
+    types:
+      quantity: float
+      price_unit: float
+      discount: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+    - '%d/%m/%y'
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
