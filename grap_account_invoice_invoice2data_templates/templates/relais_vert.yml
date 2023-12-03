@@ -33,7 +33,7 @@ fields:
     parser: lines
     start: \s+Réf.\s+Désignation.*Total\sHT\sT\sP
     end: \s+Siège\ssocial|Total\sBrut\sHT
-    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<package_name>COL|PCE|KG|KGV|LOT) +(?P<origin>(\w+)\s(\/)?) +(BIO +)?((?P<optional_package_qty>\d+) +)?(?P<quantity>\d+(\.\d+)?) +(?P<brut_price_unit>\d+\.\d+) +(?P<optional_g>\d+ +)?(?P<optional_e>\d+ +)?(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) ?(?P<vat_code>1|6)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<package_name>COL|PCE|KG|KGV|LOT|UNI) +(?P<origin>(\w+)\s(\/)?) +(BIO +)?((?P<optional_package_qty>\d+) +)?(?P<quantity>\d+(\.\d+)?) +(?P<brut_price_unit>\d+\.\d+) +(?P<optional_g>\d+ +)?(?P<optional_e>\d+ +)?(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) ?(?P<vat_code>1|6)
     types:
       quantity: float
       price_unit: float
