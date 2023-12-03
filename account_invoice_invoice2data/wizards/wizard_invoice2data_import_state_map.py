@@ -22,4 +22,4 @@ class WizardInvoice2dataImportStateMap(models.TransientModel):
         mapped_line_ids = self.mapped("line_ids.invoice_line_id").ids
         self.to_delete_invoice_line_ids = self.mapped(
             "invoice_id.invoice_line_ids"
-        ).filtered(lambda x: x.id not in mapped_line_ids and x.price_unit != 0)
+        ).filtered(lambda x: x.id not in mapped_line_ids and x.quantity != 0)

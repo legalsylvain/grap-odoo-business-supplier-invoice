@@ -60,10 +60,10 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
             sequence += 1
             line_vals = {
                 "sequence": sequence,
-                "price_unit": 0,
+                "quantity": 0,
                 "name": _(
                     "%s\n"
-                    "[PDF analysis] Unit Price %s set to 0,"
+                    "[PDF analysis] Quantity %s set to 0,"
                     " because the line is not present in the PDF."
                 )
                 % (line.name, line.price_unit),

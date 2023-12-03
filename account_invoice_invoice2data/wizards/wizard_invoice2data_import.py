@@ -95,7 +95,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         comodel_name="wizard.invoice2data.import.line",
         inverse_name="wizard_id",
         string="Invoice Lines Differences",
-        domain=[("has_changes", "=", True)],
+        domain=[("changes_type", "!=", "no")],
     )
 
     not_found_invoice_line_ids = fields.Many2many(
@@ -113,7 +113,6 @@ class WizardInvoice2dataImport(models.TransientModel):
     to_delete_invoice_line_ids = fields.Many2many(
         comodel_name="account.invoice.line",
         string="Invoice Lines to delete",
-        readonly=True,
     )
 
     pdf_invoice_number = fields.Char(readonly=True)
@@ -153,7 +152,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         compute="_compute_fuzzy_message_amount_untaxed_difference"
     )
 
-    message_vat_difference = fields.Text(
+    message_vat_difference = fields.Html(
         compute="_compute_message_vat_difference",
     )
 
@@ -168,7 +167,7 @@ class WizardInvoice2dataImport(models.TransientModel):
         if self.invoice_id.state != "draft":
             raise UserError(_("You can not run this wizard on a non draft invoice"))
 
-    @api.depends("line_ids.has_changes")
+    @api.depends("line_ids.changes_type")
     def _compute_invoice_difference_line_qty(self):
         for wizard in self:
             wizard.invoice_difference_line_qty = len(wizard.invoice_difference_line_ids)
@@ -189,8 +188,8 @@ class WizardInvoice2dataImport(models.TransientModel):
                 if line.pdf_vat_amount != line.product_id.supplier_taxes_id[0].amount:
                     message_list.append(
                         _(
-                            "The product %s has a VAT of %s %% at purchase,"
-                            " but the supplier set a VAT of %s."
+                            "The product %s has a VAT of <b>%s %%</b> at purchase,"
+                            " but the supplier set a VAT of <b>%s %%</b>."
                         )
                         % (
                             line.product_id.display_name,
@@ -198,7 +197,19 @@ class WizardInvoice2dataImport(models.TransientModel):
                             line.pdf_vat_amount,
                         )
                     )
-            wizard.message_vat_difference = "\n".join(message_list) or False
+            if message_list:
+                wizard.message_vat_difference = (
+                    "<ul>"
+                    + "".join(["<li>" + x + "</li>" for x in message_list])
+                    + "</ul>"
+                    + _(
+                        "<b>Please exit the wizard, change the VAT rate"
+                        " for each product by opening each invoice line,"
+                        " then relaunch the wizard.</b>"
+                    )
+                )
+            else:
+                wizard.message_vat_difference = False
 
         for wizard in self.filtered(
             lambda x: not x.pdf_has_vat_mapping or x.state == "import"

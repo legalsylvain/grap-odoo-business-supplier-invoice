@@ -75,7 +75,7 @@
                 <group>
                     <notebook>
                         <page string="Mapping" states="product_mapping">
-                            <group string="Supplier Product Code not found">
+                            <group string="PDF lines for which the product was not found in Odoo">
                                 <field name="product_mapping_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
@@ -102,7 +102,7 @@
                                     </tree>
                                 </field>
                             </group>
-                            <group string="Odoo Invoice Lines not found" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                            <group string="Odoo Invoice Lines not found in PDF" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
                                 <field name="not_found_invoice_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="product_id"/>
@@ -128,7 +128,7 @@
                             </group>
                         </page>
                         <page string="Invoice Lines Differences" states="line_differences">
-                            <group string="Invoice Lines to Update" attrs="{'invisible': [('invoice_difference_line_qty', '=', 0)]}">
+                            <group string="Odoo Invoice Lines to be Updated" attrs="{'invisible': [('invoice_difference_line_qty', '=', 0)]}">
                                 <field name="invoice_difference_line_ids" nolabel="1">
                                     <tree editable="bottom" create="false" delete="false">
                                         <field name="sequence"/>
@@ -152,23 +152,30 @@
                                         <field name="current_uom_id"/>
                                         <field name="new_uom_id" attrs="{'readonly': [('invoice_line_id', '=', False)]}" force_save="1"  options="{'bg_color': '#D2D2FF: True'}"/>
                                         <field name="invoice_line_id"/>
-                                        <field name="changes_description"/>
+                                        <field name="changes_type" />
+                                        <field name="changes_description"
+                                            options="{
+                                                'bg_color': '#FFFFC8:changes_type == &quot;price&quot;;#FFCC88:changes_type == &quot;quantity&quot;'}"
+                                            />
                                         <field name="currency_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </group>
-                            <group string="Invoice Lines to Ignore" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                            <group string="Invoice Lines to Disable" attrs="{'invisible': [('to_delete_invoice_line_qty', '=', 0)]}">
+                    <div class="alert alert-warning" role="alert" colspan="4">
+                        The following lines were not found in the PDF invoice. Please remove from the list the lines that actually exist. The remaining lines will be deactivated (quantity set to 0) when you validate the wizard.
+                    </div>
+
                                 <field name="to_delete_invoice_line_ids" nolabel="1">
-                                    <tree>
-                                        <field name="sequence" />
-                                        <field name="product_id" />
-                                        <field name="name" />
-                                        <field name="quantity" />
-                                        <field name="uom_id" />
-                                        <field name="price_unit" />
-                                        <field name="discount" />
-                                        <field name="discount2" />
-                                        <field name="invoice_line_tax_ids" widget="many2many_tags" />
+                                    <tree editable="bottom" create="false">
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="quantity" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="discount" readonly="1"/>
+                                        <field name="discount2" readonly="1"/>
+                                        <field name="invoice_line_tax_ids" widget="many2many_tags" readonly="1"/>
                                         <field name="price_subtotal" sum="Total" />
                                     </tree>
                                 </field>
