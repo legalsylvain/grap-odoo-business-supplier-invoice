@@ -56,3 +56,28 @@ class TestCoopDeYenne(TestModule):
                 }
             ],
         )
+
+    def test_coop_de_yenne_03(self):
+        self._test_supplier_template(
+            "coop-de-yenne__2023-11-13__HAL__31101277.pdf",
+            line_qty=4,
+            expected_values={
+                "issuer": "Coop de Yenne",
+                "date": datetime(day=13, month=11, year=2023),
+                "date_due": datetime(day=20, month=12, year=2023),
+                "invoice_number": "31101277",
+                "amount_untaxed": 297.44,
+                "amount": 313.80,
+            },
+            expected_lines=[
+                {
+                    "product_code": "RAPE3",
+                    "product_name": "RAPE 3 FROMAGES SPECIAL FONDUE x10",
+                    "vat_code": "V5",
+                    "quantity": 10.0,
+                    "price_unit": 5.4,
+                    "discount": 0,
+                    "price_subtotal": 54.0,
+                }
+            ],
+        )
