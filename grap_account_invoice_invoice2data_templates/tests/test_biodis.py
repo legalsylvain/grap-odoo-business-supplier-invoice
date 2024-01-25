@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestBiodis(TestModule):
-    def test_biodis(self):
+    def test_biodis_01(self):
         self._test_supplier_template(
             "biodis__2022-09-23__EPV__592740.pdf",
             line_qty=11,
@@ -28,6 +28,32 @@ class TestBiodis(TestModule):
                     "quantity": 12,
                     "price_unit": 1.81,
                     "price_subtotal": 21.72,
+                }
+            ],
+        )
+
+    def test_biodis_02(self):
+        self._test_supplier_template(
+            "biodis__2024-01-12__CC__670682.pdf",
+            line_qty=14 + 20 + 19 + 20 + 20 + 19 + 19 + 12,
+            expected_values={
+                "issuer": "Biodis",
+                "date": datetime(day=12, month=1, year=2024),
+                "date_due": datetime(day=12, month=2, year=2024),
+                "invoice_number": "670682",
+                "amount_untaxed": 3407.62,
+                "amount": 3660.25,
+                "amount_extra_parafiscal_tax_interfel_055": 0.49,
+                "amount_extra_parafiscal_tax_interfel_200": 0.95,
+            },
+            expected_lines=[
+                {
+                    "product_code": "39400",
+                    "product_name": "Noix de cajou W320 - Origine : Viet Nam",
+                    "vat_code": "1",
+                    "quantity": 5.0,
+                    "price_unit": 9.46,
+                    "price_subtotal": 47.30,
                 }
             ],
         )

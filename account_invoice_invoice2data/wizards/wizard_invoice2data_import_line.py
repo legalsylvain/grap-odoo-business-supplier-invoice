@@ -318,6 +318,11 @@ class WizardInvoice2dataImportLine(models.TransientModel):
                 "product_name": _("Fuel Surcharge"),
                 "vat_amount": 20.0,
             },
+            "amount_extra_parafiscal_tax_interfel_055": {
+                "product_code": "TPF",
+                "product_name": _("Taxe Interfel TPF"),
+                "vat_amount": 5.5,
+            },
             "amount_extra_parafiscal_tax_interfel_200": {
                 "product_code": "TPF",
                 "product_name": _("Taxe Interfel TPF"),
