@@ -103,6 +103,83 @@ class TestAbstract(TransactionCase):
                 % (result["amount_untaxed"], lines_total, extra_amounts_total),
             )
 
+            # check detailed vat untaxed amount, if specified
+            vat_code_000 = result.get("vat_code_000")
+            vat_code_055 = result.get("vat_code_055")
+            vat_code_200 = result.get("vat_code_200")
+            lines_total_000 = extra_amounts_total_000 = 0.0
+            lines_total_055 = extra_amounts_total_055 = 0.0
+            lines_total_200 = extra_amounts_total_200 = 0.0
+
+            for line in result["lines"]:
+                if line.get("vat_code") == vat_code_000:
+                    lines_total_000 += line["price_subtotal"]
+                elif line.get("vat_code") == vat_code_055:
+                    lines_total_055 += line["price_subtotal"]
+                elif line.get("vat_code") == vat_code_200:
+                    lines_total_200 += line["price_subtotal"]
+            for k, v in result.items():
+                if "amount_extra_" not in k:
+                    continue
+                if k.endswith("_000"):
+                    extra_amounts_total_000 += v
+                if k.endswith("_055"):
+                    extra_amounts_total_055 += v
+                if k.endswith("_200"):
+                    extra_amounts_total_200 += v
+
+            if "amount_untaxed_000" in result:
+                self.assertEqual(
+                    float_compare(
+                        lines_total_000 + extra_amounts_total_000,
+                        result["amount_untaxed_000"],
+                        precision_digits=2,
+                    ),
+                    0,
+                    "The total untaxed (VAT 0.0) of the invoice %s is "
+                    "different than %s (sum sum of lines total (%s) and extra amount %s "
+                    % (
+                        result["amount_untaxed_000"],
+                        lines_total_000 + extra_amounts_total_000,
+                        lines_total_000,
+                        extra_amounts_total_000,
+                    ),
+                )
+            if "amount_untaxed_055" in result:
+                self.assertEqual(
+                    float_compare(
+                        lines_total_055 + extra_amounts_total_055,
+                        result["amount_untaxed_055"],
+                        precision_digits=2,
+                    ),
+                    0,
+                    "The total untaxed (VAT 5.5) of the invoice %s is "
+                    "different than %s (sum sum of lines total (%s) and extra amount %s "
+                    % (
+                        result["amount_untaxed_055"],
+                        lines_total_055 + extra_amounts_total_055,
+                        lines_total_055,
+                        extra_amounts_total_055,
+                    ),
+                )
+            if "amount_untaxed_200" in result:
+                self.assertEqual(
+                    float_compare(
+                        lines_total_200 + extra_amounts_total_200,
+                        result["amount_untaxed_200"],
+                        precision_digits=2,
+                    ),
+                    0,
+                    "The total untaxed (VAT 20.0) of the invoice %s is "
+                    "different than %s (sum of lines total (%s) and extra amount %s)"
+                    % (
+                        result["amount_untaxed_200"],
+                        lines_total_200 + extra_amounts_total_200,
+                        lines_total_200,
+                        extra_amounts_total_200,
+                    ),
+                )
+
         # check for expected detailled lines
         for expected_line in expected_lines:
             line_found = False

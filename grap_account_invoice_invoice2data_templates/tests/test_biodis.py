@@ -17,6 +17,8 @@ class TestBiodis(TestModule):
                 "date_due": datetime(day=14, month=10, year=2022),
                 "invoice_number": "592740",
                 "amount_untaxed": 759.65,
+                "amount_untaxed_055": 555.39,
+                "amount_untaxed_200": 204.26,
                 "amount": 831.05,
                 "amount_extra_fuel_surcharge_200": 3.25,
             },
@@ -42,9 +44,11 @@ class TestBiodis(TestModule):
                 "date_due": datetime(day=12, month=2, year=2024),
                 "invoice_number": "670682",
                 "amount_untaxed": 3407.62,
+                "amount_untaxed_055": 2957.88,
+                "amount_untaxed_200": 449.74,
                 "amount": 3660.25,
-                "amount_extra_parafiscal_tax_interfel_055": 0.49,
-                "amount_extra_parafiscal_tax_interfel_200": 0.95,
+                "amount_extra_parafiscal_tax_interfel_no_fr_055": 0.49,
+                "amount_extra_parafiscal_tax_interfel_fr_055": 0.95,
             },
             expected_lines=[
                 {
