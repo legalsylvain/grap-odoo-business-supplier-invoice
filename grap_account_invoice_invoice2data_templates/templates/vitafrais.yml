@@ -1,7 +1,7 @@
 issuer: Vitafrais
 
 keywords:
-  - "43945915700053"
+  - "43945915700053|43945915700061"
   - "FR43439459157"
 
 fields:
@@ -41,11 +41,12 @@ fields:
     parser: lines
     start: Article +Quantité + .*Total HT Taxe
     end: Base taxe
-    line: ^(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?)\s?(UN|Kg) +(?P<price_unit>\d+\.\d+) +((?P<discount>\d+)%)? +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
+    line: ^(?P<product_code>\d+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?)\s?(UN|Kg) +(?P<price_unit>\d+\.\d+) +((?P<discount>\d+(\.\d+)?)%)?(\+(?P<discount_2>\d+(\.\d+)?)%)? +(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
     types:
       quantity: float
       price_unit: float
       discount: float
+      discount_2: float
       price_subtotal: float
 
 options:
