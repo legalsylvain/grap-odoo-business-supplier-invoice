@@ -56,3 +56,28 @@ class TestGonuts(TestModule):
                 }
             ],
         )
+
+    def test_gonuts_3(self):
+        self._test_supplier_template(
+            "gonuts__2024-01-08__CEY__FC003861.pdf",
+            line_qty=2,
+            expected_values={
+                "issuer": "Gonuts",
+                "date": datetime(day=8, month=1, year=2024),
+                "date_due": datetime(day=7, month=2, year=2024),
+                "invoice_number": "FC003861",
+                "amount_untaxed": 150.54,
+                "amount": 158.82,
+            },
+            expected_lines=[
+                {
+                    "product_code": "00079",
+                    "product_name": "PUREE NOISETTE GRILLEE 5KG",
+                    "vat_code": "TR",
+                    "quantity": 1,
+                    "price_unit": 101.44,
+                    "discount": 0,
+                    "price_subtotal": 101.44,
+                }
+            ],
+        )
