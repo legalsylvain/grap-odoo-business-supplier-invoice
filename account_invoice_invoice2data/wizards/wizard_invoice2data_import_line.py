@@ -310,17 +310,27 @@ class WizardInvoice2dataImportLine(models.TransientModel):
             },
             "amount_extra_shipping_costs_200": {
                 "product_code": "PORT",
-                "product_name": _("Shipping Cost"),
+                "product_name": _("Shipping Cost (20,0%)"),
                 "vat_amount": 20.0,
             },
             "amount_extra_fuel_surcharge_200": {
                 "product_code": "CARBURANT",
-                "product_name": _("Fuel Surcharge"),
+                "product_name": _("Fuel Surcharge (20,0%)"),
                 "vat_amount": 20.0,
+            },
+            "amount_extra_parafiscal_tax_interfel_no_fr_055": {
+                "product_code": "TPF",
+                "product_name": _("Taxe Interfel TPF (5.5% - NO FR)"),
+                "vat_amount": 5.5,
+            },
+            "amount_extra_parafiscal_tax_interfel_fr_055": {
+                "product_code": "TPF",
+                "product_name": _("Taxe Interfel TPF (5.5% - FR)"),
+                "vat_amount": 5.5,
             },
             "amount_extra_parafiscal_tax_interfel_200": {
                 "product_code": "TPF",
-                "product_name": _("Taxe Interfel TPF"),
+                "product_name": _("Taxe Interfel TPF (20,0%)"),
                 "vat_amount": 20.0,
             },
             "amount_extra_trade_discount_055": {

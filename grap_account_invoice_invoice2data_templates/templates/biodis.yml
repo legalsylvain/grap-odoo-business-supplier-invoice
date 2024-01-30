@@ -16,6 +16,14 @@ fields:
     parser: regex
     type: float
     regex: Total H.T. +(\d+\.\d+)
+  amount_untaxed_055:
+    parser: regex
+    type: float
+    regex: \s+1 +(\d+\.\d+) +5.50 +
+  amount_untaxed_200:
+    parser: regex
+    type: float
+    regex: \s+2 +(\d+\.\d+) +20.00 +
   invoice_number:
     parser: regex
     regex: Réf\. facture +(\w+)
@@ -31,6 +39,14 @@ fields:
     parser: regex
     type: float
     regex: FRAIS ENERGIE +(\d+\.\d+) €
+  amount_extra_parafiscal_tax_interfel_no_fr_055:
+    parser: regex
+    type: float
+    regex: \s+2 +\d+\.\d+ +\d+\.\d+ +(\d+\.\d+) +2
+  amount_extra_parafiscal_tax_interfel_fr_055:
+    parser: regex
+    type: float
+    regex: \s+3 +\d+\.\d+ +\d+\.\d+ +(\d+\.\d+) +3
   vat_code_055:
     parser: static
     value: "1"
@@ -41,7 +57,7 @@ fields:
     parser: lines
     start: Réf.*UNITAIRE
     end: Base TPF +TPF
-    line: ^(?P<product_code>\w+) +(?P<product_name>.{80}) +(?P<certification>(NON )?BIO|ECOCERT DETE) +(?P<barcode>\d+) +(?P<quantity>\d+(\.\d+)?) +(?P<uom_name>U|KG) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>-?\d+\.\d+) +(?P<vat_code>1|2)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<certification>(NON )?BIO|ECOCERT DETE) +(?P<barcode>\d{13}) +(?P<quantity>\d+(\.\d+)?) +(?P<uom_name>U|KG) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>-?\d+\.\d+) +(?P<vat_code>1|2)
     types:
       quantity: float
       price_unit: float
@@ -51,7 +67,7 @@ fields:
 options:
   currency: EUR
   date_formats:
-    - '%d/%m/%y'
+    - '%d/%m/%Y'
   decimal_separator: '.'
   replace:
     # Standardize the decimal separator. ('1,24' -> '1.24')

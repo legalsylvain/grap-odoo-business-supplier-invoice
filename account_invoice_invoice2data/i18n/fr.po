@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-22 20:25+0000\n"
-"PO-Revision-Date: 2023-10-22 20:25+0000\n"
+"POT-Creation-Date: 2024-01-25 13:58+0000\n"
+"PO-Revision-Date: 2024-01-25 13:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -249,8 +249,8 @@ msgstr "Nom du fichier"
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:318
 #, python-format
-msgid "Fuel Surcharge"
-msgstr "Supplément pour le carburant"
+msgid "Fuel Surcharge (20,0%)"
+msgstr "Supplément pour le carburant (TVA 20,0%)"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__fuzzy_message_amount_untaxed_difference
@@ -342,11 +342,6 @@ msgstr "Lignes de facture non trouvées"
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
 msgid "Invoice Lines to Disable"
 msgstr "Ligne de facture à désactiver"
-
-#. module: account_invoice_invoice2data
-#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
-msgid "Odoo Invoice Lines to be Updated"
-msgstr "Lignes de facture Odoo qui seront mises à jour"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__to_delete_invoice_line_ids
@@ -476,6 +471,11 @@ msgid "New UoM"
 msgstr "UdM à appliquer"
 
 #. module: account_invoice_invoice2data
+#: selection:wizard.invoice2data.import.line,changes_type:0
+msgid "No Changes"
+msgstr "Aucun changement"
+
+#. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_import.py:53
 #, python-format
 msgid "No template was found for invoice analysis."
@@ -497,7 +497,12 @@ msgid "Odoo Invoice Lines not found in PDF"
 msgstr "Lignes de facture Odoo non trouvées dans le PDF"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:517
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "Odoo Invoice Lines to be Updated"
+msgstr "Lignes de facture Odoo qui seront mises à jour"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:527
 #, python-format
 msgid "PDF Analysis"
 msgstr "Analyse PDF"
@@ -653,8 +658,8 @@ msgstr ""
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:313
 #, python-format
-msgid "Shipping Cost"
-msgstr "Frais de transport"
+msgid "Shipping Cost (20,0%)"
+msgstr "Frais de transport (TVA 20,0%)"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__state
@@ -699,12 +704,28 @@ msgid "Taxe Gazole"
 msgstr ""
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:323
 #: model:product.product,name:account_invoice_invoice2data.product_relais_vert_interfel
 #: model:product.template,name:account_invoice_invoice2data.product_relais_vert_interfel_product_template
-#, python-format
 msgid "Taxe Interfel TPF"
 msgstr ""
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:333
+#, python-format
+msgid "Taxe Interfel TPF (20,0%)"
+msgstr "Taxe Interfel TPF (TVA 20,0%)"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:328
+#, python-format
+msgid "Taxe Interfel TPF (5.5% - FR)"
+msgstr "Taxe Interfel TPF (TVA 5,5% - France)"
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:323
+#, python-format
+msgid "Taxe Interfel TPF (5.5% - NO FR)"
+msgstr "Taxe Interfel TPF (TVA 5,5% - Hors France)"
 
 #. module: account_invoice_invoice2data
 #: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_account_invoice2data_template_form
@@ -748,6 +769,11 @@ msgid "The analysis of the PDF file for the supplier %s did not go completely we
 msgstr "L'analyse du PDF pour le fournissuer %s ne s'est pas complètement bien passée.\n"
 "- Le total HT des lignes analysées est de %s, mais le total HT de la facture est de %s. (Montant manquant : %s)\n"
 " - L'analyse a trouvé %d lignes."
+
+#. module: account_invoice_invoice2data
+#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
+msgid "The following lines were not found in the PDF invoice. Please remove from the list the lines that actually exist. The remaining lines will be deactivated (quantity set to 0) when you validate the wizard."
+msgstr "Les lignes suivantes n'ont pas été trouvées dans la facture PDF. Veuillez retirer ci-dessous celles qui existent réellement. Les autres seront désactivées (quantité à 0) quand vous validerez l'assistant."
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import.py:190
@@ -803,13 +829,13 @@ msgid "Total Vat Excl"
 msgstr "Total HT"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:328
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:338
 #, python-format
 msgid "Trade Discount on products with 05.5% VAT"
 msgstr "Remise commerciale sur article à TVA 5,5%"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:333
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:343
 #, python-format
 msgid "Trade Discount on products with 20.0% VAT"
 msgstr "Remise commerciale sur article à TVA 20,0%"
@@ -821,7 +847,7 @@ msgid "Tranquille Achille - 75cl"
 msgstr ""
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:350
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:360
 #, python-format
 msgid "Unable to map the vat code '%s'"
 msgstr "Impossible de relier le code TVA '%s'"
@@ -833,7 +859,7 @@ msgid "Unable to search product without product code neither product name."
 msgstr "Impossible de rechercher un article sans le code article ni le nom de l'article."
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:437
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:447
 #, python-format
 msgid "Unimplemented feature : Product %s is still related many times with the supplier %s.\n"
 " Please update manually the information on the product form view."
@@ -925,13 +951,13 @@ msgid "You can not run this wizard on a non draft invoice"
 msgstr "Vous ne pouvez pas executer cet assistant sur une facture qui n'est pas en brouillon"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:478
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:488
 #, python-format
 msgid "[PDF analysis] %s"
 msgstr "[Analyse PDF] %s"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:516
+#: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:526
 #, python-format
 msgid "[PDF analysis] Line Creation"
 msgstr "[Analyse PDF] Création de la ligne"
@@ -978,11 +1004,6 @@ msgstr "UdM Odoo"
 #: model:product.template,weight_uom_name:account_invoice_invoice2data.product_teddy_beer_tranquille_product_template
 msgid "kg"
 msgstr ""
-
-#. module: account_invoice_invoice2data
-#: model_terms:ir.ui.view,arch_db:account_invoice_invoice2data.view_wizard_invoice2data_import_form
-msgid "The following lines were not found in the PDF invoice. Please remove from the list the lines that actually exist. The remaining lines will be deactivated (quantity set to 0) when you validate the wizard."
-msgstr "Les lignes suivantes n'ont pas été trouvées dans la facture PDF. Veuillez retirer ci-dessous celles qui existent réellement. Les autres seront désactivées (quantité à 0) quand vous validerez l'assistant."
 
 #. module: account_invoice_invoice2data
 #: model:product.product,name:account_invoice_invoice2data.product_teddy_beer_miel
