@@ -12,11 +12,13 @@
         <field name="arch" type="xml">
             <tree decoration-muted="invoice_qty == 0">
                 <field name="name"/>
+                <field name="version"/>
                 <field name="vat"/>
                 <field name="vat_values"/>
                 <field name="file_name"/>
                 <field name="invoice_qty" sum="Total"/>
                 <field name="invoice_line_qty" sum="Total"/>
+                <field name="active" widget="boolean_toggle"/>
             </tree>
         </field>
     </record>
@@ -28,14 +30,14 @@
                 <header />
                 <sheet>
                     <div class="oe_title">
-                        <h1>
-                            <field name="name"/>
-                        </h1>
+                        <h1><field name="name"/></h1>
+                        <h2><field name="version"/></h2>
                     </div>
                     <group col="4">
                         <field name="vat"/>
                         <field name="vat_values"/>
                         <field name="file_name"/>
+                        <field name="active" widget="boolean_toggle"/>
                     </group>
                     <notebook>
                         <page string="Technical Information" attrs="{'invisible': [('file_name', '=', False)]}">

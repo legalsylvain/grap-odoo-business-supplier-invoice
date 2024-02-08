@@ -18,17 +18,19 @@ class AccountInvoice2dataTemplate(models.Model):
     _description = "Template for invoice2data Supplier Invoices"
     _order = "name"
 
-    name = fields.Char(required=True, index=True)
+    name = fields.Char(required=True, index=True, readonly=True)
 
-    version = fields.Integer(required=True, default=1)
+    version = fields.Integer(required=True, default=1, readonly=True)
 
-    vat = fields.Char(string="Supplier Vat Number")
+    vat = fields.Char(string="Supplier Vat Number", readonly=True)
 
-    vat_values = fields.Char()
+    vat_values = fields.Char(readonly=True)
 
-    file_name = fields.Char()
+    file_name = fields.Char(readonly=True)
 
-    json_content = fields.Text()
+    json_content = fields.Text(readonly=True)
+
+    active = fields.Boolean(default=True)
 
     _sql_constraints = [
         (
@@ -99,7 +101,7 @@ class AccountInvoice2dataTemplate(models.Model):
     def _update_templates(self, files):
 
         up_to_date_template_ids = []
-        existing_templates = self.search([])
+        existing_templates = self.with_context(active_test=False).search([])
 
         # Create new templates, or update existing ones
         for file in files:
