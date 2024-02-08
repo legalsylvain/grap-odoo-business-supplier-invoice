@@ -14,7 +14,8 @@ from . import test_compagnie_du_riz
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
-from . import test_ecodis
+from . import test_ecodis_1
+from . import test_ecodis_2
 from . import test_ekibio
 from . import test_ferme_bio_margerie
 from . import test_ferme_des_grands_noyers

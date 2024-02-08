@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestEcodis(TestModule):
-    def test_ecodis(self):
+    def test_ecodis_1_01(self):
         self._test_supplier_template(
             "ecodis__2022-08-11__ECS__338035.pdf",
             line_qty=17,

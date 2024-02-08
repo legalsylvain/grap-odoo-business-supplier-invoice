@@ -20,6 +20,8 @@ class AccountInvoice2dataTemplate(models.Model):
 
     name = fields.Char(required=True, index=True)
 
+    version = fields.Integer(required=True, default=1)
+
     vat = fields.Char(string="Supplier Vat Number")
 
     vat_values = fields.Char()
@@ -31,8 +33,8 @@ class AccountInvoice2dataTemplate(models.Model):
     _sql_constraints = [
         (
             "unique_name",
-            "unique(name)",
-            "Name should be unique for invoice2data templates.",
+            "unique(name, version)",
+            "Name and version should be unique for invoice2data templates.",
         ),
         (
             "unique_file_name",
@@ -41,8 +43,8 @@ class AccountInvoice2dataTemplate(models.Model):
         ),
         (
             "unique_vat",
-            "unique(vat)",
-            "Vat Number should be unique for invoice2data templates.",
+            "unique(vat, version)",
+            "Vat Number and verison should be unique for invoice2data templates.",
         ),
     ]
 
@@ -138,6 +140,7 @@ class AccountInvoice2dataTemplate(models.Model):
         ]
         return {
             "name": yaml_vals.get("issuer"),
+            "version": int(yaml_vals.get("version", "1")),
             "vat": yaml_vals.get("fields").get("vat", {}).get("value"),
             "file_name": file.name,
             "json_content": str(yaml_vals),
