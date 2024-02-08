@@ -110,3 +110,27 @@ class TestEkibio(TestModule):
                 },
             ],
         )
+
+    def test_ekibio_05(self):
+        self._test_supplier_template(
+            "ekibio__2024-02-07__BSG__863788.pdf",
+            line_qty=21,
+            expected_values={
+                "issuer": "Ekibio",
+                "date": datetime(day=7, month=2, year=2024),
+                "date_due": datetime(day=8, month=3, year=2024),
+                "invoice_number": "863788",
+                "amount_untaxed": 552.28,
+                "amount": 573.92,
+            },
+            expected_lines=[
+                {
+                    "product_code": "009209",
+                    "product_name": "BIS SABLES CEREALES MUESLI ET FRUITS 200G",
+                    "vat_code": "1",
+                    "quantity": 12.0,
+                    "price_unit": 1.71,
+                    "price_subtotal": 20.52,
+                },
+            ],
+        )
