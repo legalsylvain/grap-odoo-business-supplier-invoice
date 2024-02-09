@@ -46,7 +46,7 @@ class AccountInvoice2dataTemplate(models.Model):
         (
             "unique_vat",
             "unique(vat, version)",
-            "Vat Number and verison should be unique for invoice2data templates.",
+            "Vat Number and version should be unique for invoice2data templates.",
         ),
     ]
 

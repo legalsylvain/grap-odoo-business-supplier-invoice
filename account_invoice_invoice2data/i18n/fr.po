@@ -928,7 +928,7 @@ msgstr "Numéro de TVA intracom non défini"
 
 #. module: account_invoice_invoice2data
 #: sql_constraint:account.invoice2data.template:0
-msgid "Vat Number and verison should be unique for invoice2data templates."
+msgid "Vat Number and version should be unique for invoice2data templates."
 msgstr "Le numéro de TVA intracom et la version doivent être unique pour les modèles d'import fournisseur."
 
 #. module: account_invoice_invoice2data
