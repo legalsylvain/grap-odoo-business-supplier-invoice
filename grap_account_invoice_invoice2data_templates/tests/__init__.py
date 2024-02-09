@@ -29,7 +29,8 @@ from . import test_papilles_sauvages
 from . import test_paume_de_pain
 from . import test_pural
 from . import test_relais_local
-from . import test_relais_vert
+from . import test_relais_vert_1
+from . import test_relais_vert_2
 from . import test_scop_epice
 from . import test_senfas
 from . import test_supersec

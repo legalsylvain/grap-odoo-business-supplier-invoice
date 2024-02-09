@@ -1,8 +1,11 @@
 issuer: Relais Vert
 
+version: 1
+
 keywords:
   - "352 867 493 00137"
   - "FR 72 352 867 493"
+  - "Réf. Cmd Client"
 
 fields:
   vat:
