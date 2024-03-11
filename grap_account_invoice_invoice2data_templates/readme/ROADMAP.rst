@@ -1,16 +1,18 @@
 **Ignored Supliers**
 
-- Jardins de Gaia :
-  Retours à la ligne de l'enfer dans les lignes des produits.
-  Présence de texte invisible.
+* Frutas Oscar Morell :
+    * Pas de code produit.
+    * Facture reprenant plusieurs BL.
 
-- Olival d'Ouro, Terre de Sens :
-  Facture avec des TVA manquantes. Compliqué de parser un tableau avec un champ
-  obligatoire qui n'est pas tout le temps mis.
+* Jardins de Gaia :
+    * Retours à la ligne de l'enfer dans les lignes des produits.
+    * Présence de texte invisible.
 
-- Pronatura :
-  Pas de code produit. Certains lignes de PO génère 2 lignes de factures.
-  Le champs quantité n'est pas toujours dans la même colonne.
+* Olival d'Ouro, Terre de Sens :
+    * Facture avec des TVA manquantes.
+      (Compliqué de parser un tableau avec un champ obligatoire qui n'est pas tout le temps mis.)
 
-- Frutas Oscar Morell :
-  Pas de code produit. Facture reprenant plusieurs BL.
+* Pronatura :
+    * Pas de code produit.
+    * Certains lignes de PO génère 2 lignes de factures.
+    * Le champs quantité n'est pas toujours dans la même colonne.

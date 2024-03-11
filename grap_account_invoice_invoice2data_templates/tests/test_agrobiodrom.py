@@ -7,7 +7,7 @@ from .test_module import TestModule
 
 
 class TestAgrobiodrom(TestModule):
-    def test_agrobiodrom(self):
+    def test_agrobiodrom_01(self):
         self._test_supplier_template(
             "agrobiodrom__2023-05-27__HAL__264951.pdf",
             line_qty=31,
@@ -28,6 +28,29 @@ class TestAgrobiodrom(TestModule):
                     "price_unit": 1.65,
                     "discount": 0.0,
                     "price_subtotal": 16.50,
+                }
+            ],
+        )
+
+    def test_agrobiodrom_02(self):
+        self._test_supplier_template(
+            "agrobiodrom__2024-02-24__COT__282376.pdf",
+            line_qty=22,
+            expected_values={
+                "issuer": "Agrobiodrom",
+                "date": datetime(day=26, month=2, year=2024),
+                "date_due": datetime(day=27, month=3, year=2024),
+                "invoice_number": "282376",
+                "amount_untaxed": 354.90,
+                "amount": 374.42,
+            },
+            expected_lines=[
+                {
+                    "product_name": "NAVET VIOLET FR X 5 KG 150-300",
+                    "vat_code": "1",
+                    "quantity": 5.0,
+                    "price_unit": 2.16,
+                    "price_subtotal": 10.80,
                 }
             ],
         )
