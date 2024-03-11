@@ -3,42 +3,45 @@ issuer: Scop Epice
 keywords:
   - "443 784 335 00053"
   - "FR 81 443 784 335"
-  - "Pénalités de retard.*taux annuel"
+  - "N° intracommunautaire client"
 
 fields:
   version:
     parser: static
-    value: 1
+    value: 2
   vat:
     parser: static
     value: "FR81443784335"
   amount:
     parser: regex
     type: float
-    regex: Total TTC\s+(\d+\.\d+)
+    regex: NET A PAYER +(\d+\.\d+)
   amount_untaxed:
     parser: regex
     type: float
-    regex: Total HT\s+(\d+\.\d+)
+    regex: Total +(\d+\.\d+)
   invoice_number:
     parser: regex
-    regex: Facture N°.*\s+\d{2}\/\d{2}\/\d{4}\s+(FV\d+)
+    regex: (FV\d+) +\d{2}\/\d{2}\/\d{2}
   date:
     parser: regex
     type: date
-    regex: Date.*\s+(\d{2}\/\d{2}\/\d{4})
+    regex: FV\d+ +(\d{2}\/\d{2}\/\d{2})
   date_due:
     parser: regex
     type: date
-    regex: Echéance\s+\d{2}\/\d{2}\/\d{4}\s+FV\d+\s+(\d{2}\/\d{2}\/\d{4})
+    regex: Echéance +. +(\d{2}\/\d{2}\/\d{2})
   vat_code_055:
     parser: static
-    value: "2"
+    value: "C2"
+  vat_code_200:
+    parser: static
+    value: "C5"
   lines:
     parser: lines
     start: Référence.*Montant HT\s+TVA
     end: Code.*Base.*Total HT
-    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d)
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\w+)
     types:
       quantity: float
       price_unit: float
@@ -48,7 +51,7 @@ fields:
 options:
   currency: EUR
   date_formats:
-    - '%d/%m/%Y'
+    - '%d/%m/%y'
   decimal_separator: '.'
   replace:
     # Standardize the decimal separator. ('1,24' -> '1.24')
