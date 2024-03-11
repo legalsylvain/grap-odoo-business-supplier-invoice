@@ -13,6 +13,7 @@ class TestEcodis(TestModule):
             line_qty=13,
             expected_values={
                 "issuer": "Ecodis",
+                "version": 2,
                 "date": datetime(day=22, month=12, year=2023),
                 "date_due": datetime(day=22, month=1, year=2024),
                 "invoice_number": "371068",

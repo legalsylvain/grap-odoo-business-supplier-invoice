@@ -1,13 +1,14 @@
 issuer: Relais Vert
 
-version: 2
-
 keywords:
   - "352 867 493 00137"
   - "FR 72 352 867 493"
   - "Vos Réf. Commande"
 
 fields:
+  version:
+    parser: static
+    value: 2
   vat:
     parser: static
     value: "FR72352867493"

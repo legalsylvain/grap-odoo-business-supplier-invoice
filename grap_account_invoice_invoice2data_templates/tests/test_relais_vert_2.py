@@ -13,6 +13,7 @@ class TestRelaisVert(TestModule):
             line_qty=76,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 2,
                 "date": datetime(day=11, month=12, year=2023),
                 "invoice_number": "FC11890790",
                 "amount_untaxed": 1825.81,

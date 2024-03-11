@@ -120,7 +120,6 @@ class AccountInvoice2dataTemplate(models.Model):
             existing_template = existing_templates.filtered(
                 lambda x: x.file_name == template_vals["file_name"]
             )
-
             if existing_template:
                 existing_template.write(template_vals)
                 up_to_date_template_ids.append(existing_template.id)
@@ -142,7 +141,9 @@ class AccountInvoice2dataTemplate(models.Model):
         ]
         return {
             "name": yaml_vals.get("issuer"),
-            "version": int(yaml_vals.get("version", "1")),
+            "version": yaml_vals.get("fields")
+            .get("version", {"value": 1})
+            .get("value"),
             "vat": yaml_vals.get("fields").get("vat", {}).get("value"),
             "file_name": file.name,
             "json_content": str(yaml_vals),

@@ -1,13 +1,14 @@
 issuer: Ecodis
 
-version: 1
-
 keywords:
   - "42921631000046"
   - "FR35429216310"
   - "No Client"
 
 fields:
+  version:
+    parser: static
+    value: 1
   vat:
     parser: static
     value: "FR35429216310"

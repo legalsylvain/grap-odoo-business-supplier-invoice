@@ -1,13 +1,14 @@
 issuer: Ecodis
 
-version: 2
-
 keywords:
   - "42921631000046"
   - "FR35429216310"
   - "N° Compte tiers"
 
 fields:
+  version:
+    parser: static
+    value: 2
   vat:
     parser: static
     value: "FR35429216310"

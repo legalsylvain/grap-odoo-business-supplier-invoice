@@ -13,6 +13,7 @@ class TestRelaisVert(TestModule):
             line_qty=6,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=6, month=2, year=2023),
                 "invoice_number": "FC11716389",
                 "amount_untaxed": 120.90,
@@ -37,6 +38,7 @@ class TestRelaisVert(TestModule):
             line_qty=51,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=25, month=3, year=2023),
                 "invoice_number": "FC11741819",
                 "amount_untaxed": 1000.85,
@@ -61,6 +63,7 @@ class TestRelaisVert(TestModule):
             line_qty=58,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=22, month=11, year=2023),
                 "invoice_number": "FC11879919",
                 "amount_untaxed": 982.57,
