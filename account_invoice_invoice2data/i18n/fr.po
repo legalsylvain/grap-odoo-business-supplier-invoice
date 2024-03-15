@@ -778,7 +778,7 @@ msgstr "L'analyse du PDF a échoué."
 msgid "The analysis of the PDF file for the supplier %s did not go completely well.\n"
 "- The amount of the analyzed lines is %s, but the total amount before tax is %s. (Missing Amount : %s)\n"
 " - The analysis found %d lines."
-msgstr "L'analyse du PDF pour le fournissuer %s ne s'est pas complètement bien passée.\n"
+msgstr "L'analyse du PDF pour le fournisseur %s ne s'est pas complètement bien passée.\n"
 "- Le total HT des lignes analysées est de %s, mais le total HT de la facture est de %s. (Montant manquant : %s)\n"
 " - L'analyse a trouvé %d lignes."
 
@@ -808,7 +808,7 @@ msgstr "L'analyse des factures électroniques est disponible pour le fournisseur
 #: code:addons/account_invoice_invoice2data/models/account_invoice.py:62
 #, python-format
 msgid "The supplier's electronic invoice analysis is temporarily unavailable to Supplier %s."
-msgstr "L'analyse de la facture électronique est temporairement désactivé pour le fournissuer %s."
+msgstr "L'analyse de la facture électronique est temporairement désactivé pour le fournisseur %s."
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:34
