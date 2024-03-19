@@ -11,17 +11,11 @@ fields:
   amount:
     parser: regex
     type: float
-    regex: \s+\d+.\d+\s+\d+\s+\d+[.\d+]?%\s+\d+.\d+
-      \s+\d+.\d+
-      \s+\d+.\d+
-      \s+(\d+.\d+)
+    regex: Total TTC\s+.* +(\d+.\d+)\s
   amount_untaxed:
     parser: regex
     type: float
-    regex: \s+\d+.\d+\s+\d+\s+\d+[.\d+]?%\s+\d+.\d+
-      \s+(\d+.\d+)
-      \s+\d+.\d+
-      \s+\d+.\d+
+    regex: Total TTC\s+.* +(\d+.\d+) +\d+.\d+ +\d+.\d+\s
   invoice_number:
     parser: regex
     regex: FACTURE No\s+(\d+)
