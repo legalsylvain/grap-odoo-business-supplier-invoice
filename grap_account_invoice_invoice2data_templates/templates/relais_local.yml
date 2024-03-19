@@ -1,7 +1,6 @@
 issuer: Relais Local
 
 keywords:
-  - "82398351500011"
   - "FR35823983515"
 
 fields:
@@ -20,8 +19,7 @@ fields:
       ([\d\s?]+\.\d+)
   invoice_number:
     parser: regex
-    regex: Facture N°
-      (FC\d+)
+    regex: N° +((?:AC|FC)\d+)
   date:
     parser: regex
     type: date
