@@ -14,7 +14,8 @@ from . import test_compagnie_du_riz
 from . import test_comptoir_des_lys
 from . import test_coop_de_yenne
 from . import test_croc_jbg_sas
-from . import test_ecodis
+from . import test_ecodis_1
+from . import test_ecodis_2
 from . import test_ekibio
 from . import test_ferme_bio_margerie
 from . import test_ferme_des_grands_noyers
@@ -28,8 +29,10 @@ from . import test_papilles_sauvages
 from . import test_paume_de_pain
 from . import test_pural
 from . import test_relais_local
-from . import test_relais_vert
-from . import test_scop_epice
+from . import test_relais_vert_1
+from . import test_relais_vert_2
+from . import test_scop_epice_1
+from . import test_scop_epice_2
 from . import test_senfas
 from . import test_supersec
 from . import test_route_des_comptoirs

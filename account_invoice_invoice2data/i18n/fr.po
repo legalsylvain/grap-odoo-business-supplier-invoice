@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-25 13:58+0000\n"
-"PO-Revision-Date: 2024-01-25 13:58+0000\n"
+"POT-Creation-Date: 2024-02-08 16:14+0000\n"
+"PO-Revision-Date: 2024-02-08 16:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,11 +72,13 @@ msgstr "'invoice2data_templates_dir' n'est pas paramétrer dans le fichier de co
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,help:account_invoice_invoice2data.field_account_invoice__invoice2data_state
 msgid "* Not Applicable: the invoice state of the invoice doesn't allow pdf import\n"
-" * Available: the supplier invoice can be analyzed\n"
+" * Available: The supplier invoice can be analyzed\n"
+" * Disabled:  The analysis is temporarily disabled\n"
 " * Not Found: The supplier invoice can not be analyzed\n"
 " * No VAT: The supplier doesn't have VAT defined. Unable to know if the invoice can be analyzed."
 msgstr "* Non applicable : l'état de la facture ne permet pas d'import PDF\n"
 " * Disponible: La facture du fournisseur peut être analysée\n"
+" * Désactivé: L'analyse de la facture est temporairement désactivé pour ce fournisseur\n"
 " * Non trouvé: La facture fournisseur ne peut pas être analysée\n"
 " * Pas de TVA: La fournisseur n'a pas de n° de TVA intracom défini. Impossible de savoir si la facture peut être analysée."
 
@@ -90,6 +92,11 @@ msgstr ""
 #, python-format
 msgid "<b>Please exit the wizard, change the VAT rate for each product by opening each invoice line, then relaunch the wizard.</b>"
 msgstr "<b>Veuillez quitter l'assistant, changer le taux de TVA de chaque article en ouvrant chaque ligne de facture, puis relancer l'assistant."
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__active
+msgid "Active"
+msgstr "Actif"
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import__amount_untaxed_difference
@@ -200,6 +207,11 @@ msgstr "Madame, Monsieur,\n"
 "En vous remerciant par avance.\n"
 "\n"
 "Cordialement,"
+
+#. module: account_invoice_invoice2data
+#: selection:account.invoice,invoice2data_state:0
+msgid "Disabled"
+msgstr "Désactivé"
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:169
@@ -456,8 +468,8 @@ msgstr "Nom"
 
 #. module: account_invoice_invoice2data
 #: sql_constraint:account.invoice2data.template:0
-msgid "Name should be unique for invoice2data templates."
-msgstr "Le nom devrait être unique pour les modèles Invoice2data"
+msgid "Name and version should be unique for invoice2data templates."
+msgstr "Le nom et la version devraient être unique pour les modèles Invoice2data"
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_line.py:107
@@ -613,7 +625,7 @@ msgid "Pdf Vat Amount"
 msgstr "Taux de TVA PDF"
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/models/account_invoice.py:61
+#: code:addons/account_invoice_invoice2data/models/account_invoice.py:72
 #, python-format
 msgid "Please enter your supplier's VAT number, to know if the supplier's electronic invoice analysis is available."
 msgstr "Veuillez saisir le numéro de TVA Intracom de votre fournisseur, pour savoir si l'analyse de facture électronique de fournisseur est disponible."
@@ -766,7 +778,7 @@ msgstr "L'analyse du PDF a échoué."
 msgid "The analysis of the PDF file for the supplier %s did not go completely well.\n"
 "- The amount of the analyzed lines is %s, but the total amount before tax is %s. (Missing Amount : %s)\n"
 " - The analysis found %d lines."
-msgstr "L'analyse du PDF pour le fournissuer %s ne s'est pas complètement bien passée.\n"
+msgstr "L'analyse du PDF pour le fournisseur %s ne s'est pas complètement bien passée.\n"
 "- Le total HT des lignes analysées est de %s, mais le total HT de la facture est de %s. (Montant manquant : %s)\n"
 " - L'analyse a trouvé %d lignes."
 
@@ -787,10 +799,16 @@ msgid "The supplier name entered in Odoo \""
 msgstr "Le nom du fournisseur saisi dans Odoo\""
 
 #. module: account_invoice_invoice2data
-#: code:addons/account_invoice_invoice2data/models/account_invoice.py:50
+#: code:addons/account_invoice_invoice2data/models/account_invoice.py:53
 #, python-format
 msgid "The supplier's electronic invoice analysis is available to Supplier %s."
 msgstr "L'analyse des factures électroniques est disponible pour le fournisseur %s."
+
+#. module: account_invoice_invoice2data
+#: code:addons/account_invoice_invoice2data/models/account_invoice.py:62
+#, python-format
+msgid "The supplier's electronic invoice analysis is temporarily unavailable to Supplier %s."
+msgstr "L'analyse de la facture électronique est temporairement désactivé pour le fournisseur %s."
 
 #. module: account_invoice_invoice2data
 #: code:addons/account_invoice_invoice2data/wizards/wizard_invoice2data_import_state_apply.py:34
@@ -910,13 +928,18 @@ msgstr "Numéro de TVA intracom non défini"
 
 #. module: account_invoice_invoice2data
 #: sql_constraint:account.invoice2data.template:0
-msgid "Vat Number should be unique for invoice2data templates."
-msgstr "Le numéro de TVA intracom doit être unique pour les modèles d'import fournisseur."
+msgid "Vat Number and version should be unique for invoice2data templates."
+msgstr "Le numéro de TVA intracom et la version doivent être unique pour les modèles d'import fournisseur."
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__vat_values
 msgid "Vat Values"
 msgstr "Valeurs de TVA"
+
+#. module: account_invoice_invoice2data
+#: model:ir.model.fields,field_description:account_invoice_invoice2data.field_account_invoice2data_template__version
+msgid "Version"
+msgstr ""
 
 #. module: account_invoice_invoice2data
 #: model:ir.model.fields,field_description:account_invoice_invoice2data.field_wizard_invoice2data_import_line__wizard_id

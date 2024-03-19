@@ -7,12 +7,13 @@ from .test_module import TestModule
 
 
 class TestRelaisVert(TestModule):
-    def test_relais_vert_01(self):
+    def test_relais_vert_1_01(self):
         self._test_supplier_template(
             "relais-vert__2023-02-06__CRB__FC11716389.pdf",
             line_qty=6,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=6, month=2, year=2023),
                 "invoice_number": "FC11716389",
                 "amount_untaxed": 120.90,
@@ -31,12 +32,13 @@ class TestRelaisVert(TestModule):
             ],
         )
 
-    def test_relais_vert_02(self):
+    def test_relais_vert_1_02(self):
         self._test_supplier_template(
             "relais-vert__2023-03-25__DTB__FC11741819.pdf",
             line_qty=51,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=25, month=3, year=2023),
                 "invoice_number": "FC11741819",
                 "amount_untaxed": 1000.85,
@@ -55,12 +57,13 @@ class TestRelaisVert(TestModule):
             ],
         )
 
-    def test_relais_vert_03(self):
+    def test_relais_vert_1_03(self):
         self._test_supplier_template(
             "relais-vert__2023-11-22__PRE__FC11879919.pdf",
             line_qty=58,
             expected_values={
                 "issuer": "Relais Vert",
+                "version": 1,
                 "date": datetime(day=22, month=11, year=2023),
                 "invoice_number": "FC11879919",
                 "amount_untaxed": 982.57,

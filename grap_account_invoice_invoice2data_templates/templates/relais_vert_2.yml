@@ -1,0 +1,61 @@
+issuer: Relais Vert
+
+keywords:
+  - "352 867 493 00137"
+  - "FR 72 352 867 493"
+  - "Vos Réf. Commande"
+
+fields:
+  version:
+    parser: static
+    value: 2
+  vat:
+    parser: static
+    value: "FR72352867493"
+  amount:
+    parser: regex
+    type: float
+    regex: Montant Total TTC\s+([\d\s?]+\.\d+)
+  amount_untaxed:
+    parser: regex
+    type: float
+    regex: Montant Total HT\s+([\d\s?]+\.\d+)
+  invoice_number:
+    parser: regex
+    regex: FACTURE\s+(FC\d+)
+  date:
+    parser: regex
+    type: date
+    regex: Date\s+:\s+(\d{2}/\d{2}/\d{4})
+  vat_code_055:
+    parser: static
+    value: "1"
+  vat_code_200:
+    parser: static
+    value: "6"
+  amount_extra_parafiscal_tax_interfel_200:
+    parser: regex
+    type: float
+    regex: Montant TPF HT\n+.*(\d+\.\d+) €\n
+  lines:
+    parser: lines
+    start: Adresse de Facturation
+    end: Total Brut HT
+    line: ^ +(?P<product_code>\w+) +(?P<product_name>.*) +(?P<package_name>COL|PCE|KG|KGV|LOT|UNI) +(?P<origin>(\w+)\s(\/)?) +(BIO +)?((?P<optional_package_qty>\d+) +)? +(?P<quantity>\d+(\.\d+)?) +((?P<optional_brut_price_unit>\d+\.\d+) +(?P<optional_q>-\d+ +)?(?P<optional_g>\d+ +)?(?P<optional_p>\d+ +)?(?P<optional_e>\d+ +)?)?(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) ?(?P<vat_code>1|6)
+    types:
+      quantity: float
+      price_unit: float
+      price_subtotal: float
+
+options:
+  currency: EUR
+  date_formats:
+    - '%d/%m/%Y'
+  languages:
+    - fr
+  decimal_separator: '.'
+  replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
+    - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']

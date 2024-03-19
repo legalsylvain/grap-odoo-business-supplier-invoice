@@ -18,21 +18,25 @@ class AccountInvoice2dataTemplate(models.Model):
     _description = "Template for invoice2data Supplier Invoices"
     _order = "name"
 
-    name = fields.Char(required=True, index=True)
+    name = fields.Char(required=True, index=True, readonly=True)
 
-    vat = fields.Char(string="Supplier Vat Number")
+    version = fields.Integer(required=True, default=1, readonly=True)
 
-    vat_values = fields.Char()
+    vat = fields.Char(string="Supplier Vat Number", readonly=True)
 
-    file_name = fields.Char()
+    vat_values = fields.Char(readonly=True)
 
-    json_content = fields.Text()
+    file_name = fields.Char(readonly=True)
+
+    json_content = fields.Text(readonly=True)
+
+    active = fields.Boolean(default=True)
 
     _sql_constraints = [
         (
             "unique_name",
-            "unique(name)",
-            "Name should be unique for invoice2data templates.",
+            "unique(name, version)",
+            "Name and version should be unique for invoice2data templates.",
         ),
         (
             "unique_file_name",
@@ -41,8 +45,8 @@ class AccountInvoice2dataTemplate(models.Model):
         ),
         (
             "unique_vat",
-            "unique(vat)",
-            "Vat Number should be unique for invoice2data templates.",
+            "unique(vat, version)",
+            "Vat Number and version should be unique for invoice2data templates.",
         ),
     ]
 
@@ -97,7 +101,7 @@ class AccountInvoice2dataTemplate(models.Model):
     def _update_templates(self, files):
 
         up_to_date_template_ids = []
-        existing_templates = self.search([])
+        existing_templates = self.with_context(active_test=False).search([])
 
         # Create new templates, or update existing ones
         for file in files:
@@ -116,7 +120,6 @@ class AccountInvoice2dataTemplate(models.Model):
             existing_template = existing_templates.filtered(
                 lambda x: x.file_name == template_vals["file_name"]
             )
-
             if existing_template:
                 existing_template.write(template_vals)
                 up_to_date_template_ids.append(existing_template.id)
@@ -138,6 +141,9 @@ class AccountInvoice2dataTemplate(models.Model):
         ]
         return {
             "name": yaml_vals.get("issuer"),
+            "version": yaml_vals.get("fields")
+            .get("version", {"value": 1})
+            .get("value"),
             "vat": yaml_vals.get("fields").get("vat", {}).get("value"),
             "file_name": file.name,
             "json_content": str(yaml_vals),

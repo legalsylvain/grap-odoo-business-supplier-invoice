@@ -3,8 +3,12 @@ issuer: Scop Epice
 keywords:
   - "443 784 335 00053"
   - "FR 81 443 784 335"
+  - "Pénalités de retard.*taux annuel"
 
 fields:
+  version:
+    parser: static
+    value: 1
   vat:
     parser: static
     value: "FR81443784335"

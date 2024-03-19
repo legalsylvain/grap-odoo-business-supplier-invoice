@@ -7,12 +7,13 @@ from .test_module import TestModule
 
 
 class TestEcodis(TestModule):
-    def test_ecodis(self):
+    def test_ecodis_1_01(self):
         self._test_supplier_template(
             "ecodis__2022-08-11__ECS__338035.pdf",
             line_qty=17,
             expected_values={
                 "issuer": "Ecodis",
+                "version": 1,
                 "date": datetime(day=11, month=8, year=2022),
                 "date_due": datetime(day=11, month=9, year=2022),
                 "invoice_number": "338035",

@@ -18,13 +18,16 @@ class AccountInvoice(models.Model):
         selection=[
             ("not_applicable", "Not Applicable"),
             ("available", "Available"),
+            ("disabled", "Disabled"),
             ("not_found", "Not Found"),
             ("no_vat", "Vat Number Not Set"),
         ],
         help="* Not Applicable:"
         " the invoice state of the invoice doesn't allow pdf import\n"
         " * Available:"
-        " the supplier invoice can be analyzed\n"
+        " The supplier invoice can be analyzed\n"
+        " * Disabled: "
+        " The analysis is temporarily disabled\n"
         " * Not Found:"
         " The supplier invoice can not be analyzed\n"
         " * No VAT:"
@@ -41,21 +44,33 @@ class AccountInvoice(models.Model):
         for invoice in self.filtered(lambda x: x.state == "draft" and x.partner_id):
             current_vat = (invoice.partner_id.vat or "").replace(" ", "")
             if current_vat:
-                template = self.env["account.invoice2data.template"].search(
-                    [("vat", "=", current_vat)]
+                templates = (
+                    self.env["account.invoice2data.template"]
+                    .with_context(active_test=False)
+                    .search(
+                        [("vat", "=", current_vat)],
+                    )
                 )
-                if template:
+                if any(templates.mapped("active")):
                     invoice.invoice2data_state = "available"
                     invoice.invoice2data_message = (
                         _(
                             "The supplier's electronic invoice analysis"
                             " is available to Supplier %s."
                         )
-                        % template.name
+                        % templates[0].name
+                    )
+                elif templates:
+                    invoice.invoice2data_state = "disabled"
+                    invoice.invoice2data_message = (
+                        _(
+                            "The supplier's electronic invoice analysis"
+                            " is temporarily unavailable to Supplier %s."
+                        )
+                        % templates[0].name
                     )
                 else:
                     invoice.invoice2data_state = "not_found"
-                    # For the time being, do not display anything
             else:
                 invoice.invoice2data_state = "no_vat"
                 invoice.invoice2data_message = _(

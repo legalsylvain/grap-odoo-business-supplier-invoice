@@ -1,60 +1,62 @@
-issuer: Ecodis
+issuer: Scop Epice
 
 keywords:
-  - "42921631000046"
-  - "FR35429216310"
-  - "No Client"
+  - "443 784 335 00053"
+  - "FR 81 443 784 335"
+  - "N° intracommunautaire client"
 
 fields:
   version:
     parser: static
-    value: 1
+    value: 2
   vat:
     parser: static
-    value: "FR35429216310"
+    value: "FR81443784335"
   amount:
     parser: regex
     type: float
-    regex: \*(\d+.\d+) EUR
+    regex: NET A PAYER +(\d+\.\d+)
   amount_untaxed:
     parser: regex
     type: float
-    regex: Total HT.*\s+(\d+.\d+)
+    regex: Total +(\d+\.\d+)
   invoice_number:
     parser: regex
-    regex: Numéro pièce.*\n\s+\d{2}\/\d{2}\/\d{4}\s+(\d+)
+    regex: (FV\d+) +\d{2}\/\d{2}\/\d{2}
   date:
     parser: regex
     type: date
-    regex: Date.*\n\s+(\d{2}\/\d{2}\/\d{4})
+    regex: FV\d+ +(\d{2}\/\d{2}\/\d{2})
   date_due:
     parser: regex
     type: date
-    regex: Echéance\n.*(\d{2}\/\d{2}\/\d{4})\n
+    regex: Echéance +. +(\d{2}\/\d{2}\/\d{2})
   vat_code_055:
     parser: static
-    value: "2"
+    value: "C2"
   vat_code_200:
     parser: static
-    value: "1"
+    value: "C5"
   lines:
     parser: lines
-    start: Désignation +Quantité
-    end: Total Bon de livraison
-    line: ^ +(?P<product_code>\w+)\s +(?P<product_name>.{60}) +(?P<quantity>\d+\.\d+) +(?P<quantity2>\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>2|1)
+    start: Référence.*Montant HT\s+TVA
+    end: Code.*Base.*Total HT
+    line: ^(?P<product_code>\w+) +(?P<product_name>.*) +(?P<quantity>\d+(\.\d+)?) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\w+)
     types:
       quantity: float
-      quantity2: float
       price_unit: float
+      discount: float
       price_subtotal: float
 
 options:
   currency: EUR
   date_formats:
-    - '%d/%m/%Y'
+    - '%d/%m/%y'
   decimal_separator: '.'
   replace:
     # Standardize the decimal separator. ('1,24' -> '1.24')
     - [',', '.']
     # Remove the thousands separator. ('1 234.56' -> '1234.56')
     - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
+    - ['\*', '']
