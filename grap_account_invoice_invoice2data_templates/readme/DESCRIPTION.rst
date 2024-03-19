@@ -35,4 +35,5 @@ This module contains invoice2data templates for GRAP company.
 - Senfas
 - Supersec
 - T'air de Famille
+- Thera Viva
 - Vitafrais

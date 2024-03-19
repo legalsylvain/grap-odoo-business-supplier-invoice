@@ -22,7 +22,7 @@ fields:
   date:
     parser: regex
     type: date
-    regex: Date exp.*\s+(\d{2}\/\d{2}\/\d{4})
+    regex: Date exp.*\s+.*\s+(\d{2}\/\d{2}\/\d{4})
   date_due:
     parser: regex
     type: date
@@ -44,7 +44,7 @@ fields:
     parser: lines
     start: Désignation
     end: Total TVA
-    line: ^ +(\d+) +(?P<product_name>.{40}) +(?P<origin>(\w|-)+) +(?P<package>\d+\.\d+) +(?P<ignored>.*) +(?P<brut_weight>\d+\.\d+) +(?P<quantity>\d+(\.\d+)?) +(UN|KG|CO) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>(1|2|3))
+    line: ^ +(\d+) +(?P<product_name>.{40}) +(?P<origin>(\w|-)+ ?(\w|-)+) +(?P<package>\d+\.\d+) +(?P<ignored>.*) +(?P<brut_weight>\d+\.\d+) +(?P<quantity>\d+(\.\d+)?) +(UN|KG|CO) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>(1|2|3))
     types:
       quantity: float
       price_unit: float
