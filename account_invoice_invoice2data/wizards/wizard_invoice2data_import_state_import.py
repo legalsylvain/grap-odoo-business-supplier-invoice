@@ -72,6 +72,7 @@ class WizardInvoice2dataImportStateImport(models.TransientModel):
     def _initialize_wizard_invoice(self, result):
         for invoice_field in [
             "issuer",
+            "version",
             "amount_untaxed",
             "amount",
             "invoice_number",

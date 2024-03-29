@@ -42,6 +42,7 @@
                     <field name="pdf_has_discount" invisible="1"/>
                     <field name="pdf_has_discount2" invisible="1"/>
                     <field name="pdf_has_vat_mapping" invisible="1"/>
+                    <field name="pdf_version" invisible="1"/>
                     <field name="has_discount" invisible="1"/>
                     <field name="has_discount2" invisible="1"/>
                     <field name="supplier_name_different" invisible="1"/>
