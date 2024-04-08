@@ -16,9 +16,13 @@ class TestAbstract(TransactionCase):
     def setUp(self):
         super().setUp()
 
-        self.invoice2data_key = tools.config.get("invoice2data_key", False)
+        self.invoice2data_key = tools.config.get("invoice2data_key", "")
         if not self.invoice2data_key:
-            self.invoice2data_key = os.environ["INVOICE2DATA_KEY"]
+            self.invoice2data_key = os.environ.get("INVOICE2DATA_KEY", "")
+        if not self.invoice2data_key:
+            raise Exception(
+                "No invoice2data_key defined in odoo.cfg or environ variables"
+            )
         self.invoice2data_key = self.invoice2data_key and self.invoice2data_key.encode(
             "utf-8"
         )
