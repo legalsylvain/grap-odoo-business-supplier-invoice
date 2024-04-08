@@ -2,7 +2,7 @@ issuer: Comptoir des Lys
 
 keywords:
   - "480737030 00019"
-  - FR67480737030
+  - "FR67480737030"
 
 fields:
   vat:
@@ -38,16 +38,7 @@ fields:
     parser: lines
     start: \s+Article.*TVA %
     end: Réserves de propriétés
-    line: ^
-      \s?(?P<product_code>\d+)
-      \s+(?P<product_name>.{50})
-      \s+[A-Z0-9\-]+
-      \s+(?P<quantity>\d+)
-      \s+(?P<price_unit>\d+.\d+) €
-      \s+(?P<discount>\d+.\d+)%
-      \s+(?P<net_price_unit>\d+.\d+) €
-      \s+(?P<price_subtotal>\d+.\d+) €
-      \s+(?P<vat_code>(20))
+    line: ^ +(?P<product_code>\d+) +(?P<product_name>.{50}) +[A-Z0-9\-]+ +(?P<quantity>\d+) +(?P<price_unit>\d+.\d+) € +(?P<discount>\d+.\d+)% +(?P<net_price_unit>\d+.\d+) € +(?P<price_subtotal>\d+.\d+) € +(?P<vat_code>(20))
     types:
       quantity: float
       price_unit: float
@@ -60,7 +51,11 @@ options:
     - '%d/%m/%Y'
   decimal_separator: '.'
   replace:
+    # Standardize the decimal separator. ('1,24' -> '1.24')
     - [',', '.']
+    # Remove the thousands separator. ('1 234.56' -> '1234.56')
+    - ['(\d+) (\d{3}\.\d{2})', '\g<1>\g<2>']
+
     - ['¤', '']
     - ['þ', '']
     - ['§', '']
