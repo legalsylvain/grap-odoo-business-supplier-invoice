@@ -34,7 +34,7 @@ class AccountInvoice2dataTemplate(models.Model):
 
     _sql_constraints = [
         (
-            "unique_name",
+            "unique_name_version",
             "unique(name, version)",
             "Name and version should be unique for invoice2data templates.",
         ),
@@ -44,7 +44,7 @@ class AccountInvoice2dataTemplate(models.Model):
             "File name should be unique for invoice2data templates.",
         ),
         (
-            "unique_vat",
+            "unique_vat_version",
             "unique(vat, version)",
             "Vat Number and version should be unique for invoice2data templates.",
         ),
