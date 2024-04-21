@@ -4,7 +4,6 @@
 
 
 def migrate(cr, version):
-    # Fix Pural supplierinfo for HAL
     request = """
         UPDATE account_invoice2data_template
         SET file_name = replace(file_name, '-', '_')
