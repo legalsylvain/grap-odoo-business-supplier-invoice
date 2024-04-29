@@ -19,6 +19,7 @@ from . import test_ecodis_2
 from . import test_ekibio
 from . import test_ferme_bio_margerie
 from . import test_ferme_des_grands_noyers
+from . import test_gentils_nuages
 from . import test_gonuts
 from . import test_gravier
 from . import test_helpac
