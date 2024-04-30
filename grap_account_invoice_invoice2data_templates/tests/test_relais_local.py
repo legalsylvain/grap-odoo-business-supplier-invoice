@@ -81,3 +81,27 @@ class TestRelaisLocal(TestModule):
                 }
             ],
         )
+
+    def test_relais_local_04(self):
+        self._test_supplier_template(
+            "relais-local__2024-03-15__BSG__AC24033829.pdf",
+            line_qty=1,
+            expected_values={
+                "issuer": "Relais Local",
+                "date": datetime(day=15, month=3, year=2024),
+                "date_due": datetime(day=5, month=4, year=2024),
+                "invoice_number": "AC24033829",
+                "amount_untaxed": 47.50,
+                "amount": 50.11,
+            },
+            expected_lines=[
+                {
+                    "product_code": "120337",
+                    "product_name": "ENDIVETTE",
+                    "vat_code": "3",
+                    "quantity": 10.0,
+                    "price_unit": 4.75,
+                    "price_subtotal": 47.50,
+                }
+            ],
+        )
