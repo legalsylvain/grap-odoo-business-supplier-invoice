@@ -51,7 +51,7 @@ class WizardInvoice2dataImportStateApply(models.TransientModel):
 
     def _apply_write_invoice(self):
         invoice2data_template = self.env["account.invoice2data.template"].search(
-            [("name", "=", self.pdf_issuer)]
+            [("name", "=", self.pdf_issuer), ("version", "=", self.pdf_version)]
         )
         lines_vals = self.line_ids._prepare_invoice_lines_vals()
 

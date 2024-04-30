@@ -119,6 +119,8 @@ class WizardInvoice2dataImport(models.TransientModel):
 
     pdf_issuer = fields.Char(readonly=True)
 
+    pdf_version = fields.Char(readonly=True)
+
     pdf_vat = fields.Char(readonly=True)
 
     supplier_name_different = fields.Boolean(compute="_compute_supplier_name_different")
