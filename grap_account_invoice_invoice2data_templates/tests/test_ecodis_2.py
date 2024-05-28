@@ -33,3 +33,30 @@ class TestEcodis(TestModule):
                 }
             ],
         )
+
+    def test_ecodis_2_02(self):
+        self._test_supplier_template(
+            "ecodis__2024-05-21__HAL__379385.pdf",
+            line_qty=18,
+            expected_values={
+                "issuer": "Ecodis",
+                "version": 2,
+                "date": datetime(day=21, month=5, year=2024),
+                "date_due": datetime(day=21, month=6, year=2024),
+                "invoice_number": "379385",
+                "amount_untaxed": 385.24,
+                "amount": 453.96,
+            },
+            expected_lines=[
+                {
+                    "product_code": "DO033",
+                    "product_name": "Lot de 2 éponges grattantes écologiques",
+                    "vat_code": "20.00",
+                    "quantity": 1,
+                    "quantity2": 24,
+                    "price_unit": 1.15,
+                    "discount": 3.0,
+                    "price_subtotal": 26.78,
+                }
+            ],
+        )

@@ -41,11 +41,12 @@ fields:
     parser: lines
     start: Référence.*TVA
     end: Page.* \d+\/\d+
-    line: ^ +(?P<product_code>\w+) +(?P<quantity>\d+\.\d+) +(?P<quantity2>\d+) +(?P<product_name>.*) +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
+    line: ^ +(?P<product_code>\w+) +(?P<quantity>\d+\.\d+) +(?P<quantity2>\d+) +(?P<product_name>.*) +(?P<price_unit>\d+\.\d+) +((?P<discount>\d+(\.\d+)?) +)?(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)
     types:
       quantity: float
       quantity2: float
       price_unit: float
+      discount: float
       price_subtotal: float
 
 options:
@@ -61,4 +62,4 @@ options:
 
     # Move product name of the second line in the first line,
     # and remove useless EAN code
-    - ['EAN +: +\d+ +(?P<brut_price_unit>\d+\.\d+) +(?P<price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)\s+(?P<product_name>.*)', '\g<product_name>    \g<brut_price_unit>    \g<price_unit>    \g<price_subtotal>    \g<vat_code>']
+    - ['EAN +: +\d+ +(?P<price_unit>\d+\.\d+) +(-(?P<discount>\d+(\.\d+)?)% +)?(?P<net_price_unit>\d+\.\d+) +(?P<price_subtotal>\d+\.\d+) +(?P<vat_code>\d+\.\d+)\s+(?P<product_name>.*)', '\g<product_name>    \g<price_unit>    \g<discount>    \g<net_price_unit>    \g<price_subtotal>    \g<vat_code>']
